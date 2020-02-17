@@ -1,2 +1,3 @@
 rootProject.name='ManageMyTeam'
 include ':app'
+include ':data'
