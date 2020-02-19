@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="es.us.managemyteam.ui.fragment.SplashFragment">
+
+        <!-- <action
+             android:id="@+id/action_splash_to_dashboard"
+             app:destination="@id/dashboard_nav_graph"
+             app:launchSingleTop="true"
+             app:popUpTo="@id/splashFragment"
+             app:popUpToInclusive="true"
+             app:enterAnim="@anim/nav_default_enter_anim"
+             app:exitAnim="@anim/nav_default_exit_anim"/>-->
+    </fragment>
+
+    <!--
+        <include app:graph="@navigation/dashboard_nav_graph" />
+    -->
+
+</navigation>

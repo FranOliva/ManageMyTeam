@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import es.us.managemyteam.ui.activity.MainActivity
+import es.us.managemyteam.ui.view.CustomToolbar
 
 abstract class BaseFragment<Any : ViewBinding> : Fragment() {
 
@@ -20,13 +21,13 @@ abstract class BaseFragment<Any : ViewBinding> : Fragment() {
 
     abstract fun inflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): Any
 
-    abstract fun setupToolbar(toolbar: Toolbar)
+    abstract fun setupToolbar(toolbar: CustomToolbar)
 
     //abstract fun setupBottomBar(bottomNavigationView: CommonBottomNavigationView)
 
-    /*fun getToolbar() = (activity as MainActivity).getToolbar()
+    //fun getToolbar() = (activity as MainActivity).getCustomToolbar()
 
-    fun notifyVerticalMenuChanged() {
+    /*fun notifyVerticalMenuChanged() {
         (activity as MainActivity).getVerticalNavigation().notifyUserChanged()
     }*/
 
@@ -40,8 +41,6 @@ abstract class BaseFragment<Any : ViewBinding> : Fragment() {
         setupMenuViews()
     }
 
-    fun getToolbar() = (activity as MainActivity).getToolbar()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,13 +50,10 @@ abstract class BaseFragment<Any : ViewBinding> : Fragment() {
         return viewBinding.root
     }
 
-    fun setToolbarNavAction(listener: (View) -> Unit) {
-        getToolbar().setNavigationOnClickListener(listener)
-    }
 
     private fun setupMenuViews() {
         if (activity is MainActivity) {
-            setupToolbar((activity as MainActivity).getToolbar().apply { setToolbarNavAction {} })
+            //setupToolbar((activity as MainActivity).getCustomToolbar().apply { setNavAction { } })
             //setupBottomBar((activity as MainActivity).getBottomBar())
         }
     }
