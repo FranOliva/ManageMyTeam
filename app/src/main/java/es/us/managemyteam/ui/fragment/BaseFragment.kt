@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.*
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import es.us.managemyteam.extension.setNavAction
 import es.us.managemyteam.ui.activity.MainActivity
 
 abstract class BaseFragment<Any : ViewBinding> : Fragment() {
@@ -22,11 +23,11 @@ abstract class BaseFragment<Any : ViewBinding> : Fragment() {
 
     abstract fun setupToolbar(toolbar: Toolbar)
 
-    //abstract fun setupBottomBar(bottomNavigationView: CommonBottomNavigationView)
+    abstract fun setupBottomBar(bottomNavigationView: BottomNavigationView)
 
-    /*fun getToolbar() = (activity as MainActivity).getToolbar()
+    fun getToolbar() = (activity as MainActivity).getToolbar()
 
-    fun notifyVerticalMenuChanged() {
+    /*fun notifyVerticalMenuChanged() {
         (activity as MainActivity).getVerticalNavigation().notifyUserChanged()
     }*/
 
@@ -40,8 +41,6 @@ abstract class BaseFragment<Any : ViewBinding> : Fragment() {
         setupMenuViews()
     }
 
-    fun getToolbar() = (activity as MainActivity).getToolbar()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,14 +50,11 @@ abstract class BaseFragment<Any : ViewBinding> : Fragment() {
         return viewBinding.root
     }
 
-    fun setToolbarNavAction(listener: (View) -> Unit) {
-        getToolbar().setNavigationOnClickListener(listener)
-    }
 
     private fun setupMenuViews() {
         if (activity is MainActivity) {
-            setupToolbar((activity as MainActivity).getToolbar().apply { setToolbarNavAction {} })
-            //setupBottomBar((activity as MainActivity).getBottomBar())
+            setupToolbar((activity as MainActivity).getToolbar().apply { setNavAction { } })
+            setupBottomBar((activity as MainActivity).getBottomBar())
         }
     }
 

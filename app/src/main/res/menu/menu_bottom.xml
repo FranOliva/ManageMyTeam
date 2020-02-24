@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_home"
+        android:title="Eventos"
+        android:enabled="true"
+        android:icon="@drawable/abc_vector_test"/>
+
+    <item android:id="@+id/action_news"
+        android:title="Perfil"
+        android:enabled="true"
+        android:icon="@drawable/abc_vector_test"/>
+
+    <item android:id="@+id/action_events"
+        android:title="Chat"
+        android:enabled="true"
+        android:icon="@drawable/abc_vector_test"/>
+
+    <item android:id="@+id/action_reports"
+        android:title="Otros"
+        android:icon="@drawable/abc_vector_test"/>
+</menu>
