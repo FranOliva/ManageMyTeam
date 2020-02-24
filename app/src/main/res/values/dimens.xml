@@ -1,4 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="text_ten">10sp</dimen>
+    <dimen name="text_eleven">11sp</dimen>
+    <dimen name="text_twelve">12sp</dimen>
+    <dimen name="text_thirteen">13sp</dimen>
+    <dimen name="text_fourteen">14sp</dimen>
+    <dimen name="text_fifteen">15sp</dimen>
+    <dimen name="text_sixteen">16sp</dimen>
+    <dimen name="text_seventeen">17sp</dimen>
+    <dimen name="text_eighteen">18sp</dimen>
+    <dimen name="text_nineteen">19sp</dimen>
+    <dimen name="text_twenty">20sp</dimen>
+    <dimen name="text_twentytwo">22sp</dimen>
+    <dimen name="text_twentyfour">24sp</dimen>
+    <dimen name="text_twentysix">26sp</dimen>
+    <dimen name="text_twentyeight">28sp</dimen>
+    <dimen name="text_thirty">30sp</dimen>
+    <dimen name="text_thirtytwo">32sp</dimen>
+    <dimen name="text_thirtyfour">34sp</dimen>
+    <dimen name="text_thirtysix">36sp</dimen>
+    <dimen name="text_thirtyeight">38sp</dimen>
+
+    <dimen name="size_one">1dp</dimen>
+    <dimen name="size_two">2dp</dimen>
+    <dimen name="size_four">4dp</dimen>
+    <dimen name="size_six">6dp</dimen>
+    <dimen name="size_eight">8dp</dimen>
+    <dimen name="size_ten">10dp</dimen>
+    <dimen name="size_twelve">12dp</dimen>
+    <dimen name="size_fourteen">14dp</dimen>
+    <dimen name="size_sixteen">16dp</dimen>
+    <dimen name="size_eighteen">18dp</dimen>
+    <dimen name="size_twenty">20dp</dimen>
+    <dimen name="size_twentytwo">22dp</dimen>
+    <dimen name="size_twentyfour">24dp</dimen>
+    <dimen name="size_twentysix">26dp</dimen>
+    <dimen name="size_thirty">30dp</dimen>
+    <dimen name="size_thirtytwo">32dp</dimen>
+    <dimen name="size_thirtyfour">34dp</dimen>
+    <dimen name="size_fourty">40dp</dimen>
+    <dimen name="size_fourtytwo">42dp</dimen>
+    <dimen name="size_fifty">50dp</dimen>
+    <dimen name="size_fiftysix">56dp</dimen>
+    <dimen name="size_sixty">60dp</dimen>
+    <dimen name="size_sixtytwo">62dp</dimen>
+    <dimen name="size_sixtyfour">64dp</dimen>
+    <dimen name="size_seventy">70dp</dimen>
+    <dimen name="size_eighty">80dp</dimen>
+    <dimen name="size_ninetysix">96dp</dimen>
+    <dimen name="size_onehundred">100dp</dimen>
+    <dimen name="size_onehundredandtwenty">120dp</dimen>
+    <dimen name="size_onetwentyeight">128dp</dimen>
+    <dimen name="size_threehundred">300dp</dimen>
+    <dimen name="size_threehundredtwenty">320dp</dimen>
+
     <dimen name="bottombar_size_height">54dp</dimen>
+    <dimen name="bottombar_size_twentytwo">22dp</dimen>
+    <dimen name="slidernavigation_size_marginrigth">-64dp</dimen>
+    <dimen name="row_menu_size_sixtynine">69dp</dimen>
+    <dimen name="gallery_size">68dp</dimen>
+
+    <dimen name="news_list_height">124dp</dimen>
 </resources>

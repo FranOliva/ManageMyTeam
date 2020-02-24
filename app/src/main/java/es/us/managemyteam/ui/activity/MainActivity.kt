@@ -7,7 +7,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import es.us.managemyteam.R
 import es.us.managemyteam.databinding.ActivityMainBinding
-import es.us.managemyteam.ui.view.CustomToolbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,20 +26,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupToolbar() {
-        setSupportActionBar(viewBinding.toolbar)
+        setSupportActionBar(getToolbar())
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
     //region BaseActivity
 
-    /*override fun getToolbar() : CustomToolbar {
-        return null
-    }
+    fun getToolbar() = viewBinding.toolbar
 
-    override fun getBottomBar() = viewBinding.mainBottombarMenu
+    fun getBottomBar() = viewBinding.mainBottombarMenu
 
-    override fun getNavGraph() = navController*/
+    fun getNavGraph() = navController
 
     //endregion
 }
