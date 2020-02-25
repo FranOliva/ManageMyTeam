@@ -56,4 +56,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$androidx_navigation_version"
     implementation "androidx.constraintlayout:constraintlayout:$androidx_constraintlayout_version"
     implementation "androidx.drawerlayout:drawerlayout:1.0.0"
+
+    // Firebase
+    implementation "com.google.firebase:firebase-database:$firebase_database_version"
 }

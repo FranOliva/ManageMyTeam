@@ -13,6 +13,8 @@ buildscript {
         androidx_room_version = '2.2.1'
         androidx_fragment_version = '1.2.1'
         androidx_drawerlayout_version = '1.0.0'
+
+        firebase_database_version = '19.1.0'
     }
     repositories {
         google()
