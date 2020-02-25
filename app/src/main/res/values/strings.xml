@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">ManageMyTeam</string>
     <string name="app_name_separated">Manage My Team</string>
+
+    <!-- Bottom Menu -->
+    <string name="events">Eventos</string>
+    <string name="menu">Menú</string>
+    <string name="chat">Chat</string>
+    <string name="profile">Perfil</string>
+
+    <!-- Events -->
+
 </resources>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,16 +9,36 @@
         android:id="@+id/main__container__parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
-        android:orientation="vertical">
+        android:animateLayoutChanges="true">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="0dp"
             android:layout_height="?attr/actionBarSize"
+            android:contentInsetStartWithNavigation="0dp"
+            android:elevation="@dimen/size_four"
+            app:contentInsetStart="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/main__label__toolbar_title"
+                style="@style/Medium.Sixteen.Black"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                tools:text="Eventos" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_four"
+            android:background="@drawable/background_shadow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
         <fragment
             android:id="@+id/main__container__nav_host"
@@ -37,31 +58,16 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/bottombar_size_height"
             android:background="@color/white"
+            android:foreground="?attr/selectableItemBackground"
+            app:itemBackground="@android:color/transparent"
+            app:itemIconTint="@color/menu_bottom_drawer_item"
+            app:itemTextColor="@color/menu_bottom_drawer_item"
+            app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/menu_bottom" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!--<com.google.android.material.navigation.NavigationView
-        android:id="@+id/main__navigation__menu"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:layout_marginStart="@dimen/slidernavigation_size_marginrigth"
-        android:layout_marginBottom="@dimen/bottombar_size_height"
-        android:background="@color/white"
-        app:elevation="0dp" />-->
-
-    <!--<com.google.android.material.navigation.NavigationView
-        android:id="@+id/main__navigation__menu"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:layout_marginBottom="@dimen/bottombar_size_height"
-        android:background="@color/white"
-        app:elevation="0dp"
-        tools:visibility="gone" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

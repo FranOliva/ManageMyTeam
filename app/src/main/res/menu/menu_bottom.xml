@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/action_home"
-        android:title="Eventos"
+    <item
+        android:id="@+id/action_events"
         android:enabled="true"
-        android:icon="@drawable/abc_vector_test"/>
+        android:foreground="?attr/selectableItemBackground"
+        android:icon="@drawable/ic_calendar"
+        android:title="@string/events" />
 
-    <item android:id="@+id/action_news"
-        android:title="Perfil"
+    <item
+        android:id="@+id/action_profile"
         android:enabled="true"
-        android:icon="@drawable/abc_vector_test"/>
+        android:foreground="?attr/selectableItemBackground"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/profile" />
 
-    <item android:id="@+id/action_events"
-        android:title="Chat"
+    <item
+        android:id="@+id/action_chat"
         android:enabled="true"
-        android:icon="@drawable/abc_vector_test"/>
+        android:foreground="?attr/selectableItemBackground"
+        android:icon="@drawable/ic_chat"
+        android:title="@string/chat" />
 
-    <item android:id="@+id/action_reports"
-        android:title="Otros"
-        android:icon="@drawable/abc_vector_test"/>
+    <item
+        android:id="@+id/action_menu"
+        android:foreground="?attr/selectableItemBackground"
+        android:icon="@drawable/ic_menu"
+        android:title="@string/menu" />
 </menu>
