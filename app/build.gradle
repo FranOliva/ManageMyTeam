@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
@@ -55,5 +56,13 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$androidx_navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$androidx_navigation_version"
     implementation "androidx.constraintlayout:constraintlayout:$androidx_constraintlayout_version"
-    implementation "androidx.drawerlayout:drawerlayout:1.0.0"
+
+    // Firebase
+    implementation "com.google.firebase:firebase-core:$firebase_core_version"
+    implementation "com.google.firebase:firebase-database:$firebase_database_version"
+    implementation "com.google.firebase:firebase-analytics:$firebase_core_version"
+
+    // Google
+    implementation "com.google.android.gms:play-services-maps:$google_playservices_version"
+    implementation "com.google.android.gms:play-services-location:$google_playservices_version"
 }
