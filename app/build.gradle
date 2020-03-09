@@ -65,4 +65,8 @@ dependencies {
     // Google
     implementation "com.google.android.gms:play-services-maps:$google_playservices_version"
     implementation "com.google.android.gms:play-services-location:$google_playservices_version"
+
+    //RcyclerView
+    implementation "androidx.recyclerview:recyclerview:$recycler_view_version"
+
 }

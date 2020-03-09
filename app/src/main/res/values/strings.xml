@@ -10,4 +10,7 @@
 
     <!-- Events -->
 
+    <!-- Club module -->
+    <string name="club_stats">Estadísticas</string>
+    <string name="club">Club</string>
 </resources>
