@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.database.FirebaseDatabase
 import es.us.managemyteam.extension.setNavAction
 import es.us.managemyteam.ui.activity.MainActivity
 
@@ -57,5 +58,7 @@ abstract class BaseFragment<Any : ViewBinding> : Fragment() {
             setupBottomBar((activity as MainActivity).getBottomBar())
         }
     }
+
+    fun getDatabase() = FirebaseDatabase.getInstance()
 
 }
