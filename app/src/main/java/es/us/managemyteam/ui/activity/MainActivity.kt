@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
+import com.google.firebase.database.FirebaseDatabase
 import es.us.managemyteam.R
 import es.us.managemyteam.databinding.ActivityMainBinding
 
@@ -60,15 +61,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //region BaseActivity
-
     fun getToolbar() = viewBinding.toolbar
 
     fun getBottomBar() = viewBinding.mainBottombarMenu
 
     fun getNavGraph() = navController
-
-    //endregion
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)

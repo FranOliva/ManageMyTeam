@@ -61,4 +61,8 @@ dependencies {
     // Firebase
     implementation "com.google.firebase:firebase-database:$firebase_database_version"
     implementation "com.google.firebase:firebase-analytics:$firebase_analytics_version"
+
+    // Google
+    implementation "com.google.android.gms:play-services-maps:$google_playservices_version"
+    implementation "com.google.android.gms:play-services-location:$google_playservices_version"
 }
