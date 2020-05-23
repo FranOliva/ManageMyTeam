@@ -2,9 +2,9 @@ package es.us.managemyteam.database
 
 object DatabaseTables {
 
-    const val USER_TABLE = "user"
-    const val EVENT_TABLE = "event"
-    const val MESSAGE_TABLE = "message"
+    const val USER_TABLE = "users"
+    const val EVENT_TABLE = "events"
+    const val MESSAGE_TABLE = "messages"
     const val CLUB_TABLE = "club"
 
 }
