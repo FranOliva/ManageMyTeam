@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -42,7 +42,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
@@ -56,11 +56,11 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$androidx_navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$androidx_navigation_version"
     implementation "androidx.constraintlayout:constraintlayout:$androidx_constraintlayout_version"
+    implementation "androidx.drawerlayout:drawerlayout:1.0.0"
 
     // Firebase
-    implementation "com.google.firebase:firebase-core:$firebase_core_version"
     implementation "com.google.firebase:firebase-database:$firebase_database_version"
-    implementation "com.google.firebase:firebase-analytics:$firebase_core_version"
+    implementation "com.google.firebase:firebase-analytics:$firebase_analytics_version"
 
     // Google
     implementation "com.google.android.gms:play-services-maps:$google_playservices_version"
