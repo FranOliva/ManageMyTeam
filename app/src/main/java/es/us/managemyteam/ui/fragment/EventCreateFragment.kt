@@ -3,6 +3,7 @@ package es.us.managemyteam.ui.fragment
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import es.us.managemyteam.database.DatabaseTables
 import es.us.managemyteam.databinding.FragmentCreateEventBinding
 import es.us.managemyteam.extension.*
 import es.us.managemyteam.util.EventUtil
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -30,13 +32,60 @@ class EventCreateFragment : BaseFragment<FragmentCreateEventBinding>() {
         setupClickListeners()
     }
 
-    private fun saveEvent(event: EventBo) {
+    private fun saveEvent() {
+        if (validateForm()) {
+            val sdf = SimpleDateFormat(getString(R.string.date_time_format), Locale.getDefault())
+            val date = if (!viewBinding.createEventEditTextDate.text.isBlank()) {
+                sdf.parse(viewBinding.createEventEditTextDate.text)
+            } else {
+                null
+            }
+            val event = EventBo(
+                viewBinding.createEventEditTextTitle.text,
+                date,
+                null,
+                viewBinding.createEventEditTextDescription.text,
+                null,
+                viewBinding.createEventEditTextEventType.text
+            )
+            eventsRef.push().setValue(event)
+            popBack()
+        } else {
+            showErrorDialog(
+                getFormErrorMessage(),
+                DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
+        }
 
+    }
+
+    private fun validateForm(): Boolean {
+
+        return viewBinding.createEventEditTextTitle.text.isNotBlank() &&
+                viewBinding.createEventEditTextDate.text.isNotBlank() &&
+                viewBinding.createEventEditTextEventType.text.isNotBlank()
+    }
+
+    private fun getFormErrorMessage(): String {
+        var message = ""
+        if (viewBinding.createEventEditTextTitle.text.isBlank()) {
+            message += getString(R.string.create_event_error_title)
+        }
+        if (viewBinding.createEventEditTextDate.text.isBlank()) {
+            message += getString(R.string.create_event_error_date)
+        }
+        if (viewBinding.createEventEditTextEventType.text.isBlank()) {
+            message += getString(R.string.create_event_error_event_type)
+        }
+
+        return message
     }
 
     private fun setupClickListeners() {
         setupDateClickListener()
         setupEventTypeClickListener()
+        viewBinding.createEventBtnSave.setOnClickListener {
+            saveEvent()
+        }
     }
 
     private fun setupEventTypeClickListener() {
@@ -71,8 +120,8 @@ class EventCreateFragment : BaseFragment<FragmentCreateEventBinding>() {
             showDateDialog(
                 selectedDate,
                 DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                    updateSelectedDate(dayOfMonth, month, year)
-                    showTimePickerDialog(dayOfMonth, month, year)
+                    updateSelectedDate(dayOfMonth, month + 1, year)
+                    showTimePickerDialog(dayOfMonth, month + 1, year)
                 })
         }
     }
@@ -114,8 +163,8 @@ class EventCreateFragment : BaseFragment<FragmentCreateEventBinding>() {
                 it,
                 TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
                     viewBinding.createEventEditTextDate.setText(
-                        resources.getString(
-                            R.string.create_event_date_placeholder,
+                        String.format(
+                            getString(R.string.create_event_date_format),
                             day,
                             month,
                             year,
