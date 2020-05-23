@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "725431545447",
+    "firebase_url": "https://tfg-manage-team.firebaseio.com",
+    "project_id": "tfg-manage-team",
+    "storage_bucket": "tfg-manage-team.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:725431545447:android:86a092ff1e89523797aec2",
+        "android_client_info": {
+          "package_name": "es.us.managemyteam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "725431545447-ae2kl5lr3c2s1r002dptf86cjo02fno5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "es.us.managemyteam",
+            "certificate_hash": "9d394096e789732ab6aa15942a473d7c8df20405"
+          }
+        },
+        {
+          "client_id": "725431545447-qi4orosgro8o4de2h7mhg6nsij4k7n1e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeWRsyysNtC1SCUrVRT4QRhXAqglFhde0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "725431545447-qi4orosgro8o4de2h7mhg6nsij4k7n1e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
