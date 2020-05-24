@@ -23,11 +23,12 @@ import es.us.managemyteam.R
 import es.us.managemyteam.databinding.ViewMapBinding
 import es.us.managemyteam.extension.getBounds
 import es.us.managemyteam.extension.getBoundsWithUserLocation
+import es.us.managemyteam.extension.tint
 import es.us.managemyteam.extension.toBitmapDescriptor
 import es.us.managemyteam.manager.LocationManager
 import kotlin.math.roundToInt
 
-private const val DEFAULT_ZOOM = 15f
+private const val DEFAULT_ZOOM = 18f
 private const val NO_ZOOM = 0f
 
 class MapView @JvmOverloads constructor(
@@ -234,6 +235,10 @@ class MapView @JvmOverloads constructor(
     private fun shouldZoom(zoom: Float): Boolean {
         return !(zoom == DEFAULT_ZOOM &&
                 (map?.cameraPosition?.zoom ?: NO_ZOOM) > DEFAULT_ZOOM)
+    }
+
+    private fun applyColorToBackground(color: Int) {
+        viewBinding.mapContainerLocation.background.tint(color)
     }
 
     private fun applyZoom(

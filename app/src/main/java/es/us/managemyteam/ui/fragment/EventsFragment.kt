@@ -46,8 +46,7 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(), BaseAdapterClickLi
             .observe(viewLifecycleOwner, object : ResourceObserver<List<EventBo>>() {
                 override fun onSuccess(response: List<EventBo>?) {
                     response?.let {
-
-                        eventsAdapter?.setData(it)
+                        eventsAdapter?.setData(it.sortedBy { event -> event.date })
                         eventsAdapter?.notifyDataSetChanged()
 
                         if (it.isNotEmpty()) {

@@ -43,9 +43,11 @@
             </androidx.appcompat.widget.Toolbar>
 
             <View
+                android:id="@+id/main__view__toolbar_shadow"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_four"
                 android:background="@drawable/background_shadow"
+                android:elevation="@dimen/size_four"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/toolbar" />

@@ -3,15 +3,12 @@ package es.us.managemyteam.ui.viewmodel
 import androidx.lifecycle.*
 import es.us.managemyteam.data.model.EventBo
 import es.us.managemyteam.repository.util.Resource
-import es.us.managemyteam.usecase.GetEventLocationUc
 import es.us.managemyteam.usecase.GetEventsUc
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class EventsViewModel(
-    private val getEventLocationUc: GetEventLocationUc,
-    private val setEventLocationUc: GetEventLocationUc,
     private val getEventsUc: GetEventsUc
 ) : ViewModel() {
 
@@ -38,5 +35,6 @@ class EventsViewModel(
     fun getEventsData(): LiveData<Resource<List<EventBo>>> {
         return events
     }
+
 
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false">
@@ -52,18 +53,44 @@
         <FrameLayout
             android:id="@+id/create_event__container__location"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_onehundredandtwenty"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_twentyfour"
-            android:background="@drawable/input_background">
+            android:background="@drawable/input_background"
+            android:foreground="?attr/selectableItemBackground">
 
             <TextView
+                android:id="@+id/create_event__label__location"
                 style="@style/Regular.Sixteen.Black"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/size_onehundredandtwenty"
                 android:layout_gravity="center"
-                android:text="Selecciona la localización" />
+                android:gravity="center"
+                android:text="@string/create_event_select_location"
+                android:textAlignment="center" />
 
         </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/create_event__container__map"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <es.us.managemyteam.ui.view.common_map.MapView
+                android:id="@+id/create_event__view__map"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/minimap_height" />
+
+            <TextView
+                android:id="@+id/create_event__label__address"
+                style="@style/Regular.Fourteen.Black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_fourteen" />
+
+        </LinearLayout>
 
         <es.us.managemyteam.ui.view.loading_button.LoadingButtonView
             android:id="@+id/create_event__btn__save"

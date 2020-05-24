@@ -12,7 +12,6 @@ class PermissionUtil {
 
     companion object {
 
-        @JvmStatic
         fun needPermission(context: Context, vararg permissions: String): Boolean {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 permissions.forEach {
@@ -29,19 +28,16 @@ class PermissionUtil {
             return false
         }
 
-        @JvmStatic
         fun requestPermission(fragment: Fragment, vararg permissions: String) {
             fragment.requestPermissions(permissions, Permission.REQUEST_CODE)
         }
 
-        @JvmStatic
         fun requestPermission(activity: FragmentActivity, vararg permissions: String) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 activity.requestPermissions(permissions, Permission.REQUEST_CODE)
             }
         }
 
-        @JvmStatic
         fun isPermissionGranted(requestCode: Int, responses: IntArray): Boolean {
             return requestCode == Permission.REQUEST_CODE &&
                     !responses.contains(PackageManager.PERMISSION_DENIED)
