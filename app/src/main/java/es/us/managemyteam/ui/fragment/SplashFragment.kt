@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.findNavController
@@ -30,6 +31,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
     override fun setupToolbar(toolbar: Toolbar) {
         toolbar.hide()
+        activity?.findViewById<View>(R.id.main__view__toolbar_shadow)?.visibility = GONE
     }
 
     override fun setupBottomBar(bottomNavigationView: BottomNavigationView) {

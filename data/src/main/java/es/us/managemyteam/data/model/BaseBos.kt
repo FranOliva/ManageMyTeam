@@ -1,7 +1,6 @@
 package es.us.managemyteam.data.model
 
 import android.os.Parcelable
-import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.parcel.Parcelize
 
 open class BaseBo(
@@ -10,6 +9,12 @@ open class BaseBo(
 
 @Parcelize
 data class LocationBo(
-    val location: LatLng? = null,
+    val location: MyLatLng? = null,
     val address: String? = null
+) : Parcelable
+
+@Parcelize
+data class MyLatLng(
+    val lat: Double = 0.0,
+    val long: Double = 0.0
 ) : Parcelable

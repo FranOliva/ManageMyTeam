@@ -3,34 +3,35 @@ package es.us.managemyteam.ui.fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import es.us.managemyteam.R
 import es.us.managemyteam.contract.BaseAdapterClickListener
 import es.us.managemyteam.data.model.EventBo
-import es.us.managemyteam.database.DatabaseTables
 import es.us.managemyteam.databinding.FragmentEventsBinding
 import es.us.managemyteam.extension.*
+import es.us.managemyteam.repository.util.Error
+import es.us.managemyteam.repository.util.ResourceObserver
 import es.us.managemyteam.ui.adapter.EventsAdapter
+import es.us.managemyteam.ui.viewmodel.EventsViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class EventsFragment : BaseFragment<FragmentEventsBinding>(), BaseAdapterClickListener<EventBo> {
 
-    private val eventsRef = getDatabase().getReference(DatabaseTables.EVENT_TABLE)
-    private var events = arrayListOf<EventBo>()
     private var eventsAdapter: EventsAdapter? = null
+    private val eventsViewModel: EventsViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupList()
-        initializeEventsListener()
         setupClickListeners()
+        setupEventsObserver()
 
     }
 
@@ -40,26 +41,40 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(), BaseAdapterClickLi
         }
     }
 
-    private fun initializeEventsListener() {
-        eventsRef.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(databaseError: DatabaseError) {
-                showErrorDialog(databaseError.message, getDefaultDialogErrorListener())
-            }
+    private fun setupEventsObserver() {
+        eventsViewModel.getEventsData()
+            .observe(viewLifecycleOwner, object : ResourceObserver<List<EventBo>>() {
+                override fun onSuccess(response: List<EventBo>?) {
+                    response?.let {
+                        eventsAdapter?.setData(it.sortedBy { event -> event.date })
+                        eventsAdapter?.notifyDataSetChanged()
 
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                events.clear()
-                dataSnapshot.children.forEach {
-                    val eventData = it.getValue(EventBo::class.java)
-                    eventData?.let { event ->
-                        events.add(event)
+                        if (it.isNotEmpty()) {
+                            viewBinding.eventsEmptyResults.root.visibility = GONE
+                        } else {
+                            viewBinding.eventsEmptyResults.root.visibility = VISIBLE
+                        }
                     }
                 }
-                events.sortBy { it.date }
-                eventsAdapter?.setData(events)
-                eventsAdapter?.notifyDataSetChanged()
-            }
 
-        })
+                override fun onError(error: Error) {
+                    super.onError(error)
+                    showErrorDialog(
+                        getString(error.errorMessageId),
+                        getDefaultDialogErrorListener()
+                    )
+                }
+
+                override fun onLoading(loading: Boolean) {
+                    super.onLoading(loading)
+                    if (loading) {
+                        viewBinding.eventsProgressBar.startAnimation()
+                    } else {
+                        viewBinding.eventsProgressBar.stopAnimationAndHide()
+                    }
+                }
+            })
+
     }
 
     private fun setupList() {
@@ -73,6 +88,9 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(), BaseAdapterClickLi
         }
     }
 
+    override fun onAdapterItemClicked(item: EventBo, position: Int) {
+        // TODO: go to detail
+    }
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,
@@ -91,10 +109,6 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(), BaseAdapterClickLi
 
     override fun setupBottomBar(bottomNavigationView: BottomNavigationView) {
         bottomNavigationView.show()
-    }
-
-    override fun onAdapterItemClicked(item: EventBo, position: Int) {
-        // TODO: go to detail
     }
 
 }

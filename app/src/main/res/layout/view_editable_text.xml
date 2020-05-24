@@ -24,7 +24,6 @@
             android:id="@+id/editable_text__img__border"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:alpha="0.43"
             android:contentDescription="@null"
             android:src="@drawable/input_background"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -1,6 +1,7 @@
 package es.us.managemyteam.extension
 
 import android.content.DialogInterface
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -34,4 +35,8 @@ fun Fragment.getDefaultDialogErrorListener(): DialogInterface.OnClickListener {
     return DialogInterface.OnClickListener { _, _ ->
         popBack()
     }
+}
+
+fun Fragment.getFocusedView(): View {
+    return activity?.currentFocus ?: view?.rootView ?: View(activity)
 }

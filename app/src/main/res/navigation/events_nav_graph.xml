@@ -10,11 +10,23 @@
 
     <fragment
         android:id="@+id/eventsCreateFragment"
-        android:name="es.us.managemyteam.ui.fragment.EventCreateFragment" />
+        android:name="es.us.managemyteam.ui.fragment.CreateEventFragment" />
+
+    <fragment
+        android:id="@+id/selectLocationFragment"
+        android:name="es.us.managemyteam.ui.fragment.SelectLocationFragment" />
 
     <action
         android:id="@+id/action_events_to_create_event"
         app:destination="@id/eventsCreateFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    <action
+        android:id="@+id/action_create_event_to_select_location"
+        app:destination="@id/selectLocationFragment"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"

@@ -23,14 +23,15 @@ import es.us.managemyteam.R
 import es.us.managemyteam.databinding.ViewMapBinding
 import es.us.managemyteam.extension.getBounds
 import es.us.managemyteam.extension.getBoundsWithUserLocation
+import es.us.managemyteam.extension.tint
 import es.us.managemyteam.extension.toBitmapDescriptor
 import es.us.managemyteam.manager.LocationManager
 import kotlin.math.roundToInt
 
-private const val DEFAULT_ZOOM = 15f
+private const val DEFAULT_ZOOM = 18f
 private const val NO_ZOOM = 0f
 
-class CommonMapView @JvmOverloads constructor(
+class MapView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -117,7 +118,7 @@ class CommonMapView @JvmOverloads constructor(
     fun onCreate(savedInstanceState: Bundle?) {
         viewBinding.mapViewMainMap.apply {
             this.onCreate(savedInstanceState)
-            this.getMapAsync(this@CommonMapView)
+            this.getMapAsync(this@MapView)
         }
         viewBinding.mapContainerLocation.setOnClickListener {
             clickOnCurrentLocation()
@@ -236,6 +237,10 @@ class CommonMapView @JvmOverloads constructor(
                 (map?.cameraPosition?.zoom ?: NO_ZOOM) > DEFAULT_ZOOM)
     }
 
+    private fun applyColorToBackground(color: Int) {
+        viewBinding.mapContainerLocation.background.tint(color)
+    }
+
     private fun applyZoom(
         latLng: LatLng,
         animate: Boolean = animateCamera,
@@ -351,8 +356,8 @@ class CommonMapView @JvmOverloads constructor(
         map?.apply {
             uiSettings.isMapToolbarEnabled = false
             uiSettings.setAllGesturesEnabled(interactionEnabled)
-            setOnMapClickListener(this@CommonMapView)
-            setOnMarkerClickListener(this@CommonMapView)
+            setOnMapClickListener(this@MapView)
+            setOnMarkerClickListener(this@MapView)
             setOnMapLoadedCallback {
                 mapTransitionListener?.onMapLoaded()
             }

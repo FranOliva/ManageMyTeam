@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <es.us.managemyteam.ui.view.common_map.MapView
+        android:id="@+id/select_location__map"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/select_location__btn__save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <es.us.managemyteam.ui.view.loading_button.LoadingButtonView
+        android:id="@+id/select_location__btn__save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:btn_background_color="@color/primary"
+        app:btn_has_radius="false"
+        app:btn_text="@string/save"
+        app:btn_text_color="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
