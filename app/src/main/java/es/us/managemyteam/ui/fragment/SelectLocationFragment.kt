@@ -40,7 +40,7 @@ class SelectLocationFragment : BaseFragment<FragmentSelectLocationBinding>(), Ma
         if (latLngSelected != null) {
             createEventViewModel.setLocationSelected(
                 LocationBo(
-                    latLngSelected,
+                    latLngSelected?.toMyLatLng(),
                     viewBinding.selectLocationMap.getAddressFromMarkerPosition(latLngSelected!!)
                 )
             )
@@ -149,7 +149,7 @@ class SelectLocationFragment : BaseFragment<FragmentSelectLocationBinding>(), Ma
     override fun onMapClicked(latLng: LatLng) {
         latLngSelected = latLng
         viewBinding.selectLocationMap.apply {
-            val markerItemVo = latLng.getMarkerItemVo(this)
+            val markerItemVo = latLng.toMyLatLng().getMarkerItemVo(this)
             clearMarkers()
             addMarker(markerItemVo)
             showMarkerInfo(markerItemVo)

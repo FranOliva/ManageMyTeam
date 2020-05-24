@@ -1,6 +1,5 @@
 package es.us.managemyteam.usecase
 
-import com.google.android.gms.maps.model.LatLng
 import es.us.managemyteam.data.model.LocationBo
 import es.us.managemyteam.repository.EventRepository
 

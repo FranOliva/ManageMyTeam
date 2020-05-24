@@ -2,7 +2,6 @@ package es.us.managemyteam.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -21,7 +20,7 @@ interface EventRepository {
 
     suspend fun getEventLocation(): LocationBo?
 
-    suspend fun setEventLocation(latLng: LocationBo?)
+    suspend fun setEventLocation(location: LocationBo?)
 
     suspend fun getCurrentNewEvent(): EventBo?
 
@@ -54,8 +53,8 @@ class EventRepositoryImpl : EventRepository {
         return eventLocation
     }
 
-    override suspend fun setEventLocation(latLng: LocationBo?) {
-        this.eventLocation = latLng
+    override suspend fun setEventLocation(location: LocationBo?) {
+        this.eventLocation = location
     }
 
     override suspend fun getCurrentNewEvent(): EventBo? {
