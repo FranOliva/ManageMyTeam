@@ -1,15 +1,19 @@
 package es.us.managemyteam.ui.activity
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import es.us.managemyteam.R
 import es.us.managemyteam.databinding.ActivityMainBinding
+import es.us.managemyteam.ui.view.verticalnavigation.NeedCloseDrawerListener
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         setupToolbar()
         setupBottomBar()
+        setupSliderNavigationMenu()
     }
 
     private fun setupToolbar() {
@@ -42,15 +47,29 @@ class MainActivity : AppCompatActivity() {
         getBottomBar().apply {
             setOnNavigationItemSelectedListener {
                 when (it.itemId) {
-                    //TODO: click on menu item
-                    /*R.id.action_slider_menu -> viewBinding.dashboardDrawerMain.openDrawer(
+                    R.id.action_menu -> viewBinding.dashboardDrawerMain.openDrawer(
                         GravityCompat.END
-                    )*/
+                    )
                     else -> onNavigationItemSelected(it.itemId)
                 }
                 true
             }
         }
+    }
+
+    private fun setupSliderNavigationMenu() {
+        viewBinding.dashboardDrawerMain.setScrimColor(Color.TRANSPARENT)
+        viewBinding.dashboardDrawerMain.drawerElevation = 0f
+        viewBinding.dashboardDrawerMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        viewBinding.mainNavigationMenu.setNeedCloseDrawerListener(object : NeedCloseDrawerListener {
+            override fun onNeedClosingDrawer() {
+                closeDrawer()
+            }
+        })
+    }
+
+    private fun closeDrawer() {
+        viewBinding.dashboardDrawerMain.closeDrawers()
     }
 
     private fun onNavigationItemSelected(itemId: Int) {

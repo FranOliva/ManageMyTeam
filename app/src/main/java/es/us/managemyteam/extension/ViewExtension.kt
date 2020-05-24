@@ -4,6 +4,7 @@ import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.View
 import androidx.annotation.StyleableRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 
 const val NO_STYLE = -1
@@ -20,4 +21,8 @@ fun View.getStyleTypeArray(
         0,
         0
     )
+}
+
+fun View.getBaseActivity(): AppCompatActivity? {
+    return context as? AppCompatActivity
 }
