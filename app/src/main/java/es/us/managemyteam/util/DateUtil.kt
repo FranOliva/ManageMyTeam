@@ -10,8 +10,8 @@ class DateUtil {
         private const val DEFAULT_ISO_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ"
         private const val DATE_FORMAT_MONTH_COMPLETE_TEXT = "MMMM"
         private const val DATE_FORMAT_DAY_OF_WEEK_TEXT = "EEEE"
-        private const val START_TIME_FORMAT = "HH:mm"
-        private const val START_TIME_FORMAT_SECONDS = "HH:mm:ss"
+        private const val TIME_FORMAT = "HH:mm"
+        private const val TIME_FORMAT_SECONDS = "HH:mm:ss"
 
         fun format(iso: String, format: String = DEFAULT_DATE_FORMAT): String {
             return format(parseIso(iso), format)
@@ -56,6 +56,14 @@ class DateUtil {
             )
         }
 
+        fun getTimeFromMillis(millis: Long): String {
+            return SimpleDateFormat(TIME_FORMAT, Locale.getDefault()).format(
+                getCalendarFromMillis(
+                    millis
+                ).time
+            )
+        }
+
         fun getMonthFromMillis(millis: Long): Int {
             return getCalendarFromMillis(millis)[Calendar.MONTH]
         }
@@ -89,8 +97,8 @@ class DateUtil {
         }
 
         fun formatTimeWithoutSeconds(timeWithSeconds: String): String {
-            val formatWithSeconds = SimpleDateFormat(START_TIME_FORMAT_SECONDS, Locale.getDefault())
-            val formatWithoutSeconds = SimpleDateFormat(START_TIME_FORMAT, Locale.getDefault())
+            val formatWithSeconds = SimpleDateFormat(TIME_FORMAT_SECONDS, Locale.getDefault())
+            val formatWithoutSeconds = SimpleDateFormat(TIME_FORMAT, Locale.getDefault())
             return formatWithoutSeconds.format(formatWithSeconds.parse(timeWithSeconds))
         }
 

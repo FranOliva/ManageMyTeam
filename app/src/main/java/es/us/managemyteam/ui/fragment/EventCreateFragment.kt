@@ -23,7 +23,7 @@ import java.util.*
 
 class EventCreateFragment : BaseFragment<FragmentCreateEventBinding>() {
 
-    val eventsRef = getDatabase().getReference(DatabaseTables.EVENT_TABLE)
+    private val eventsRef = getDatabase().getReference(DatabaseTables.EVENT_TABLE)
     private var selectedDate = Calendar.getInstance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,7 +59,6 @@ class EventCreateFragment : BaseFragment<FragmentCreateEventBinding>() {
     }
 
     private fun validateForm(): Boolean {
-
         return viewBinding.createEventEditTextTitle.text.isNotBlank() &&
                 viewBinding.createEventEditTextDate.text.isNotBlank() &&
                 viewBinding.createEventEditTextEventType.text.isNotBlank()

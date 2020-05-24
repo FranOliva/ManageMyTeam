@@ -34,9 +34,12 @@ class EventsAdapter(private val itemListener: BaseAdapterClickListener<EventBo>)
                 rowEventLabelEventType.text = item.eventType
                 if (item.date != null) {
                     rowEventLabelDay.text = DateUtil.getDayFromMillis(item.date!!.time).toString()
-                    rowEventLabelMonth.text = DateUtil.getMonthLabelFromMillis(item.date!!.time)
+                    rowEventLabelMonth.text =
+                        DateUtil.getMonthLabelFromMillis(item.date!!.time).substring(0, 3)
+                    rowEventLabelTime.text = DateUtil.getTimeFromMillis(item.date!!.time)
                 } else {
                     rowEventContainerDate.visibility = GONE
+                    rowEventLabelTime.visibility = GONE
                 }
                 root.setOnClickListener {
                     itemClickListener.onAdapterItemClicked(item, adapterPosition)

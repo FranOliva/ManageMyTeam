@@ -54,6 +54,7 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(), BaseAdapterClickLi
                         events.add(event)
                     }
                 }
+                events.sortBy { it.date }
                 eventsAdapter?.setData(events)
                 eventsAdapter?.notifyDataSetChanged()
             }
