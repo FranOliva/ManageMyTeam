@@ -2,7 +2,9 @@ package es.us.managemyteam.extension
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 
@@ -17,4 +19,12 @@ fun Drawable.toBitmapDescriptor(): BitmapDescriptor {
     setBounds(0, 0, intrinsicWidth, intrinsicHeight)
     draw(canvas)
     return BitmapDescriptorFactory.fromBitmap(bitmap)
+}
+
+fun Drawable.tint(color: Int) {
+    if (this is GradientDrawable) {
+        this.setColor(color)
+    } else {
+        setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+    }
 }

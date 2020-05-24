@@ -11,12 +11,5 @@ data class EventBo(
     val location: LocationBo? = null,
     val description: String? = null,
     val assistants: List<UserBo>? = null,
-    val eventType: EventType? = null
+    val eventType: String? = null
 ) : BaseBo(), Parcelable
-
-@Parcelize
-enum class EventType : Parcelable {
-    TRAINING,
-    MATCH,
-    OTHER
-}

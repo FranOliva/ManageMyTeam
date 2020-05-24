@@ -2,6 +2,12 @@
     <string name="app_name">ManageMyTeam</string>
     <string name="app_name_separated">Manage My Team</string>
 
+    <!-- General -->
+    <string name="accept">Aceptar</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="date_time_format">dd/MM/yyyy HH:mm</string>
+
     <!-- Bottom Menu -->
     <string name="events">Eventos</string>
     <string name="menu">Menú</string>
@@ -9,5 +15,20 @@
     <string name="profile">Perfil</string>
 
     <!-- Events -->
+    <string name="event_type_match">Partido</string>
+    <string name="event_type_training">Entrenamiento</string>
+    <string name="event_type_other">Otro</string>
+    <string name="create_event_title">Nuevo evento</string>
+    <string name="create_event_event_title">Título *</string>
+    <string name="create_event_event_date">Fecha y hora *</string>
+    <string name="create_event_event_location">Localización</string>
+    <string name="create_event_event_description">Descripción</string>
+    <string name="create_event_event_assistants">Asistentes</string>
+    <string name="create_event_event_type">Tipo de evento *</string>
+    <string name="create_event_event_type_hint">Partido, entrenamiento u otro</string>
+    <string name="create_event_date_format">%02d/%02d/%04d %02d:%02d</string>
+    <string name="create_event_error_title">Debe introducir un título\n</string>
+    <string name="create_event_error_date">La fecha no puede ser nula\n</string>
+    <string name="create_event_error_event_type">Debe seleccionar un tipo de evento\n</string>
 
 </resources>
