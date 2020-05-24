@@ -113,6 +113,7 @@ class CreateEventViewModel(
         viewModelScope.launch(Dispatchers.Main) {
             withContext(Dispatchers.IO) {
                 setCurrentNewEventUc(null)
+                setLocationSelected(null)
             }
         }
 

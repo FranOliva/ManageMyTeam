@@ -122,6 +122,7 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
             .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
                 override fun onSuccess(response: Boolean?) {
                     response?.let {
+                        createEventViewModel.clearEvent()
                         Toast.makeText(
                             context,
                             getString(R.string.create_event_success),
