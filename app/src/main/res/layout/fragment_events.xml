@@ -26,4 +26,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <include
+        android:id="@+id/events__empty_results"
+        layout="@layout/view_empty_results"
+        android:visibility="gone" />
+
+    <com.bluehomestudio.progressimage.ProgressPicture
+        android:id="@+id/events__progress_bar"
+        android:layout_width="@dimen/size_eighty"
+        android:layout_height="@dimen/size_eighty"
+        android:src="@drawable/ic_soccer_ball"
+        app:animation="rotate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

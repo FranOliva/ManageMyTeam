@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
 import es.us.managemyteam.data.model.EventBo
-import es.us.managemyteam.database.DatabaseTables
+import es.us.managemyteam.data.database.DatabaseTables
 import es.us.managemyteam.databinding.FragmentCreateEventBinding
 import es.us.managemyteam.extension.*
 import es.us.managemyteam.util.EventUtil

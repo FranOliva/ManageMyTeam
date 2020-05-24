@@ -1,4 +1,4 @@
-package es.us.managemyteam.database
+package es.us.managemyteam.data.database
 
 object DatabaseTables {
 

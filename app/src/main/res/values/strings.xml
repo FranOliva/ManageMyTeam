@@ -7,6 +7,7 @@
     <string name="save">Guardar</string>
     <string name="cancel">Cancelar</string>
     <string name="date_time_format">dd/MM/yyyy HH:mm</string>
+    <string name="empty_results">No se han encontrado resultados</string>
 
     <!-- Bottom Menu -->
     <string name="events">Eventos</string>

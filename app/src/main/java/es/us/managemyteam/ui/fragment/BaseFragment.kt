@@ -14,10 +14,6 @@ import es.us.managemyteam.ui.activity.MainActivity
 
 abstract class BaseFragment<Any : ViewBinding> : Fragment() {
 
-    companion object {
-        const val ANIMATION_DELAYER_TIME = 200L
-    }
-
     lateinit var viewBinding: Any
 
     abstract fun inflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): Any

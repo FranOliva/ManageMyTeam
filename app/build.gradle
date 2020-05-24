@@ -72,4 +72,6 @@ dependencies {
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-android-scope:$koin_version"
     implementation "org.koin:koin-android-viewmodel:$koin_version"
+
+    compile 'com.github.mmoamenn:ProgressImage_Android:0.0.2'
 }
