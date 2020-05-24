@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <es.us.managemyteam.ui.view.input.CommonEditableTextView
+        <es.us.managemyteam.ui.view.input.EditableTextView
             android:id="@+id/create_event__edit_text__title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
             app:input_header="@string/create_event_event_title"
             app:input_type="text" />
 
-        <es.us.managemyteam.ui.view.input.CommonEditableTextView
+        <es.us.managemyteam.ui.view.input.EditableTextView
             android:id="@+id/create_event__edit_text__date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             app:input_hint="dd/MM/yyyy HH:mm"
             app:input_type="none" />
 
-        <es.us.managemyteam.ui.view.input.CommonEditableTextView
+        <es.us.managemyteam.ui.view.input.EditableTextView
             android:id="@+id/create_event__edit_text__event_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
             app:input_hint="@string/create_event_event_type_hint"
             app:input_type="none" />
 
-        <es.us.managemyteam.ui.view.input.CommonEditableTextView
+        <es.us.managemyteam.ui.view.input.EditableTextView
             android:id="@+id/create_event__edit_text__description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,7 +49,23 @@
             app:input_height="@dimen/size_onehundredandtwenty"
             app:input_type="multi_line" />
 
-        <es.us.managemyteam.ui.view.loading_button.CommonLoadingButtonView
+        <FrameLayout
+            android:id="@+id/create_event__container__location"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_onehundredandtwenty"
+            android:layout_marginTop="@dimen/size_twentyfour"
+            android:background="@drawable/input_background">
+
+            <TextView
+                style="@style/Regular.Sixteen.Black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Selecciona la localización" />
+
+        </FrameLayout>
+
+        <es.us.managemyteam.ui.view.loading_button.LoadingButtonView
             android:id="@+id/create_event__btn__save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

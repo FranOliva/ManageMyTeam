@@ -18,7 +18,7 @@ import es.us.managemyteam.databinding.ViewEditableTextBinding
 import es.us.managemyteam.extension.getStyleTypeArray
 import es.us.managemyteam.ui.view.input.CommonInputParams.DEFAULT_HEIGHT
 
-class CommonEditableTextView @JvmOverloads constructor(
+class EditableTextView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -83,28 +83,28 @@ class CommonEditableTextView @JvmOverloads constructor(
 
     private fun applyAttributes(attrs: AttributeSet?) {
         attrs?.let {
-            val typedArray = getStyleTypeArray(attrs, R.styleable.CommonEditableTextView)
-            val hint = typedArray.getString(R.styleable.CommonEditableTextView_input_hint)
+            val typedArray = getStyleTypeArray(attrs, R.styleable.EditableTextView)
+            val hint = typedArray.getString(R.styleable.EditableTextView_input_hint)
             val hintColor = typedArray.getColor(
-                R.styleable.CommonEditableTextView_input_hint_color,
+                R.styleable.EditableTextView_input_hint_color,
                 ContextCompat.getColor(context, R.color.bluegrey)
             )
             val inputType =
                 typedArray.getInt(
-                    R.styleable.CommonEditableTextView_input_type,
+                    R.styleable.EditableTextView_input_type,
                     CommonInputType.TEXT
                 )
             val imeOption =
-                typedArray.getInt(R.styleable.CommonEditableTextView_input_ime, CommonInputIme.DONE)
+                typedArray.getInt(R.styleable.EditableTextView_input_ime, CommonInputIme.DONE)
             val height = typedArray.getDimension(
-                R.styleable.CommonEditableTextView_input_height,
+                R.styleable.EditableTextView_input_height,
                 DEFAULT_HEIGHT
             )
-            val header = typedArray.getString(R.styleable.CommonEditableTextView_input_header)
+            val header = typedArray.getString(R.styleable.EditableTextView_input_header)
             val background =
-                typedArray.getDrawable(R.styleable.CommonEditableTextView_input_background)
+                typedArray.getDrawable(R.styleable.EditableTextView_input_background)
             val solidBackground = typedArray.getBoolean(
-                R.styleable.CommonEditableTextView_input_solid_background,
+                R.styleable.EditableTextView_input_solid_background,
                 false
             )
 

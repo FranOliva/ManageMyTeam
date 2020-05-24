@@ -41,6 +41,7 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(), BaseAdapterClickLi
     }
 
     private fun initializeEventsListener() {
+        // TODO: inicializar loader
         eventsRef.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(databaseError: DatabaseError) {
                 showErrorDialog(databaseError.message, getDefaultDialogErrorListener())
@@ -60,6 +61,7 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(), BaseAdapterClickLi
             }
 
         })
+
     }
 
     private fun setupList() {
@@ -73,6 +75,9 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(), BaseAdapterClickLi
         }
     }
 
+    override fun onAdapterItemClicked(item: EventBo, position: Int) {
+        // TODO: go to detail
+    }
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,
@@ -91,10 +96,6 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(), BaseAdapterClickLi
 
     override fun setupBottomBar(bottomNavigationView: BottomNavigationView) {
         bottomNavigationView.show()
-    }
-
-    override fun onAdapterItemClicked(item: EventBo, position: Int) {
-        // TODO: go to detail
     }
 
 }

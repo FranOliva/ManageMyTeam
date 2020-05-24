@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="CommonEditableTextView">
+    <declare-styleable name="EditableTextView">
         <attr name="input_header" format="string" />
         <attr name="input_hint" format="string" />
         <attr name="input_hint_color" format="reference" />
@@ -22,7 +22,7 @@
         <attr name="input_solid_background" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="CommonLoadingButtonView">
+    <declare-styleable name="LoadingButtonView">
 
         <attr name="btn_text" format="string" />
         <attr name="btn_text_color" format="color" />

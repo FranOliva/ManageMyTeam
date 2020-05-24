@@ -7,7 +7,7 @@ import com.google.android.material.navigation.NavigationView
 import es.us.managemyteam.databinding.ViewVerticalNavigationBinding
 
 
-class CommonVerticalNavigationView @JvmOverloads constructor(
+class VerticalNavigationView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : NavigationView(context, attrs, defStyleAttr) {
 

@@ -30,7 +30,7 @@ import kotlin.math.roundToInt
 private const val DEFAULT_ZOOM = 15f
 private const val NO_ZOOM = 0f
 
-class CommonMapView @JvmOverloads constructor(
+class MapView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -117,7 +117,7 @@ class CommonMapView @JvmOverloads constructor(
     fun onCreate(savedInstanceState: Bundle?) {
         viewBinding.mapViewMainMap.apply {
             this.onCreate(savedInstanceState)
-            this.getMapAsync(this@CommonMapView)
+            this.getMapAsync(this@MapView)
         }
         viewBinding.mapContainerLocation.setOnClickListener {
             clickOnCurrentLocation()
@@ -351,8 +351,8 @@ class CommonMapView @JvmOverloads constructor(
         map?.apply {
             uiSettings.isMapToolbarEnabled = false
             uiSettings.setAllGesturesEnabled(interactionEnabled)
-            setOnMapClickListener(this@CommonMapView)
-            setOnMarkerClickListener(this@CommonMapView)
+            setOnMapClickListener(this@MapView)
+            setOnMarkerClickListener(this@MapView)
             setOnMapLoadedCallback {
                 mapTransitionListener?.onMapLoaded()
             }

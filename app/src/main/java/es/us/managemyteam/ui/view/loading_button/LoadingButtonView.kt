@@ -14,7 +14,7 @@ import es.us.managemyteam.extension.NO_STYLE
 import es.us.managemyteam.extension.getColor
 import es.us.managemyteam.extension.getStyleTypeArray
 
-class CommonLoadingButtonView @JvmOverloads constructor(
+class LoadingButtonView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -49,19 +49,19 @@ class CommonLoadingButtonView @JvmOverloads constructor(
 
     private fun applyAttributes(attrs: AttributeSet?) {
         attrs?.let {
-            val typedArray = getStyleTypeArray(attrs, R.styleable.CommonLoadingButtonView)
-            currentText = typedArray.getString(R.styleable.CommonLoadingButtonView_btn_text)
+            val typedArray = getStyleTypeArray(attrs, R.styleable.LoadingButtonView)
+            currentText = typedArray.getString(R.styleable.LoadingButtonView_btn_text)
             val textColor =
-                typedArray.getColor(R.styleable.CommonLoadingButtonView_btn_text_color, Color.BLACK)
+                typedArray.getColor(R.styleable.LoadingButtonView_btn_text_color, Color.BLACK)
             val backgroundColor = typedArray.getColor(
-                R.styleable.CommonLoadingButtonView_btn_background_color,
+                R.styleable.LoadingButtonView_btn_background_color,
                 getColor(android.R.color.transparent)
             )
             val drawable = typedArray.getDrawable(
-                R.styleable.CommonLoadingButtonView_btn_background_drawable
+                R.styleable.LoadingButtonView_btn_background_drawable
             )
             val textStyle = typedArray.getResourceId(
-                R.styleable.CommonLoadingButtonView_btn_text_style,
+                R.styleable.LoadingButtonView_btn_text_style,
                 NO_STYLE
             )
             if (textStyle != NO_STYLE) {
@@ -72,7 +72,7 @@ class CommonLoadingButtonView @JvmOverloads constructor(
                 }
             }
             val hasRadius =
-                typedArray.getBoolean(R.styleable.CommonLoadingButtonView_btn_has_radius, true)
+                typedArray.getBoolean(R.styleable.LoadingButtonView_btn_has_radius, true)
 
             if (!hasRadius) {
                 (viewBinding.root as CardView).radius = 0f
