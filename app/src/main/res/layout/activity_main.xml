@@ -1,57 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dashboard__drawer__main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/main__container__parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:animateLayoutChanges="true">
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="0dp"
-            android:layout_height="?attr/actionBarSize"
-            android:contentInsetStartWithNavigation="0dp"
-            android:elevation="@dimen/size_four"
-            app:contentInsetStart="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/main__label__toolbar_title"
-                style="@style/Medium.Sixteen.Black"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                tools:text="Eventos" />
-
-        </androidx.appcompat.widget.Toolbar>
-
-        <View
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main__container__coordinator"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_four"
-            android:background="@drawable/background_shadow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
-
-        <fragment
-            android:id="@+id/main__container__nav_host"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="0dp"
             android:layout_height="0dp"
-            app:defaultNavHost="true"
-            app:layout_constraintBottom_toTopOf="@id/main_bottombar_menu"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:navGraph="@navigation/main_nav_graph" />
+            android:layout_weight="1"
+            android:animateLayoutChanges="true"
+            android:background="@color/white">
 
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="0dp"
+                android:layout_height="?attr/actionBarSize"
+                android:contentInsetStartWithNavigation="0dp"
+                android:elevation="@dimen/size_four"
+                app:contentInsetStart="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/main__label__toolbar_title"
+                    style="@style/Medium.Sixteen.Black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    tools:text="Eventos" />
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <View
+                android:id="@+id/main__view__toolbar_shadow"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_four"
+                android:background="@drawable/background_shadow"
+                android:elevation="@dimen/size_four"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+            <fragment
+                android:id="@+id/main__container__nav_host"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:defaultNavHost="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:navGraph="@navigation/main_nav_graph" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/main_bottombar_menu"
@@ -68,6 +81,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/menu_bottom" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <es.us.managemyteam.ui.view.verticalnavigation.VerticalNavigationView
+        android:id="@+id/main__navigation__menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:layout_marginStart="@dimen/slidernavigation_size_marginrigth"
+        android:layout_marginBottom="@dimen/bottombar_size_height"
+        android:background="@color/white"
+        app:elevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

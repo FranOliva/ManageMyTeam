@@ -60,5 +60,6 @@
     <dimen name="row_menu_size_sixtynine">69dp</dimen>
     <dimen name="gallery_size">68dp</dimen>
 
-    <dimen name="news_list_height">124dp</dimen>
+    <dimen name="minimap_height">200dp</dimen>
+
 </resources>

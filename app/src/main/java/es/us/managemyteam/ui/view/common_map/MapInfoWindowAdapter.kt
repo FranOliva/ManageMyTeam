@@ -15,12 +15,16 @@ class MapInfoWindowAdapter(
 ) : GoogleMap.InfoWindowAdapter {
 
     private var inflater: LayoutInflater = LayoutInflater.from(context)
+    private var viewBinding = ViewInfoWindowBinding.inflate(inflater, null, false)
 
     override fun getInfoContents(marker: Marker?): View {
+        return viewBinding.root
+    }
+
+    override fun getInfoWindow(marker: Marker?): View? {
         val item = markers.find {
             it.position == marker?.position
         }
-        val viewBinding = ViewInfoWindowBinding.inflate(inflater, null, false)
 
         viewBinding.infoWindowLabelTitle.apply {
             text = item?.title
@@ -30,19 +34,7 @@ class MapInfoWindowAdapter(
                 VISIBLE
             }
         }
-        viewBinding.infoWindowLabelSubtitle.apply {
-            text = item?.subtitle
-            visibility = if (item?.subtitle.isNullOrEmpty()) {
-                GONE
-            } else {
-                VISIBLE
-            }
-        }
 
         return viewBinding.root
-    }
-
-    override fun getInfoWindow(marker: Marker?): View? {
-        return null
     }
 }

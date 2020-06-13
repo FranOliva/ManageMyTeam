@@ -36,4 +36,12 @@ dependencies {
 
     // Google
     implementation "com.google.android.gms:play-services-maps:$google_playservices_version"
+    // Koin
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-android-scope:$koin_version"
+    implementation "org.koin:koin-android-viewmodel:$koin_version"
+
+    // Firebase
+    implementation "com.google.firebase:firebase-database:$firebase_database_version"
+    implementation "com.google.firebase:firebase-analytics:$firebase_analytics_version"
 }

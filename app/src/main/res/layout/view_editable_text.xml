@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/editable_text__label__header"
+        style="@style/Medium.Fourteen.Black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_six"
+        android:ellipsize="end"
+        android:maxLines="1" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/editable_text__container__background"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_fifty">
+
+        <ImageView
+            android:id="@+id/editable_text__img__border"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="@null"
+            android:src="@drawable/input_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/editable_text__input__info"
+            style="@style/Regular.Sixteen.Black"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@null"
+            android:ellipsize="end"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:letterSpacing="0"
+            android:paddingStart="@dimen/size_twenty"
+            android:paddingLeft="@dimen/size_twenty"
+            android:paddingTop="@dimen/size_sixteen"
+            android:paddingEnd="@dimen/size_twenty"
+            android:paddingRight="@dimen/size_twenty"
+            android:paddingBottom="@dimen/size_sixteen"
+            android:textColorHint="@color/bluegrey"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/editable_text__img__action"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:hint="Nombre" />
+
+        <ImageView
+            android:id="@+id/editable_text__img__action"
+            android:layout_width="@dimen/size_sixteen"
+            android:layout_height="@dimen/size_twenty"
+            android:layout_marginEnd="@dimen/size_twenty"
+            android:layout_marginRight="@dimen/size_twenty"
+            android:contentDescription="@null"
+            android:focusable="false"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_calendar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

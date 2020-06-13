@@ -1,0 +1,42 @@
+package es.us.managemyteam.extension
+
+import android.content.DialogInterface
+import android.view.View
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import es.us.managemyteam.R
+
+fun Fragment.popBack() {
+    findNavController().navigateUp()
+}
+
+fun Fragment.showErrorDialog(
+    errorMessage: String,
+    dialogOnClickListener: DialogInterface.OnClickListener? = null
+) {
+    context?.let { con ->
+        val dialog = AlertDialog.Builder(con)
+            .setCancelable(true)
+            .setMessage(errorMessage)
+            .setTitle(null)
+            .setPositiveButton(R.string.accept, dialogOnClickListener)
+            .create()
+        dialog.setOnShowListener {
+            dialog.getButton(DialogInterface.BUTTON_POSITIVE)
+                .setTextColor(ContextCompat.getColor(con, R.color.black))
+        }
+        dialog.show()
+    }
+}
+
+fun Fragment.getDefaultDialogErrorListener(): DialogInterface.OnClickListener {
+    return DialogInterface.OnClickListener { _, _ ->
+        popBack()
+    }
+}
+
+fun Fragment.getFocusedView(): View {
+    return activity?.currentFocus ?: view?.rootView ?: View(activity)
+}

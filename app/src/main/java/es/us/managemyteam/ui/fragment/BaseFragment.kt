@@ -8,15 +8,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.database.FirebaseDatabase
+import es.us.managemyteam.R
 import es.us.managemyteam.extension.setNavAction
 import es.us.managemyteam.ui.activity.MainActivity
 
 abstract class BaseFragment<Any : ViewBinding> : Fragment() {
-
-    companion object {
-        const val ANIMATION_DELAYER_TIME = 200L
-    }
 
     lateinit var viewBinding: Any
 
@@ -54,11 +50,10 @@ abstract class BaseFragment<Any : ViewBinding> : Fragment() {
 
     private fun setupMenuViews() {
         if (activity is MainActivity) {
+            activity?.findViewById<View>(R.id.main__view__toolbar_shadow)?.visibility = View.VISIBLE
             setupToolbar((activity as MainActivity).getToolbar().apply { setNavAction { } })
             setupBottomBar((activity as MainActivity).getBottomBar())
         }
     }
-
-    fun getDatabase() = FirebaseDatabase.getInstance()
 
 }

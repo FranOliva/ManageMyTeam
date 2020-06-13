@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/size_sixteen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <es.us.managemyteam.ui.view.input.EditableTextView
+            android:id="@+id/create_event__edit_text__title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_twentyfour"
+            app:input_header="@string/create_event_event_title"
+            app:input_type="text" />
+
+        <es.us.managemyteam.ui.view.input.EditableTextView
+            android:id="@+id/create_event__edit_text__date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_twentyfour"
+            app:input_header="@string/create_event_event_date"
+            app:input_hint="dd/MM/yyyy HH:mm"
+            app:input_type="none" />
+
+        <es.us.managemyteam.ui.view.input.EditableTextView
+            android:id="@+id/create_event__edit_text__event_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_twentyfour"
+            app:input_header="@string/create_event_event_type"
+            app:input_hint="@string/create_event_event_type_hint"
+            app:input_type="none" />
+
+        <es.us.managemyteam.ui.view.input.EditableTextView
+            android:id="@+id/create_event__edit_text__description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_twentyfour"
+            app:input_header="@string/create_event_event_description"
+            app:input_height="@dimen/size_onehundredandtwenty"
+            app:input_type="multi_line" />
+
+        <FrameLayout
+            android:id="@+id/create_event__container__location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_twentyfour"
+            android:background="@drawable/input_background"
+            android:foreground="?attr/selectableItemBackground">
+
+            <TextView
+                android:id="@+id/create_event__label__location"
+                style="@style/Regular.Sixteen.Black"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/size_onehundredandtwenty"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/create_event_select_location"
+                android:textAlignment="center" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/create_event__container__map"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <es.us.managemyteam.ui.view.common_map.MapView
+                android:id="@+id/create_event__view__map"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/minimap_height" />
+
+            <TextView
+                android:id="@+id/create_event__label__address"
+                style="@style/Regular.Fourteen.Black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_fourteen" />
+
+        </LinearLayout>
+
+        <es.us.managemyteam.ui.view.loading_button.LoadingButtonView
+            android:id="@+id/create_event__btn__save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_thirty"
+            app:btn_background_color="@color/primary"
+            app:btn_has_radius="true"
+            app:btn_text="@string/save"
+            app:btn_text_color="@color/white" />
+
+    </LinearLayout>
+
+
+</ScrollView>
