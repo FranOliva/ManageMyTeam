@@ -39,4 +39,5 @@
     <!-- Club module -->
     <string name="club_stats">Estadísticas</string>
     <string name="club">Club</string>
+    <string name="club_edit">Editar</string>
 </resources>
