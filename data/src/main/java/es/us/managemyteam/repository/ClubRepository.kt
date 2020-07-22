@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import es.us.managemyteam.data.database.DatabaseTables
 import es.us.managemyteam.data.model.ClubBo
 import es.us.managemyteam.repository.util.Error
@@ -67,14 +68,14 @@ class ClubRepositoryImpl : ClubRepository {
     }
 
     private fun initializeClubListener() {
-        clubRef.addValueClubListener(object : ValueClubListener {
+        clubRef.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(databaseError: DatabaseError) {
                 club.value = Resource.error(Error(serverErrorMessage = databaseError.message))
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 club.value =
-                    Resource.success(dataSnapshot.children.mapNotNull { it.getValue(ClubBo::class.java) })
+                    Resource.success(dataSnapshot.getValue(ClubBo::class.java))
             }
 
         })

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.View.VISIBLE
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
@@ -26,13 +27,14 @@ class ClubFragment : BaseFragment<FragmentClubBinding>(), BaseAdapterClickListen
     }
 
     private fun setupView() {
-        viewBinding.apply {
-            clubLabelNameValue.text = item.name
-            }
-            clubAdapter?.let {
-                adapter = it
-            }
-        }
+        viewBinding.clubLabelNameValue.visibility = VISIBLE
+        viewBinding.clubLabelDateFundationValue.visibility = VISIBLE
+        viewBinding.clubLabelPresidentValue.visibility = VISIBLE
+        viewBinding.clubLabelCoachValue.visibility = VISIBLE
+        viewBinding.clubLabelLocationValue.visibility = VISIBLE
+        viewBinding.clubLabelMailValue.visibility = VISIBLE
+        viewBinding.clubLabelPhoneNumberValue.visibility = VISIBLE
+        viewBinding.clubLabelWebValue.visibility = VISIBLE
     }
 
     override fun inflateViewBinding(
