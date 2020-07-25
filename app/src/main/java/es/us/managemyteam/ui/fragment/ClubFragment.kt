@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.View.VISIBLE
 import androidx.appcompat.widget.Toolbar
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
 import es.us.managemyteam.contract.BaseAdapterClickListener
@@ -23,7 +24,13 @@ class ClubFragment : BaseFragment<FragmentClubBinding>(), BaseAdapterClickListen
         super.onViewCreated(view, savedInstanceState)
 
         setupView()
+        setupClickListeners()
+    }
 
+    private fun setupClickListeners() {
+        viewBinding.clubFabEditClub.setOnClickListener {
+            findNavController().navigate(R.id.action_club_to_edit_club)
+        }
     }
 
     private fun setupView() {
