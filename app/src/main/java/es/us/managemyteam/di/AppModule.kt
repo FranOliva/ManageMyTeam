@@ -2,6 +2,7 @@ package es.us.managemyteam.di
 
 import es.us.managemyteam.ui.viewmodel.CreateEventViewModel
 import es.us.managemyteam.ui.viewmodel.EventsViewModel
+import es.us.managemyteam.ui.viewmodel.RegistrationViewModel
 import es.us.managemyteam.usecase.*
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -34,6 +35,7 @@ val appModule = module {
         SetCurrentNewEventUc(get())
     }
 
+
     viewModel {
         EventsViewModel(get())
     }
@@ -42,4 +44,13 @@ val appModule = module {
         CreateEventViewModel(get(), get(), get(), get(), get())
     }
 
+    // User
+
+    factory {
+        PostRegistrationUc(get())
+    }
+
+    viewModel {
+        RegistrationViewModel(get())
+    }
 }

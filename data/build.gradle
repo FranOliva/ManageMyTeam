@@ -44,4 +44,6 @@ dependencies {
     // Firebase
     implementation "com.google.firebase:firebase-database:$firebase_database_version"
     implementation "com.google.firebase:firebase-analytics:$firebase_analytics_version"
+    implementation "com.google.firebase:firebase-auth:$firebase_auth_version"
+
 }

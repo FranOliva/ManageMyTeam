@@ -87,7 +87,7 @@ class EditableTextView @JvmOverloads constructor(
             val hint = typedArray.getString(R.styleable.EditableTextView_input_hint)
             val hintColor = typedArray.getColor(
                 R.styleable.EditableTextView_input_hint_color,
-                ContextCompat.getColor(context, R.color.bluegrey)
+                ContextCompat.getColor(context, R.color.primaryWithAlpha)
             )
             val inputType =
                 typedArray.getInt(

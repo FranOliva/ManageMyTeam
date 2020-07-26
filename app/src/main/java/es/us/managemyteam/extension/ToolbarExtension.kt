@@ -14,7 +14,6 @@ fun Toolbar.setNavAction(listener: (View) -> Unit) {
 
 fun Toolbar.setNavIcon(iconDrawable: Drawable?) {
     navigationIcon = iconDrawable
-    findViewById<TextView>(R.id.main__label__toolbar_title)
 }
 
 fun Toolbar.show() {

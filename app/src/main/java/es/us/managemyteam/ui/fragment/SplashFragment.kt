@@ -18,7 +18,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Handler().postDelayed({
-            findNavController().navigate(R.id.action_splash_to_events)
+            findNavController().navigate(R.id.action_splash_to_registration)
         }, 3000)
     }
 
