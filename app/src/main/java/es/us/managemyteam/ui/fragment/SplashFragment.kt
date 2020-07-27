@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import es.us.managemyteam.R
 import es.us.managemyteam.databinding.FragmentSplashBinding
 import es.us.managemyteam.extension.hide
@@ -18,8 +19,16 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Handler().postDelayed({
-            findNavController().navigate(R.id.action_splash_to_registration)
+            navigate()
         }, 3000)
+    }
+
+    private fun navigate() {
+        if (FirebaseAuth.getInstance().currentUser != null) {
+            findNavController().navigate(R.id.action_splash_to_events)
+        } else {
+            findNavController().navigate(R.id.action_splash_to_login)
+        }
     }
 
     override fun inflateViewBinding(

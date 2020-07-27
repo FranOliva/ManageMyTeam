@@ -11,15 +11,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/registration__label__title"
-            style="@style/Bold.Twenty.Black"
+        <LinearLayout
+            android:id="@+id/registration__container__title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_twenty"
-            android:text="@string/registration_player_title"
+            android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_back" />
+
+            <TextView
+                android:id="@+id/registration__label__title"
+                style="@style/Bold.Twenty.Black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/size_twenty"
+                android:text="@string/registration_player_title" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/registration__label__information"
@@ -29,7 +44,7 @@
             android:layout_marginTop="@dimen/size_twenty"
             android:text="@string/registration_information"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/registration__label__title" />
+            app:layout_constraintTop_toBottomOf="@id/registration__container__title" />
 
         <es.us.managemyteam.ui.view.input.EditableTextView
             android:id="@+id/registration__edit_text_name"
@@ -104,7 +119,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_twentyfour"
-            app:btn_background_color="@color/primary"
+            app:btn_background_color="@color/primaryDark"
             app:btn_has_radius="true"
             app:btn_text="@string/accept"
             app:btn_text_color="@color/white"

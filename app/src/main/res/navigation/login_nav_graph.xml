@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/login_nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="es.us.managemyteam.ui.fragment.LoginFragment" />
+
+    <action
+        android:id="@+id/action_login_to_events"
+        app:destination="@+id/events_nav_graph"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:launchSingleTop="true"
+        app:popUpTo="@id/loginFragment"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_login_to_registration"
+        app:destination="@+id/registration_nav_graph"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:launchSingleTop="true"
+        app:popUpTo="@id/loginFragment"
+        app:popUpToInclusive="true" />
+
+    <include app:graph="@navigation/registration_nav_graph" />
+
+    <include app:graph="@navigation/events_nav_graph" />
+
+</navigation>
