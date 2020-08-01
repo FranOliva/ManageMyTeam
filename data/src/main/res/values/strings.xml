@@ -6,4 +6,5 @@
     <string name="registration_error_email_already_used">El correo electrónico ya está siendo utilizado por otra cuenta</string>
     <string name="login_error_user_not_found">El correo electrónico introducido no pertenece a ninguno de los usuarios registrados. Si formas parte del equipo y aún no tienes acceso, por favor, haz la solicitud de registro.</string>
     <string name="login_error_wrong_password">Contraseña incorrecta</string>
+    <string name="login_error_user_not_activated">Su solicitud de registro aún no ha sido aceptada por el administrador del club.</string>
 </resources>

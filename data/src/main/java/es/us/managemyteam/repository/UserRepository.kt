@@ -1,5 +1,6 @@
 package es.us.managemyteam.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
@@ -26,20 +27,24 @@ interface UserRepository {
         role: Role
     ): LiveData<Resource<Boolean>>
 
-    fun getUserByUid(uid: String): LiveData<Resource<UserBo>>
+    suspend fun getUserByUid(uid: String): LiveData<Resource<UserBo>>
 
     suspend fun login(
         email: String,
         password: String
-    ): LiveData<Resource<UserBo>>
+    ): LiveData<Resource<Boolean>>
+
+    suspend fun logout()
 }
 
 class UserRepositoryImpl : UserRepository {
 
+    private var user: UserBo? = null
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val createUserData = MutableLiveData<Resource<Boolean>>()
     private val userData = MutableLiveData<Resource<UserBo>>()
     private val userTable = RepositoryUtil.getDatabaseTable(DatabaseTables.USER_TABLE)
+    private val loginData = MutableLiveData<Resource<Boolean>>()
 
     override suspend fun createUser(
         email: String,
@@ -62,35 +67,44 @@ class UserRepositoryImpl : UserRepository {
         return createUserData
     }
 
-    override suspend fun login(email: String, password: String): LiveData<Resource<UserBo>> {
+    override suspend fun login(email: String, password: String): LiveData<Resource<Boolean>> {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
-                auth.currentUser?.let { firebaseUser ->
-                    getUserByUid(firebaseUser.uid)
-                }
+                loginData.value = Resource.success(true)
             } else {
-                val exception = it.exception as FirebaseAuthException
-                userData.value =
-                    Resource.error(Error(errorMessageId = getMessageErrorByErrorCode(exception)))
+                val exception = getMessageErrorByErrorCode(it.exception as FirebaseAuthException)
+                Log.e("LOGIN", "Login error: $exception")
+                loginData.value =
+                    Resource.error(Error(errorMessageId = exception))
             }
         }
-        return userData
+        return loginData
     }
 
-    override fun getUserByUid(uid: String): LiveData<Resource<UserBo>> {
+    override suspend fun logout() {
+        auth.signOut()
+    }
+
+    override suspend fun getUserByUid(uid: String): LiveData<Resource<UserBo>> {
         userTable.child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 userData.value = Resource.error(Error(serverErrorMessage = error.message))
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                val user = snapshot.getValue(UserBo::class.java)
-                userData.value = Resource.success(user)
+                user = snapshot.getValue(UserBo::class.java)
+                if (user?.enable == true) {
+                    userData.value = Resource.success(user)
+                } else {
+                    userData.value =
+                        Resource.error(Error(errorMessageId = R.string.login_error_user_not_activated))
+                }
             }
-
         })
+
         return userData
     }
+
 
     private fun createUserFirebaseDatabase(
         name: String,

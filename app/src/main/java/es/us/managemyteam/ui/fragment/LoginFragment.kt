@@ -15,16 +15,18 @@ import es.us.managemyteam.extension.showErrorDialog
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.ResourceObserver
 import es.us.managemyteam.ui.viewmodel.LoginViewModel
+import es.us.managemyteam.util.FirebaseAuthUtil
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private val loginViewModel: LoginViewModel by viewModel()
+    private val auth = FirebaseAuthUtil.getFirebaseAuthInstance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
-        setupLoginObserver()
+        setupObservers()
         setupEnterClickListener()
     }
 
@@ -34,8 +36,30 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         }
     }
 
-    private fun setupLoginObserver() {
+    private fun setupObservers() {
         loginViewModel.getLoginData()
+            .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
+                override fun onSuccess(response: Boolean?) {
+                    response?.let {
+                        auth.currentUser?.uid?.let {
+                            loginViewModel.getUser(it)
+                        }
+                    }
+                }
+
+                override fun onError(error: Error) {
+                    super.onError(error)
+                    showErrorDialog(getString(error.errorMessageId))
+                    auth.signOut()
+                }
+
+                override fun onLoading(loading: Boolean) {
+                    super.onLoading(loading)
+                    viewBinding.loginBtnEnter.showLoading(loading)
+                }
+            })
+
+        loginViewModel.getUserData()
             .observe(viewLifecycleOwner, object : ResourceObserver<UserBo>() {
                 override fun onSuccess(response: UserBo?) {
                     response?.let {
@@ -46,11 +70,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 override fun onError(error: Error) {
                     super.onError(error)
                     showErrorDialog(getString(error.errorMessageId))
-                }
-
-                override fun onLoading(loading: Boolean) {
-                    super.onLoading(loading)
-                    viewBinding.loginBtnEnter.showLoading(loading)
+                    auth.signOut()
                 }
             })
     }

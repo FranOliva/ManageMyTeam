@@ -23,7 +23,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupCreateUserObserver()
-        createUserClickListener()
+        setupClickListeners()
     }
 
     private fun setupCreateUserObserver() {
@@ -49,7 +49,10 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
 
     }
 
-    private fun createUserClickListener() {
+    private fun setupClickListeners() {
+        viewBinding.registrationImgBack.setOnClickListener {
+            popBack()
+        }
         viewBinding.registrationBtnSendRequest.setOnClickListener {
             clickOnAcceptRegister()
         }

@@ -58,11 +58,15 @@ val appModule = module {
         LoginUc(get())
     }
 
+    factory {
+        GetUserUc(get())
+    }
+
     viewModel {
         RegistrationViewModel(get())
     }
 
     viewModel {
-        LoginViewModel(get())
+        LoginViewModel(get(), get())
     }
 }

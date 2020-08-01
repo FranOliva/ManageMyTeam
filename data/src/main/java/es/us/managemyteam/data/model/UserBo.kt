@@ -13,7 +13,14 @@ data class UserBo(
     val role: Role? = null,
     val dorsal: Long? = null,
     val enable: Boolean? = null
-) : BaseBo(), Parcelable
+) : BaseBo(), Parcelable {
+
+    fun isAdmin() = Role.ADMIN == role
+
+    fun isPlayer() = Role.PLAYER == role
+
+    fun isStaff() = Role.STAFF == role
+}
 
 enum class Role {
     ADMIN,
