@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="unknown_error">Ha ocurrido un error inesperado, inténtelo más tarde</string>
+
+    <string name="registration_error_weak_password">La contraseña debe tener al menos 6 caracteres</string>
+    <string name="registration_error_email_already_used">El correo electrónico ya está siendo utilizado por otra cuenta</string>
+    <string name="login_error_user_not_found">El correo electrónico introducido no pertenece a ninguno de los usuarios registrados. Si formas parte del equipo y aún no tienes acceso, por favor, haz la solicitud de registro.</string>
+    <string name="login_error_wrong_password">Contraseña incorrecta</string>
 </resources>

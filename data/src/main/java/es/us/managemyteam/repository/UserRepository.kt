@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import es.us.managemyteam.data.R
 import es.us.managemyteam.data.database.DatabaseTables
 import es.us.managemyteam.data.model.Role
 import es.us.managemyteam.data.model.UserBo
@@ -52,9 +53,9 @@ class UserRepositoryImpl : UserRepository {
             if (it.isSuccessful) {
                 createUserFirebaseDatabase(name, surname, email, phoneNumber, role)
             } else {
-                val exception = (it.exception as FirebaseAuthException).errorCode
+                val exception = (it.exception as FirebaseAuthException)
                 createUserData.value =
-                    Resource.error(Error(serverErrorMessage = it.exception?.localizedMessage))
+                    Resource.error(Error(errorMessageId = getMessageErrorByErrorCode(exception)))
             }
         }
 
@@ -67,6 +68,10 @@ class UserRepositoryImpl : UserRepository {
                 auth.currentUser?.let { firebaseUser ->
                     getUserByUid(firebaseUser.uid)
                 }
+            } else {
+                val exception = it.exception as FirebaseAuthException
+                userData.value =
+                    Resource.error(Error(errorMessageId = getMessageErrorByErrorCode(exception)))
             }
         }
         return userData
@@ -119,6 +124,16 @@ class UserRepositoryImpl : UserRepository {
             }
 
         return createUserData
+    }
+
+    private fun getMessageErrorByErrorCode(exception: FirebaseAuthException): Int {
+        return when (exception.errorCode) {
+            "ERROR_WEAK_PASSWORD" -> R.string.registration_error_weak_password
+            "ERROR_EMAIL_ALREADY_IN_USE" -> R.string.registration_error_email_already_used
+            "ERROR_USER_NOT_FOUND" -> R.string.login_error_user_not_found
+            "ERROR_WRONG_PASSWORD" -> R.string.login_error_wrong_password
+            else -> R.string.unknown_error
+        }
     }
 
 }

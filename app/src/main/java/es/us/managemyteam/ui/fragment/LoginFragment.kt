@@ -45,7 +45,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
                 override fun onError(error: Error) {
                     super.onError(error)
-                    showErrorDialog("Ha ocurrido un error en el inicio de sesión")
+                    showErrorDialog(getString(error.errorMessageId))
                 }
 
                 override fun onLoading(loading: Boolean) {
