@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/my_recycler_view"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="false">
+    android:scrollbars="vertical">
+    android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="@dimen/size_eighty"
@@ -131,33 +133,6 @@
                 android:textSize="@dimen/text_twenty"
                 tools:text="Entrenador" />
 
-            <LinearLayout
-                android:id="@+id/club__container__location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_twenty"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/club__label__location_title"
-                    style="@style/Regular.Sixteen.Black"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/size_ten"
-                    android:textSize="@dimen/text_twenty"
-                    tools:text="Ubicación" />
-
-                <TextView
-                    android:id="@+id/club__label__location_value"
-                    style="@style/Regular.Sixteen.Black"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/size_ten"
-                    android:textSize="@dimen/text_twenty"
-                    tools:text="Ubicación" />
-
-            </LinearLayout>
-
             <TextView
                 android:id="@+id/club__label__coach_value"
                 style="@style/Regular.Sixteen.Black"
@@ -166,6 +141,33 @@
                 android:paddingStart="@dimen/size_ten"
                 android:textSize="@dimen/text_twenty"
                 tools:text="Entrenador" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/club__container__location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_twenty"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/club__label__location_title"
+                style="@style/Regular.Sixteen.Black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/size_ten"
+                android:textSize="@dimen/text_twenty"
+                tools:text="Ubicación" />
+
+            <TextView
+                android:id="@+id/club__label__location_value"
+                style="@style/Regular.Sixteen.Black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/size_ten"
+                android:textSize="@dimen/text_twenty"
+                tools:text="Ubicación" />
 
         </LinearLayout>
 
@@ -256,7 +258,9 @@
 
         </LinearLayout>
 
-        <Button
+    </LinearLayout>
+
+    <Button
         android:id="@+id/club__fab__edit_club"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -265,6 +269,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    </LinearLayout>
-
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

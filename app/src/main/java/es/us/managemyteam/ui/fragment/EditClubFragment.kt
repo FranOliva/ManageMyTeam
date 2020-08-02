@@ -7,8 +7,6 @@ import es.us.managemyteam.ui.view.common_map.MapListener
 
 class EditClubFragment : BaseFragment<FragmentEditClubBinding>(), MapListener {
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -16,6 +14,5 @@ class EditClubFragment : BaseFragment<FragmentEditClubBinding>(), MapListener {
         setupClickListeners()
         setupObservers()
     }
-
 
 }

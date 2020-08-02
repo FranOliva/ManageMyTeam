@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.View.VISIBLE
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.MediatorLiveData
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.database.DatabaseReference
 import es.us.managemyteam.R
 import es.us.managemyteam.contract.BaseAdapterClickListener
 import es.us.managemyteam.data.model.ClubBo
@@ -15,9 +18,13 @@ import es.us.managemyteam.databinding.FragmentClubBinding
 import es.us.managemyteam.extension.setNavIcon
 import es.us.managemyteam.extension.setToolbarTitle
 import es.us.managemyteam.extension.show
+import es.us.managemyteam.repository.util.Resource
 import kotlinx.android.synthetic.main.fragment_club.*
+import org.w3c.dom.Text
 
 class ClubFragment : BaseFragment<FragmentClubBinding>(), BaseAdapterClickListener<ClubBo> {
+
+    private val club: MediatorLiveData<Resource<ClubBo>> = MediatorLiveData()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -25,6 +32,7 @@ class ClubFragment : BaseFragment<FragmentClubBinding>(), BaseAdapterClickListen
 
         setupView()
         setupClickListeners()
+
     }
 
     private fun setupClickListeners() {
@@ -34,6 +42,7 @@ class ClubFragment : BaseFragment<FragmentClubBinding>(), BaseAdapterClickListen
     }
 
     private fun setupView() {
+
         viewBinding.clubLabelNameValue.visibility = VISIBLE
         viewBinding.clubLabelDateFundationValue.visibility = VISIBLE
         viewBinding.clubLabelPresidentValue.visibility = VISIBLE
@@ -42,6 +51,12 @@ class ClubFragment : BaseFragment<FragmentClubBinding>(), BaseAdapterClickListen
         viewBinding.clubLabelMailValue.visibility = VISIBLE
         viewBinding.clubLabelPhoneNumberValue.visibility = VISIBLE
         viewBinding.clubLabelWebValue.visibility = VISIBLE
+
+        viewBinding.clubProfileContainerContent.apply {
+            clubLabelNameValue = club.value.data.name
+
+        }
+
     }
 
     override fun inflateViewBinding(

@@ -40,4 +40,15 @@
     <string name="club_stats">Estadísticas</string>
     <string name="club">Club</string>
     <string name="club_edit">Editar</string>
+    <string name="edit_club_club_shield">Escudo</string>
+    <string name="edit_club_club_name">Nombre</string>
+    <string name="edit_club_club_date_fundation">Fecha de fundación</string>
+    <string name="edit_club_club_president">Presidente</string>
+    <string name="edit_club_club_coach">Entrenador</string>
+    <string name="edit_club_club_location">Ubicación</string>
+    <string name="edit_club_club_mail">Email</string>
+    <string name="edit_club_club_phone_number">Número de teléfono</string>
+    <string name="edit_club_club_web">Página web</string>
+    <string name="edit_club_select_shield">Pulse para subir archivo y editar el escudo</string>
+
 </resources>
