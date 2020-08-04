@@ -15,15 +15,6 @@ android:clipToPadding="false">
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/edit_club__label__shield"
-        style="@style/Regular.Sixteen.Black"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/size_onehundredandtwenty"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="@string/edit_club_select_shield"
-        android:textAlignment="center" />
 
     <es.us.managemyteam.ui.view.input.EditableTextView
         android:id="@+id/edit_club__edit__name"

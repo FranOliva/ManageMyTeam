@@ -50,5 +50,7 @@
     <string name="edit_club_club_phone_number">Número de teléfono</string>
     <string name="edit_club_club_web">Página web</string>
     <string name="edit_club_select_shield">Pulse para subir archivo y editar el escudo</string>
+    <string name="edit_club_success">Datos del club editados correctamente</string>
+    <string name="edit_club_title">Editar datos del club</string>
 
 </resources>

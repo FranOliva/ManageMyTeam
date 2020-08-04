@@ -4,59 +4,74 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.View.VISIBLE
-import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.MediatorLiveData
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.database.DatabaseReference
 import es.us.managemyteam.R
+import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.contract.BaseAdapterClickListener
 import es.us.managemyteam.data.model.ClubBo
 import es.us.managemyteam.databinding.FragmentClubBinding
-import es.us.managemyteam.extension.setNavIcon
-import es.us.managemyteam.extension.setToolbarTitle
-import es.us.managemyteam.extension.show
-import es.us.managemyteam.repository.util.Resource
-import kotlinx.android.synthetic.main.fragment_club.*
-import org.w3c.dom.Text
+import es.us.managemyteam.extension.*
+import es.us.managemyteam.repository.util.ResourceObserver
+import es.us.managemyteam.ui.viewmodel.ClubViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class ClubFragment : BaseFragment<FragmentClubBinding>(), BaseAdapterClickListener<ClubBo> {
 
-    private val club: MediatorLiveData<Resource<ClubBo>> = MediatorLiveData()
-
+    private val clubViewModel: ClubViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupView()
+        setupClubObserver()
         setupClickListeners()
 
     }
 
+    private fun setupClubObserver() {
+        clubViewModel.getClubData()
+            .observe(viewLifecycleOwner, object : ResourceObserver<ClubBo>() {
+            override fun onSuccess(response: ClubBo?) {
+                response?.let { setupView(it) }
+            }
+
+            override fun onError(error: Error) {
+                super.onError(error)
+                showErrorDialog(
+                    getString(error.errorMessageId),
+                    getDefaultDialogErrorListener()
+                )
+            }
+
+            override fun onLoading(loading: Boolean) {
+                super.onLoading(loading)
+                if (loading) {
+                    viewBinding.clubProgressBar.startAnimation()
+                } else {
+                    viewBinding.clubProgressBar.stopAnimationAndHide()
+                }
+            }
+
+        })
+        clubViewModel.getClub()
+    }
+
     private fun setupClickListeners() {
-        viewBinding.clubFabEditClub.setOnClickListener {
+        viewBinding.clubFabEdit.setOnClickListener {
             findNavController().navigate(R.id.action_club_to_edit_club)
         }
     }
 
-    private fun setupView() {
-
-        viewBinding.clubLabelNameValue.visibility = VISIBLE
-        viewBinding.clubLabelDateFundationValue.visibility = VISIBLE
-        viewBinding.clubLabelPresidentValue.visibility = VISIBLE
-        viewBinding.clubLabelCoachValue.visibility = VISIBLE
-        viewBinding.clubLabelLocationValue.visibility = VISIBLE
-        viewBinding.clubLabelMailValue.visibility = VISIBLE
-        viewBinding.clubLabelPhoneNumberValue.visibility = VISIBLE
-        viewBinding.clubLabelWebValue.visibility = VISIBLE
-
-        viewBinding.clubProfileContainerContent.apply {
-            clubLabelNameValue = club.value.data.name
-
-        }
-
+    private fun setupView(club : ClubBo) {
+        viewBinding.clubLabelNameValue.text = club.name
+        viewBinding.clubLabelDateFundationValue.text = club.dateFundation
+        viewBinding.clubLabelPresidentValue.text = club.president
+        viewBinding.clubLabelCoachValue.text = club.coach
+        viewBinding.clubLabelLocationValue.text = club.location
+        viewBinding.clubLabelMailValue.text = club.mail
+        viewBinding.clubLabelPhoneNumberValue.text = club.phoneNumber
+        viewBinding.clubLabelWebValue.text = club.web
     }
 
     override fun inflateViewBinding(

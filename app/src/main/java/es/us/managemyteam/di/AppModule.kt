@@ -1,5 +1,6 @@
 package es.us.managemyteam.di
 
+import es.us.managemyteam.ui.viewmodel.ClubViewModel
 import es.us.managemyteam.ui.viewmodel.CreateEventViewModel
 import es.us.managemyteam.ui.viewmodel.EventsViewModel
 import es.us.managemyteam.usecase.*
@@ -40,6 +41,16 @@ val appModule = module {
 
     viewModel {
         CreateEventViewModel(get(), get(), get(), get(), get())
+    }
+
+    // Club
+
+    factory {
+        GetClubUc(get())
+    }
+
+    viewModel {
+        ClubViewModel(get())
     }
 
 }
