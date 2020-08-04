@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/editable_text__label__header"
-        style="@style/Medium.Fourteen.Black"
+        style="@style/SemiBold.Sixteen.Black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/size_six"
@@ -33,7 +33,7 @@
 
         <EditText
             android:id="@+id/editable_text__input__info"
-            style="@style/Regular.Sixteen.Black"
+            style="@style/Regular.Fourteen.Black"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@null"
@@ -49,7 +49,7 @@
             android:paddingEnd="@dimen/size_twenty"
             android:paddingRight="@dimen/size_twenty"
             android:paddingBottom="@dimen/size_sixteen"
-            android:textColorHint="@color/bluegrey"
+            android:textColorHint="@color/primaryWithAlpha"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/editable_text__img__action"
             app:layout_constraintStart_toStartOf="parent"

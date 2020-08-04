@@ -9,7 +9,7 @@
     </style>
 
     <style name="Regular">
-        <item name="android:fontFamily">@font/fonts_worksans_regular</item>
+        <item name="android:fontFamily">@font/notosans_regular</item>
     </style>
 
     <style name="Regular.Sixteen" parent="Regular">
@@ -81,7 +81,7 @@
     </style>
 
     <style name="Medium">
-        <item name="android:fontFamily">@font/fonts_worksans_medium</item>
+        <item name="android:fontFamily">@font/fonts_notosans_regular</item>
     </style>
 
     <style name="Medium.Eleven" parent="Medium">
@@ -303,7 +303,27 @@
     </style>
 
     <style name="Bold">
-        <item name="android:fontFamily">@font/fonts_worksans_bold</item>
+        <item name="android:fontFamily">@font/fonts_notosans_bold</item>
+    </style>
+
+    <style name="Bold.Twenty" parent="Bold">
+        <item name="android:textSize">@dimen/text_twenty</item>
+    </style>
+
+    <style name="Bold.Twenty.Black" parent="Bold.Twenty">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Bold.Twenty.White" parent="Bold.Twenty">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Bold.Sixteen" parent="Bold">
+        <item name="android:textSize">@dimen/text_sixteen</item>
+    </style>
+
+    <style name="Bold.Sixteen.Black" parent="Bold.Sixteen">
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Bold.Twelve" parent="Bold">
