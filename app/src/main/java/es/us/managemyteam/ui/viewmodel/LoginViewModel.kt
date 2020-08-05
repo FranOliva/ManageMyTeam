@@ -14,14 +14,15 @@ import kotlinx.coroutines.withContext
 
 class LoginViewModel(private val loginUc: LoginUc, private val getUserUc: GetUserUc) : ViewModel() {
 
-    private val login: MediatorLiveData<Resource<Boolean>> = MediatorLiveData()
-    private var loginSource: LiveData<Resource<Boolean>> = MutableLiveData()
+    private val login: MediatorLiveData<Resource<String>> = MediatorLiveData()
+    private var loginSource: LiveData<Resource<String>> = MutableLiveData()
     private val user: MediatorLiveData<Resource<UserBo>> = MediatorLiveData()
     private var userSource: LiveData<Resource<UserBo>> = MutableLiveData()
 
-    fun getLoginData(): LiveData<Resource<Boolean>> {
-        login.value = null
-        return login
+    fun getLoginData(): LiveData<Resource<String>> {
+        return login.apply {
+            value = null
+        }
     }
 
     fun login(
@@ -53,6 +54,7 @@ class LoginViewModel(private val loginUc: LoginUc, private val getUserUc: GetUse
 
     fun getUser(uid: String) =
         viewModelScope.launch(Dispatchers.Main) {
+            user.value = null
             user.value = Resource.loading(null)
             user.removeSource(userSource)
             withContext(Dispatchers.IO) {

@@ -35,7 +35,7 @@
         app:destination="@+id/login_nav_graph"
         app:enterAnim="@anim/nav_enter_from_bottom"
         app:exitAnim="@anim/nav_default_exit_anim"
-        app:launchSingleTop="true"
+        app:popUpToInclusive="true"
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
         app:popExitAnim="@anim/nav_exit_to_bottom" />
 
