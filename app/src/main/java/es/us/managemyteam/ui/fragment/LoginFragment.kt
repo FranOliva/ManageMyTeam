@@ -38,12 +38,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private fun setupObservers() {
         loginViewModel.getLoginData()
-            .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
-                override fun onSuccess(response: Boolean?) {
+            .observe(viewLifecycleOwner, object : ResourceObserver<String>() {
+                override fun onSuccess(response: String?) {
                     response?.let {
-                        auth.currentUser?.uid?.let {
-                            loginViewModel.getUser(it)
-                        }
+                        loginViewModel.getUser(it)
                     }
                 }
 

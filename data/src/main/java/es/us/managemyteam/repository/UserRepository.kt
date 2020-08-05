@@ -32,7 +32,7 @@ interface UserRepository {
     suspend fun login(
         email: String,
         password: String
-    ): LiveData<Resource<Boolean>>
+    ): LiveData<Resource<String>>
 
     suspend fun logout()
 }
@@ -44,7 +44,7 @@ class UserRepositoryImpl : UserRepository {
     private val createUserData = MutableLiveData<Resource<Boolean>>()
     private val userData = MutableLiveData<Resource<UserBo>>()
     private val userTable = RepositoryUtil.getDatabaseTable(DatabaseTables.USER_TABLE)
-    private val loginData = MutableLiveData<Resource<Boolean>>()
+    private val loginData = MutableLiveData<Resource<String>>()
 
     override suspend fun createUser(
         email: String,
@@ -67,10 +67,11 @@ class UserRepositoryImpl : UserRepository {
         return createUserData
     }
 
-    override suspend fun login(email: String, password: String): LiveData<Resource<Boolean>> {
+    override suspend fun login(email: String, password: String): LiveData<Resource<String>> {
+        loginData.postValue(null)
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
-                loginData.value = Resource.success(true)
+                loginData.value = Resource.success(auth.currentUser?.uid)
             } else {
                 val exception = getMessageErrorByErrorCode(it.exception as FirebaseAuthException)
                 Log.e("LOGIN", "Login error: $exception")
@@ -86,6 +87,7 @@ class UserRepositoryImpl : UserRepository {
     }
 
     override suspend fun getUserByUid(uid: String): LiveData<Resource<UserBo>> {
+        userData.postValue(null)
         userTable.child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 userData.value = Resource.error(Error(serverErrorMessage = error.message))
