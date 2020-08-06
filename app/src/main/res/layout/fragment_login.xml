@@ -4,33 +4,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_login"
-    android:paddingTop="@dimen/size_fifty"
     android:paddingBottom="@dimen/size_fifty">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/login__img__logo"
-        android:layout_width="@dimen/size_onehundred"
-        android:layout_height="@dimen/size_onehundred"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="400dp"
+        android:background="@drawable/login_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_football"
-        app:tint="@color/white" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/login__label__title"
-        style="@style/Bold.Twenty.Black"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_fourty"
-        android:fontFamily="@font/chewy_regular"
-        android:text="@string/app_name_separated"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_thirty"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login__img__logo" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/login__img__logo"
+            android:layout_width="@dimen/size_onehundred"
+            android:layout_height="@dimen/size_onehundred"
+            android:layout_marginTop="@dimen/size_fifty"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_football"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/login__label__title"
+            style="@style/Bold.Twenty.Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_fourty"
+            android:fontFamily="@font/chewy_regular"
+            android:text="@string/app_name_separated"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_thirty"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login__img__logo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/login__container__form"
@@ -74,7 +84,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_fourty"
-            app:btn_background_color="@color/primary"
+            app:btn_background_color="@color/primaryDark"
             app:btn_has_radius="true"
             app:btn_text="Entrar"
             app:btn_text_color="@color/white"
