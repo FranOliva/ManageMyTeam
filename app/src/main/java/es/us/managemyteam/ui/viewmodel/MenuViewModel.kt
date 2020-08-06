@@ -1,13 +1,20 @@
 package es.us.managemyteam.ui.viewmodel
 
+import androidx.lifecycle.viewModelScope
 import es.us.managemyteam.usecase.GetUserUc
-import es.us.managemyteam.util.FirebaseAuthUtil
+import es.us.managemyteam.usecase.LogoutUc
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class MenuViewModel(getUserUc: GetUserUc) : BaseLoggedViewModel(getUserUc) {
-
-    private val auth = FirebaseAuthUtil.getFirebaseAuthInstance()
+class MenuViewModel(getUserUc: GetUserUc, private val logoutUc: LogoutUc) :
+    BaseLoggedViewModel(getUserUc) {
 
     fun logout() {
-        auth.signOut()
+        viewModelScope.launch(Dispatchers.Main) {
+            withContext(Dispatchers.IO) {
+                logoutUc()
+            }
+        }
     }
 }

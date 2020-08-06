@@ -23,13 +23,18 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private val loginViewModel: LoginViewModel by viewModel()
     private val auth = FirebaseAuthUtil.getFirebaseAuthInstance()
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            activity?.finish()
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupBackPressed()
         setupViews()
         setupObservers()
         setupEnterClickListener()
-        setupBackPressed()
     }
 
     private fun setupViews() {
@@ -39,13 +44,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     }
 
     private fun setupBackPressed() {
-        requireActivity().onBackPressedDispatcher.addCallback(
+        activity?.onBackPressedDispatcher?.addCallback(
             viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    activity?.finish()
-                }
-            })
+            onBackPressedCallback
+        )
     }
 
     private fun setupObservers() {

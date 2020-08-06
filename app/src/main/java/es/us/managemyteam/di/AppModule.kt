@@ -10,7 +10,7 @@ val appModule = module {
     // General
 
     viewModel {
-        MenuViewModel(get())
+        MenuViewModel(get(), get())
     }
 
     // Eventos
@@ -69,6 +69,10 @@ val appModule = module {
 
     factory {
         GetUserUc(get())
+    }
+
+    factory {
+        LogoutUc(get())
     }
 
     viewModel {
