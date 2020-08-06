@@ -17,7 +17,7 @@ import es.us.managemyteam.repository.util.ResourceObserver
 import es.us.managemyteam.ui.viewmodel.ClubViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class ClubFragment : BaseFragment<FragmentClubBinding>(), BaseAdapterClickListener<ClubBo> {
+class ClubFragment : BaseFragment<FragmentClubBinding>() {
 
     private val clubViewModel: ClubViewModel by viewModel()
 
@@ -70,7 +70,7 @@ class ClubFragment : BaseFragment<FragmentClubBinding>(), BaseAdapterClickListen
         viewBinding.clubLabelCoachValue.text = club.coach
         viewBinding.clubLabelLocationValue.text = club.location
         viewBinding.clubLabelMailValue.text = club.mail
-        viewBinding.clubLabelPhoneNumberValue.text = club.phoneNumber
+        viewBinding.clubLabelPhoneNumberValue.text = club.phoneNumber.toString()
         viewBinding.clubLabelWebValue.text = club.web
     }
 
@@ -93,7 +93,4 @@ class ClubFragment : BaseFragment<FragmentClubBinding>(), BaseAdapterClickListen
         bottomNavigationView.show()
     }
 
-    override fun onAdapterItemClicked(item: ClubBo, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 }

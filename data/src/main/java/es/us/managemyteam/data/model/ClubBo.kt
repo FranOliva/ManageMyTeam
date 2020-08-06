@@ -10,7 +10,7 @@ data class ClubBo(
     val location: String? = null,
     val president: String? = null,
     val coach: String? = null,
-    val phoneNumber: String? = null,
+    val phoneNumber: Long? = null,
     val mail: String? = null,
     val web: String? = null
 ) : Parcelable

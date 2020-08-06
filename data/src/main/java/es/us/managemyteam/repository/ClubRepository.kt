@@ -21,7 +21,7 @@ interface ClubRepository {
         location: String,
         president: String,
         coach: String,
-        phoneNumber: String,
+        phoneNumber: Long,
         mail: String,
         web: String
     ): LiveData<Resource<Boolean>>
@@ -48,7 +48,7 @@ class ClubRepositoryImpl : ClubRepository {
         location: String,
         president: String,
         coach: String,
-        phoneNumber: String,
+        phoneNumber: Long,
         mail: String,
         web: String
     ): LiveData<Resource<Boolean>> {

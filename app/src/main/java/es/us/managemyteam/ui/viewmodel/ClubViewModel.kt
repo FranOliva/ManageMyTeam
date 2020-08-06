@@ -1,19 +1,22 @@
 package es.us.managemyteam.ui.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import es.us.managemyteam.data.model.ClubBo
 import es.us.managemyteam.repository.util.Resource
 import es.us.managemyteam.usecase.GetClubUc
+import es.us.managemyteam.util.CustomMediatorLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ClubViewModel(
-private val getClubUc: GetClubUc
+    private val getClubUc: GetClubUc
 ) : ViewModel() {
 
-    private val club: MediatorLiveData<Resource<ClubBo>> = MediatorLiveData()
-    private var clubSource: LiveData<Resource<ClubBo>> = MutableLiveData()
+    private val club: CustomMediatorLiveData<Resource<ClubBo>> = CustomMediatorLiveData()
 
     init {
         getClub()
@@ -21,20 +24,18 @@ private val getClubUc: GetClubUc
 
     fun getClub() {
         viewModelScope.launch(Dispatchers.Main) {
-            club.value = Resource.loading()
-            club.removeSource(clubSource)
+            club.setData(Resource.loading(data = null))
             withContext(Dispatchers.IO) {
-                clubSource = getClubUc()
-            }
-            club.addSource(clubSource) {
-                club.value = it
+                club.changeSource(
+                    Dispatchers.Main,
+                    getClubUc()
+                )
             }
         }
     }
 
     fun getClubData(): LiveData<Resource<ClubBo>> {
-        return club
+        return club.liveData()
     }
-
 
 }
