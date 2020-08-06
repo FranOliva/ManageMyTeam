@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -28,12 +29,23 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         setupViews()
         setupObservers()
         setupEnterClickListener()
+        setupBackPressed()
     }
 
     private fun setupViews() {
         viewBinding.loginLabelGoToRegistration.setOnClickListener {
             findNavController().navigate(R.id.action_login_to_registration)
         }
+    }
+
+    private fun setupBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    activity?.finish()
+                }
+            })
     }
 
     private fun setupObservers() {
