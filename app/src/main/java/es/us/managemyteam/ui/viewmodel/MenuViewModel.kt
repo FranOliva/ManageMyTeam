@@ -1,9 +1,9 @@
 package es.us.managemyteam.ui.viewmodel
 
-import androidx.lifecycle.ViewModel
+import es.us.managemyteam.usecase.GetUserUc
 import es.us.managemyteam.util.FirebaseAuthUtil
 
-class MenuViewModel : ViewModel() {
+class MenuViewModel(getUserUc: GetUserUc) : BaseLoggedViewModel(getUserUc) {
 
     private val auth = FirebaseAuthUtil.getFirebaseAuthInstance()
 
