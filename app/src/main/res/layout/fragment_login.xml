@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_login"
+    android:paddingTop="@dimen/size_fifty"
+    android:paddingBottom="@dimen/size_fifty">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/login__img__logo"
+        android:layout_width="@dimen/size_onehundred"
+        android:layout_height="@dimen/size_onehundred"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_football"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/login__label__title"
+        style="@style/Bold.Twenty.Black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_fourty"
+        android:fontFamily="@font/chewy_regular"
+        android:text="@string/app_name_separated"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_thirty"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login__img__logo" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/login__container__form"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_twenty"
+        android:layout_marginEnd="@dimen/size_twenty"
+        android:layout_marginBottom="@dimen/size_twenty"
+        android:background="@drawable/background_rounded_white"
+        android:padding="@dimen/size_fourty"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login__label__title">
+
+        <es.us.managemyteam.ui.view.input.EditableTextView
+            android:id="@+id/login__edit_text__email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:input_background="@drawable/input_background_rounded"
+            app:input_hint="@string/login_email"
+            app:input_ime="next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <es.us.managemyteam.ui.view.input.EditableTextView
+            android:id="@+id/login__edit_text__password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_twenty"
+            app:input_background="@drawable/input_background_rounded"
+            app:input_hint="@string/login_password"
+            app:input_type="password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login__edit_text__email" />
+
+        <es.us.managemyteam.ui.view.loading_button.LoadingButtonView
+            android:id="@+id/login__btn__enter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_fourty"
+            app:btn_background_color="@color/primary"
+            app:btn_has_radius="true"
+            app:btn_text="Entrar"
+            app:btn_text_color="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login__edit_text__password" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/login__label__go_to_registration"
+        style="@style/Regular.Sixteen.White"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_twenty"
+        android:text="@string/login_message_registration"
+        app:layout_constraintStart_toStartOf="@id/login__container__form"
+        app:layout_constraintTop_toBottomOf="@id/login__container__form" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

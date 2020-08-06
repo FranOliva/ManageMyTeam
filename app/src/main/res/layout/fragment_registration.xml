@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:padding="@dimen/size_sixteen"
+    android:scrollbars="none">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/registration__container__title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_twenty"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/registration__img__back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                app:srcCompat="@drawable/ic_back"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/registration__label__title"
+                style="@style/Bold.Twenty.Black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/size_twenty"
+                android:text="@string/registration_player_title" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/registration__label__information"
+            style="@style/Regular.Sixteen.Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_twenty"
+            android:text="@string/registration_information"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/registration__container__title" />
+
+        <es.us.managemyteam.ui.view.input.EditableTextView
+            android:id="@+id/registration__edit_text_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_sixteen"
+            app:input_header="@string/user_name"
+            app:input_ime="next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/registration__label__information" />
+
+        <es.us.managemyteam.ui.view.input.EditableTextView
+            android:id="@+id/registration__edit_text_surname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_sixteen"
+            app:input_header="@string/user_surname"
+            app:input_ime="next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/registration__edit_text_name" />
+
+        <es.us.managemyteam.ui.view.input.EditableTextView
+            android:id="@+id/registration__edit_text_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_sixteen"
+            app:input_header="@string/user_email"
+            app:input_ime="next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/registration__edit_text_surname" />
+
+        <es.us.managemyteam.ui.view.input.EditableTextView
+            android:id="@+id/registration__edit_text_password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_sixteen"
+            app:input_header="@string/user_password"
+            app:input_ime="next"
+            app:input_type="password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/registration__edit_text_email" />
+
+        <es.us.managemyteam.ui.view.input.EditableTextView
+            android:id="@+id/registration__edit_text_confirm_password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_sixteen"
+            app:input_header="@string/user_confirm_password"
+            app:input_ime="next"
+            app:input_type="password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/registration__edit_text_password" />
+
+        <es.us.managemyteam.ui.view.input.EditableTextView
+            android:id="@+id/registration__edit_text_phonenumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_sixteen"
+            app:input_header="@string/user_phone"
+            app:input_ime="done"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/registration__edit_text_confirm_password" />
+
+        <es.us.managemyteam.ui.view.loading_button.LoadingButtonView
+            android:id="@+id/registration__btn__send_request"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_twentyfour"
+            app:btn_background_color="@color/primaryDark"
+            app:btn_has_radius="true"
+            app:btn_text="@string/accept"
+            app:btn_text_color="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/registration__edit_text_phonenumber" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

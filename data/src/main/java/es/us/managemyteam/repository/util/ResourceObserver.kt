@@ -14,7 +14,7 @@ abstract class ResourceObserver<T> : Observer<Resource<T>> {
                 }
                 it.isError() -> {
                     onLoading(false)
-                    it.error?.let { error ->
+                     it.error?.let { error ->
                         onError(error)
                     }
                 }

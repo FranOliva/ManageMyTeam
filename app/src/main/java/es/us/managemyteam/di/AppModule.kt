@@ -1,5 +1,6 @@
 package es.us.managemyteam.di
 
+import es.us.managemyteam.ui.viewmodel.*
 import es.us.managemyteam.ui.viewmodel.ClubViewModel
 import es.us.managemyteam.ui.viewmodel.CreateEventViewModel
 import es.us.managemyteam.ui.viewmodel.EventsViewModel
@@ -8,6 +9,12 @@ import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
+
+    // General
+
+    viewModel {
+        MenuViewModel()
+    }
 
     // Eventos
 
@@ -53,4 +60,25 @@ val appModule = module {
         ClubViewModel(get())
     }
 
+    // User
+
+    factory {
+        PostRegistrationUc(get())
+    }
+
+    factory {
+        LoginUc(get())
+    }
+
+    factory {
+        GetUserUc(get())
+    }
+
+    viewModel {
+        RegistrationViewModel(get())
+    }
+
+    viewModel {
+        LoginViewModel(get(), get())
+    }
 }

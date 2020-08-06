@@ -35,6 +35,25 @@
     <string name="create_event_select_location">Pulse para seleccionar la localización del evento</string>
     <string name="create_event_success">Evento creado correctamente</string>
     <string name="create_event_select_location_error">Debe seleccionar una localización</string>
+    
+    <!-- User -->
+    <string name="user_email">Correo electrónico *</string>
+    <string name="user_password">Contraseña *</string>
+    <string name="user_confirm_password">Confirmar contraseña *</string>
+    <string name="user_name">Nombre *</string>
+    <string name="user_surname">Apellidos *</string>
+    <string name="user_phone">Teléfono *</string>
+    <string name="user_age">Edad</string>
+    <string name="user_dorsal">Dorsal</string>
+    <string name="user_created_successfully">Solicitud de registro enviada con éxito</string>
+    <string name="login_email">Correo electrónico</string>
+    <string name="login_password">Contraseña</string>
+    <string name="login_message_registration">¿Aún no has solicitado acceso? Regístrate aquí</string>
+    <string name="registration_player_title">Registro de jugador</string>
+    <string name="registration_error_invalid_email">Introduzca un correo electrónico válido</string>
+    <string name="registration_error_invalid_password">Las contraseñas introducidas no coinciden</string>
+    <string name="registration_error_empty_fields">Debe rellenar todos los campos</string>
+    <string name="registration_information">Este formulario enviará una solicitud de registro en la aplicación. Si usted no pertenece al club esta solicitud se rechazará.</string>
 
     <!-- Club module -->
     <string name="club_stats">Estadísticas</string>
