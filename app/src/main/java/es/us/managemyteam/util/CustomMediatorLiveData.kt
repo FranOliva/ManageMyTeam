@@ -33,7 +33,7 @@ class CustomMediatorLiveData<Type> : Observer<Type> {
         }
     }
 
-    fun setData(type: Type) {
+    fun setData(type: Type?) {
         actualSource.value = type
     }
 
