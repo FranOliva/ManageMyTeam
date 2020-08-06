@@ -1,6 +1,9 @@
 package es.us.managemyteam.di
 
 import es.us.managemyteam.ui.viewmodel.*
+import es.us.managemyteam.ui.viewmodel.ClubViewModel
+import es.us.managemyteam.ui.viewmodel.CreateEventViewModel
+import es.us.managemyteam.ui.viewmodel.EventsViewModel
 import es.us.managemyteam.usecase.*
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -39,13 +42,22 @@ val appModule = module {
         SetCurrentNewEventUc(get())
     }
 
-
     viewModel {
         EventsViewModel(get())
     }
 
     viewModel {
         CreateEventViewModel(get(), get(), get(), get(), get())
+    }
+
+    // Club
+
+    factory {
+        GetClubUc(get())
+    }
+
+    viewModel {
+        ClubViewModel(get())
     }
 
     // User

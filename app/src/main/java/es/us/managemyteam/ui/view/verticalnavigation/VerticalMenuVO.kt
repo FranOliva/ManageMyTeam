@@ -9,14 +9,22 @@ data class VerticalMenuVO(val id: VerticalMenuId, val title: String, val icon: I
         fun getDefaultMenu(context: Context): List<VerticalMenuVO> {
             val verticalMenuList = mutableListOf<VerticalMenuVO>()
 
+            val club = VerticalMenuVO(
+                VerticalMenuId.MY_CLUB_ID,
+                "Datos del club",
+                R.drawable.ic_profile
+            )
             val administration = VerticalMenuVO(
                 VerticalMenuId.ADMINISTRATION_ID,
                 "Administración del club",
                 R.drawable.ic_settings
             )
-            val logout =
-                VerticalMenuVO(VerticalMenuId.LOGOUT_ID, "Cerrar sesión", R.drawable.ic_settings)
+            val logout = VerticalMenuVO(
+                VerticalMenuId.LOGOUT_ID,
+                "Cerrar sesión",
+                R.drawable.ic_settings)
 
+            verticalMenuList.add(club)
             verticalMenuList.add(administration)
             verticalMenuList.add(logout)
 

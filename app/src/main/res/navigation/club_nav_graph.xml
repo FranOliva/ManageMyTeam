@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/club_nav_graph"
+    app:startDestination="@id/clubFragment">
+
+    <fragment
+        android:id="@+id/clubFragment"
+        android:name="es.us.managemyteam.ui.fragment.ClubFragment" />
+
+    <fragment
+        android:id="@+id/clubEditFragment"
+        android:name="es.us.managemyteam.ui.fragment.EditClubFragment" />
+
+    <action
+        android:id="@+id/action_club_to_edit_club"
+        app:destination="@id/clubEditFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+</navigation>

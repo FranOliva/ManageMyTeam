@@ -26,9 +26,13 @@
         app:popUpTo="@id/splashFragment"
         app:popUpToInclusive="true" />
 
-    <include app:graph="@navigation/login_nav_graph" />
-
-    <include app:graph="@navigation/events_nav_graph" />
+    <action
+        android:id="@+id/action_menu_to_club"
+        app:destination="@+id/club_nav_graph"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 
     <action
         android:id="@+id/action_menu_to_login"
@@ -38,5 +42,10 @@
         app:popUpToInclusive="true"
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
         app:popExitAnim="@anim/nav_exit_to_bottom" />
+
+
+    <include app:graph="@navigation/club_nav_graph" />
+    <include app:graph="@navigation/login_nav_graph" />
+    <include app:graph="@navigation/events_nav_graph" />
 
 </navigation>

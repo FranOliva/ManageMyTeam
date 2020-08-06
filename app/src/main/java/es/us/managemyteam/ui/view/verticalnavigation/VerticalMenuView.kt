@@ -13,6 +13,7 @@ import es.us.managemyteam.contract.BaseAdapterClickListener
 import es.us.managemyteam.databinding.ViewVerticalMenuBinding
 import es.us.managemyteam.extension.getBaseActivity
 import es.us.managemyteam.ui.activity.MainActivity
+import es.us.managemyteam.ui.viewmodel.ClubViewModel
 import es.us.managemyteam.ui.viewmodel.MenuViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -78,6 +79,7 @@ class VerticalMenuView @JvmOverloads constructor(
     override fun onVerticalMenuClicked(menuId: VerticalMenuId) {
         when (menuId) {
             VerticalMenuId.LOGOUT_ID -> setupLogoutClick()
+            VerticalMenuId.MY_CLUB_ID -> setupClubClick()
         }
         needClosingDrawerListener?.onNeedClosingDrawer()
     }
@@ -90,6 +92,10 @@ class VerticalMenuView @JvmOverloads constructor(
     private fun setupLogoutClick() {
         menuViewModel.logout()
         (getBaseActivity() as MainActivity).getNavGraph().navigate(R.id.action_menu_to_login)
+    }
+
+    private fun setupClubClick() {
+        (getBaseActivity() as MainActivity).getNavGraph().navigate(R.id.action_menu_to_club)
     }
 
     private fun setupMyAccountNavigation(): Int {
