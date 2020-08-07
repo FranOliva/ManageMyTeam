@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -22,9 +23,15 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private val loginViewModel: LoginViewModel by viewModel()
     private val auth = FirebaseAuthUtil.getFirebaseAuthInstance()
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            activity?.finish()
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupBackPressed()
         setupViews()
         setupObservers()
         setupEnterClickListener()
@@ -34,6 +41,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         viewBinding.loginLabelGoToRegistration.setOnClickListener {
             findNavController().navigate(R.id.action_login_to_registration)
         }
+    }
+
+    private fun setupBackPressed() {
+        activity?.onBackPressedDispatcher?.addCallback(
+            viewLifecycleOwner,
+            onBackPressedCallback
+        )
     }
 
     private fun setupObservers() {

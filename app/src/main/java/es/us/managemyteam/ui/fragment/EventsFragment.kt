@@ -12,6 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
 import es.us.managemyteam.contract.BaseAdapterClickListener
 import es.us.managemyteam.data.model.EventBo
+import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.databinding.FragmentEventsBinding
 import es.us.managemyteam.extension.*
 import es.us.managemyteam.repository.util.Error
@@ -32,7 +33,28 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(), BaseAdapterClickLi
         setupList()
         setupClickListeners()
         setupEventsObserver()
+        setupUserObserver()
 
+    }
+
+    private fun setupUserObserver() {
+        eventsViewModel.getUserData()
+            .observe(viewLifecycleOwner, object : ResourceObserver<UserBo>() {
+                override fun onSuccess(response: UserBo?) {
+                    response?.let {
+                        setupButtonCreateEventVisibility(!it.isPlayer())
+                    }
+                }
+            })
+        eventsViewModel.getUser()
+    }
+
+    private fun setupButtonCreateEventVisibility(visible: Boolean) {
+        viewBinding.eventsFabCreateEvent.visibility = if (visible) {
+            VISIBLE
+        } else {
+            GONE
+        }
     }
 
     private fun setupClickListeners() {

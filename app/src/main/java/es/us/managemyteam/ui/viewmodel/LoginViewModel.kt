@@ -1,6 +1,8 @@
 package es.us.managemyteam.ui.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import es.us.managemyteam.R
 import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.extension.isEmail
@@ -8,21 +10,20 @@ import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.Resource
 import es.us.managemyteam.usecase.GetUserUc
 import es.us.managemyteam.usecase.LoginUc
+import es.us.managemyteam.util.CustomMediatorLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class LoginViewModel(private val loginUc: LoginUc, private val getUserUc: GetUserUc) : ViewModel() {
 
-    private val login: MediatorLiveData<Resource<String>> = MediatorLiveData()
-    private var loginSource: LiveData<Resource<String>> = MutableLiveData()
-    private val user: MediatorLiveData<Resource<UserBo>> = MediatorLiveData()
-    private var userSource: LiveData<Resource<UserBo>> = MutableLiveData()
+    private val login: CustomMediatorLiveData<Resource<String>> = CustomMediatorLiveData()
+    private val user: CustomMediatorLiveData<Resource<UserBo>> = CustomMediatorLiveData()
 
     fun getLoginData(): LiveData<Resource<String>> {
         return login.apply {
-            value = null
-        }
+            setData(null)
+        }.liveData()
     }
 
     fun login(
@@ -31,55 +32,45 @@ class LoginViewModel(private val loginUc: LoginUc, private val getUserUc: GetUse
     ) =
         viewModelScope.launch(Dispatchers.Main) {
             if (validateForm(email, password)) {
-                login.value = Resource.loading(null)
-                login.removeSource(loginSource)
+                login.setData(Resource.loading(data = null))
                 withContext(Dispatchers.IO) {
-                    loginSource =
-                        loginUc(
-                            email,
-                            password
-                        )
-                }
-                login.addSource(loginSource) {
-                    login.value = it
+                    login.changeSource(Dispatchers.Main, loginUc(email, password))
                 }
             }
         }
 
     fun getUserData(): LiveData<Resource<UserBo>> {
-        user.value = null
-        user.removeSource(userSource)
-        return user
+        user.setData(null)
+        return user.liveData()
     }
 
     fun getUser(uid: String) =
         viewModelScope.launch(Dispatchers.Main) {
-            user.value = null
-            user.value = Resource.loading(null)
-            user.removeSource(userSource)
+            user.setData(null)
+            user.setData(Resource.loading(null))
             withContext(Dispatchers.IO) {
-                userSource = getUserUc(uid)
-
-            }
-            user.addSource(userSource) {
-                user.value = it
+                user.changeSource(Dispatchers.Main, getUserUc(uid))
             }
         }
 
     private fun validateForm(email: String, password: String): Boolean {
         return when {
             email.isBlank() || password.isBlank() -> {
-                login.value = Resource.error(
-                    Error(
-                        R.string.registration_error_empty_fields
+                login.setData(
+                    Resource.error(
+                        Error(
+                            R.string.registration_error_empty_fields
+                        )
                     )
                 )
                 false
             }
             !email.isEmail() -> {
-                login.value = Resource.error(
-                    Error(
-                        R.string.registration_error_invalid_email
+                login.setData(
+                    Resource.error(
+                        Error(
+                            R.string.registration_error_invalid_email
+                        )
                     )
                 )
                 false
