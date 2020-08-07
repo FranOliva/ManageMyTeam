@@ -72,4 +72,7 @@
     <string name="edit_club_success">Datos del club editados correctamente</string>
     <string name="edit_club_title">Editar datos del club</string>
 
+    <!-- Others -->
+    <string name="administration_accept_players">Solicitudes de jugadores</string>
+
 </resources>

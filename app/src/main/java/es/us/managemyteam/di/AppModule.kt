@@ -82,4 +82,14 @@ val appModule = module {
     viewModel {
         LoginViewModel(get(), get())
     }
+
+    // Administration
+
+    factory {
+        GetPlayersUc(get())
+    }
+
+    viewModel {
+        AcceptPlayersViewModel(get())
+    }
 }

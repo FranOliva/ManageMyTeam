@@ -1,7 +1,6 @@
 package es.us.managemyteam.ui.view.verticalnavigation
 
 import android.content.Context
-import android.os.Handler
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
@@ -31,9 +30,7 @@ class VerticalMenuView @JvmOverloads constructor(
 
     override fun onFinishInflate() {
         super.onFinishInflate()
-        Handler().postDelayed({
-            setupUserIsAdminObserver()
-        }, 3000)
+        setupUserIsAdminObserver()
     }
 
     private fun setupUserIsAdminObserver() {
@@ -58,10 +55,6 @@ class VerticalMenuView @JvmOverloads constructor(
 
     }
 
-    fun notifyUserChanged() {
-        menuViewModel.getUser()
-    }
-
     private fun setupMenuList(userIsAdmin: Boolean) {
         viewBinding.verticalMenuListOption.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -81,6 +74,7 @@ class VerticalMenuView @JvmOverloads constructor(
         when (menuId) {
             VerticalMenuId.LOGOUT_ID -> setupLogoutClick()
             VerticalMenuId.MY_CLUB_ID -> setupClubClick()
+            VerticalMenuId.ADMINISTRATION_ID -> setupAdministrationClick()
         }
         needClosingDrawerListener?.onNeedClosingDrawer()
     }
@@ -97,6 +91,11 @@ class VerticalMenuView @JvmOverloads constructor(
 
     private fun setupClubClick() {
         (getBaseActivity() as MainActivity).getNavGraph().navigate(R.id.action_menu_to_club)
+    }
+
+    private fun setupAdministrationClick() {
+        (getBaseActivity() as MainActivity).getNavGraph()
+            .navigate(R.id.action_menu_to_accept_players)
     }
 
 }
