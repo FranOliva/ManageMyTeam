@@ -9,8 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import es.us.managemyteam.R
 import es.us.managemyteam.contract.BaseAdapterClickListener
+import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.databinding.ViewVerticalMenuBinding
 import es.us.managemyteam.extension.getBaseActivity
+import es.us.managemyteam.repository.util.ResourceObserver
 import es.us.managemyteam.ui.activity.MainActivity
 import es.us.managemyteam.ui.viewmodel.MenuViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -25,7 +27,7 @@ class VerticalMenuView @JvmOverloads constructor(
         ViewVerticalMenuBinding.inflate(LayoutInflater.from(context), this, true)
 
     private val menuViewModel: MenuViewModel by (context as AppCompatActivity).viewModel()
-    private var userIsLogged = false
+    private var userIsAdmin = false
 
     override fun onFinishInflate() {
         super.onFinishInflate()

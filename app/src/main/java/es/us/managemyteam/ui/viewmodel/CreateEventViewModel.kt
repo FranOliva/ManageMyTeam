@@ -1,6 +1,8 @@
 package es.us.managemyteam.ui.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import es.us.managemyteam.R
 import es.us.managemyteam.data.model.EventBo
 import es.us.managemyteam.data.model.LocationBo
@@ -8,6 +10,7 @@ import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.Resource
 import es.us.managemyteam.usecase.*
+import es.us.managemyteam.util.CustomMediatorLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -21,14 +24,9 @@ class CreateEventViewModel(
     private val createEventUc: CreateEventUc
 ) : ViewModel() {
 
-    private val currentNewEvent = MediatorLiveData<Resource<EventBo>>()
-    private var currentNewEventSource: LiveData<Resource<EventBo>> = MutableLiveData()
-
-    private val createEvent = MediatorLiveData<Resource<Boolean>>()
-    private var createEventSource: LiveData<Resource<Boolean>> = MutableLiveData()
-
-    private val locationSelected = MediatorLiveData<Resource<LocationBo?>>()
-    private var locationSelectedSource: LiveData<Resource<LocationBo?>> = MutableLiveData()
+    private val currentNewEvent = CustomMediatorLiveData<Resource<EventBo>>()
+    private val createEvent = CustomMediatorLiveData<Resource<Boolean>>()
+    private val locationSelected = CustomMediatorLiveData<Resource<LocationBo?>>()
 
     fun createEvent(
         title: String,
@@ -40,24 +38,18 @@ class CreateEventViewModel(
     ) =
         viewModelScope.launch(Dispatchers.Main) {
             if (validateForm(title, date, type)) {
-
-                createEvent.removeSource(createEventSource)
                 withContext(Dispatchers.IO) {
-                    createEventSource =
+                    createEvent.changeSource(
+                        Dispatchers.Main,
                         createEventUc(title, date, type, description, location, assistants)
+                    )
                 }
-
-                createEvent.addSource(createEventSource) {
-                    createEvent.value = it
-                }
-
             }
         }
 
     fun createEventData(): LiveData<Resource<Boolean>> {
-        createEvent.value = null
-        createEvent.removeSource(createEventSource)
-        return createEvent
+        createEvent.setData(null)
+        return createEvent.liveData()
     }
 
     private fun validateForm(
@@ -67,20 +59,26 @@ class CreateEventViewModel(
     ): Boolean {
         return when {
             title.isBlank() -> {
-                createEvent.value = Resource.error(
-                    Error(R.string.create_event_error_title)
+                createEvent.setData(
+                    Resource.error(
+                        Error(R.string.create_event_error_title)
+                    )
                 )
                 false
             }
             date == null -> {
-                createEvent.value = Resource.error(
-                    Error(R.string.create_event_error_date)
+                createEvent.setData(
+                    Resource.error(
+                        Error(R.string.create_event_error_date)
+                    )
                 )
                 false
             }
             type.isBlank() -> {
-                createEvent.value = Resource.error(
-                    Error(R.string.create_event_error_event_type)
+                createEvent.setData(
+                    Resource.error(
+                        Error(R.string.create_event_error_event_type)
+                    )
                 )
                 false
             }
@@ -90,17 +88,13 @@ class CreateEventViewModel(
 
     fun getCurrentNewEvent() =
         viewModelScope.launch(Dispatchers.Main) {
-            currentNewEvent.value = Resource.loading()
-            currentNewEvent.removeSource(currentNewEventSource)
+            currentNewEvent.setData(Resource.loading())
             withContext(Dispatchers.IO) {
-                currentNewEventSource = getCurrentNewEventUc()
-            }
-            currentNewEvent.addSource(currentNewEventSource) {
-                currentNewEvent.value = it
+                currentNewEvent.changeSource(Dispatchers.Main, getCurrentNewEventUc())
             }
         }
 
-    fun getCurrentNewEventData() = currentNewEvent as LiveData<Resource<EventBo>>
+    fun getCurrentNewEventData() = currentNewEvent.liveData()
 
     fun setCurrentNewEvent(event: EventBo) =
         viewModelScope.launch(Dispatchers.Main) {
@@ -119,17 +113,13 @@ class CreateEventViewModel(
 
     fun getLocationSelected() =
         viewModelScope.launch(Dispatchers.Main) {
-            locationSelected.value = Resource.loading()
-            locationSelected.removeSource(locationSelectedSource)
+            locationSelected.setData(Resource.loading())
             withContext(Dispatchers.IO) {
-                locationSelectedSource = getEventLocationUc()
-            }
-            locationSelected.addSource(locationSelectedSource) {
-                locationSelected.value = it
+                locationSelected.changeSource(Dispatchers.Main, getEventLocationUc())
             }
         }
 
-    fun getLocationSelectedData() = locationSelected as LiveData<Resource<LocationBo?>>
+    fun getLocationSelectedData() = locationSelected.liveData()
 
     fun setLocationSelected(location: LocationBo?) =
         viewModelScope.launch(Dispatchers.Main) {
