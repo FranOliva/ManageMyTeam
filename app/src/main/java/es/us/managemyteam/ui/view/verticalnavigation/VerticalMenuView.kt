@@ -6,14 +6,14 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import es.us.managemyteam.R
 import es.us.managemyteam.contract.BaseAdapterClickListener
+import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.databinding.ViewVerticalMenuBinding
 import es.us.managemyteam.extension.getBaseActivity
+import es.us.managemyteam.repository.util.ResourceObserver
 import es.us.managemyteam.ui.activity.MainActivity
-import es.us.managemyteam.ui.viewmodel.ClubViewModel
 import es.us.managemyteam.ui.viewmodel.MenuViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -27,29 +27,30 @@ class VerticalMenuView @JvmOverloads constructor(
         ViewVerticalMenuBinding.inflate(LayoutInflater.from(context), this, true)
 
     private val menuViewModel: MenuViewModel by (context as AppCompatActivity).viewModel()
-    private var userIsLogged = false
+    private var userIsAdmin = false
 
     override fun onFinishInflate() {
         super.onFinishInflate()
-        if (!isInEditMode) {
-            setupMenuList()
-            Handler().postDelayed({
-                //setupUserLoggedObserver()
-            }, 3000)
-        }
+        Handler().postDelayed({
+            setupUserIsAdminObserver()
+        }, 3000)
     }
 
-    /*private fun setupUserLoggedObserver() {
+    private fun setupUserIsAdminObserver() {
         getBaseActivity()?.let {
-            menuViewModel.getUserLoggedData().observe(it,
+            menuViewModel.getUserData().observe(it,
                 object : ResourceObserver<UserBo>() {
                     override fun onSuccess(response: UserBo?) {
-                        userIsLogged = response != null
+                        response?.let { user ->
+                            userIsAdmin = user.isAdmin()
+                            setupMenuList(userIsAdmin)
+                        }
                     }
 
-                    override fun onError(error: Error) {
+                    override fun onError(error: es.us.managemyteam.repository.util.Error) {
                         super.onError(error)
-                        userIsLogged = false
+                        userIsAdmin = false
+                        setupMenuList(userIsAdmin)
                     }
                 })
             menuViewModel.getUser()
@@ -59,13 +60,13 @@ class VerticalMenuView @JvmOverloads constructor(
 
     fun notifyUserChanged() {
         menuViewModel.getUser()
-    }*/
+    }
 
-    private fun setupMenuList() {
+    private fun setupMenuList(userIsAdmin: Boolean) {
         viewBinding.verticalMenuListOption.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         viewBinding.verticalMenuListOption.adapter =
-            VerticalMenuAdapter(VerticalMenuVO.getDefaultMenu(context)).apply {
+            VerticalMenuAdapter(VerticalMenuVO.getDefaultMenu(context, userIsAdmin)).apply {
                 setItemClickListener(this@VerticalMenuView)
             }
     }
@@ -96,15 +97,6 @@ class VerticalMenuView @JvmOverloads constructor(
 
     private fun setupClubClick() {
         (getBaseActivity() as MainActivity).getNavGraph().navigate(R.id.action_menu_to_club)
-    }
-
-    private fun setupMyAccountNavigation(): Int {
-        return 0
-        /*return if (userIsLogged) {
-            R.id.action_menu_to_user
-        } else {
-            R.id.action_menu_to_login
-        }*/
     }
 
 }

@@ -1,6 +1,7 @@
 package es.us.managemyteam.ui.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import es.us.managemyteam.R
 import es.us.managemyteam.constant.RegistrationError
 import es.us.managemyteam.data.model.Role
@@ -8,6 +9,7 @@ import es.us.managemyteam.extension.isEmail
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.Resource
 import es.us.managemyteam.usecase.PostRegistrationUc
+import es.us.managemyteam.util.CustomMediatorLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -16,10 +18,9 @@ class RegistrationViewModel(
     private val postRegistrationUc: PostRegistrationUc
 ) : ViewModel() {
 
-    private val createUser = MediatorLiveData<Resource<Boolean>>()
-    private var createUserSource: LiveData<Resource<Boolean>> = MutableLiveData()
+    private val createUser = CustomMediatorLiveData<Resource<Boolean>>()
 
-    fun getCreateUserData() = createUser
+    fun getCreateUserData() = createUser.liveData()
 
     fun createUser(
         email: String,
@@ -31,14 +32,11 @@ class RegistrationViewModel(
         role: Role
     ) = viewModelScope.launch {
         if (validateForm(email, password, confirmPassword, name, surname, phoneNumber)) {
-            createUser.removeSource(createUserSource)
             withContext(Dispatchers.IO) {
-                createUserSource =
+                createUser.changeSource(
+                    Dispatchers.Main,
                     postRegistrationUc(email, password, name, surname, phoneNumber, role)
-            }
-
-            createUser.addSource(createUserSource) {
-                createUser.value = it
+                )
             }
         }
     }
@@ -53,28 +51,34 @@ class RegistrationViewModel(
     ): Boolean {
         return when {
             name.isBlank() || password.isBlank() || passwordRepeated.isBlank() || name.isBlank() || surname.isBlank() || phoneNumber.isBlank() -> {
-                createUser.value = Resource.error(
-                    Error(
-                        R.string.registration_error_empty_fields,
-                        RegistrationError.EMPTY_FIELDS.ordinal
+                createUser.setData(
+                    Resource.error(
+                        Error(
+                            R.string.registration_error_empty_fields,
+                            RegistrationError.EMPTY_FIELDS.ordinal
+                        )
                     )
                 )
                 false
             }
             !email.isEmail() -> {
-                createUser.value = Resource.error(
-                    Error(
-                        R.string.registration_error_invalid_email,
-                        RegistrationError.NOT_AN_EMAIL.ordinal
+                createUser.setData(
+                    Resource.error(
+                        Error(
+                            R.string.registration_error_invalid_email,
+                            RegistrationError.NOT_AN_EMAIL.ordinal
+                        )
                     )
                 )
                 false
             }
             password.isBlank() || password != passwordRepeated -> {
-                createUser.value = Resource.error(
-                    Error(
-                        R.string.registration_error_invalid_password,
-                        RegistrationError.PASSWORDS_NOT_FILL.ordinal
+                createUser.setData(
+                    Resource.error(
+                        Error(
+                            R.string.registration_error_invalid_password,
+                            RegistrationError.PASSWORDS_NOT_FILL.ordinal
+                        )
                     )
                 )
                 false

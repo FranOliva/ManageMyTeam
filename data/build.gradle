@@ -36,6 +36,7 @@ dependencies {
 
     // Google
     implementation "com.google.android.gms:play-services-maps:$google_playservices_version"
+
     // Koin
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-android-scope:$koin_version"
@@ -45,5 +46,9 @@ dependencies {
     implementation "com.google.firebase:firebase-database:$firebase_database_version"
     implementation "com.google.firebase:firebase-analytics:$firebase_analytics_version"
     implementation "com.google.firebase:firebase-auth:$firebase_auth_version"
+
+    // Room
+    implementation "androidx.room:room-runtime:$androidx_room_version"
+    annotationProcessor "androidx.room:room-compiler:$androidx_room_version"
 
 }

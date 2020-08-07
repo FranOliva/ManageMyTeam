@@ -23,7 +23,6 @@ class VerticalMenuAdapter(
                 false
             )
         )
-
     }
 
     override fun onBind(item: VerticalMenuVO, position: Int, holder: VerticalMenuViewHolder) {
