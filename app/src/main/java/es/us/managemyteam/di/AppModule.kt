@@ -54,7 +54,7 @@ val appModule = module {
     }
 
     viewModel {
-        ClubViewModel(get())
+        ClubViewModel(get(), get())
     }
 
     // User

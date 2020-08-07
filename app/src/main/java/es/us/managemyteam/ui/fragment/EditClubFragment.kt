@@ -1,12 +1,15 @@
 package es.us.managemyteam.ui.fragment
 
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
+import es.us.managemyteam.data.model.ClubBo
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.databinding.FragmentEditClubBinding
 import es.us.managemyteam.extension.*
@@ -18,6 +21,12 @@ class EditClubFragment : BaseFragment<FragmentEditClubBinding>() {
 
     private val editClubViewModel: EditClubViewModel by viewModel()
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupObservers()
+    }
+
     override fun inflateViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -26,16 +35,14 @@ class EditClubFragment : BaseFragment<FragmentEditClubBinding>() {
     }
 
     private fun setupObservers() {
-       // setupEditClubObserver()
+        setupEditClubObserver()
     }
-
-    /*
 
     //region Observers
     private fun setupEditClubObserver() {
-        editClubViewModel.editClubData()
-            .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
-                override fun onSuccess(response: Boolean?) {
+        editClubViewModel.getClubData()
+            .observe(viewLifecycleOwner, object : ResourceObserver<ClubBo>() {
+                override fun onSuccess(response: ClubBo?) {
                     response?.let {
                         Toast.makeText(
                             context,
@@ -54,12 +61,19 @@ class EditClubFragment : BaseFragment<FragmentEditClubBinding>() {
                     )
                 }
 
+                override fun onLoading(loading: Boolean) {
+                    super.onLoading(loading)
+                    if (loading) {
+                        viewBinding.clubProgressBar.startAnimation()
+                    } else {
+                        viewBinding.clubProgressBar.stopAnimationAndHide()
+                    }
+                }
+
             })
     }
 
 
-
-     */
     override fun setupToolbar(toolbar: Toolbar) {
         toolbar.apply {
             setToolbarTitle(getString(R.string.edit_club_title))
