@@ -48,8 +48,9 @@ class MainActivity : AppCompatActivity() {
             setOnNavigationItemSelectedListener {
                 when (it.itemId) {
                     R.id.action_menu -> viewBinding.dashboardDrawerMain.openDrawer(
-                        GravityCompat.END
-                    )
+                        GravityCompat.END)
+                    R.id.action_events -> getNavGraph().navigate(R.id.action_menu_to_events)
+
                     else -> onNavigationItemSelected(it.itemId)
                 }
                 true
