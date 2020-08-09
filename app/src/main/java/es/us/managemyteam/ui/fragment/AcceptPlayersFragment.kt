@@ -30,10 +30,25 @@ class AcceptPlayersFragment : BaseFragment<FragmentAcceptsPlayersBinding>(), Acc
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupList()
-        setupUsersObserver()
+        setupPlayersObserver()
+        setupAcceptPlayerObserver()
     }
 
-    private fun setupUsersObserver() {
+    private fun setupAcceptPlayerObserver() {
+        acceptsPlayersViewModel.getAcceptPlayerData()
+            .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
+                override fun onSuccess(response: Boolean?) {
+                    response?.let {
+                        if (it) {
+                            acceptsPlayersViewModel.getPlayers()
+                        }
+                    }
+                }
+
+            })
+    }
+
+    private fun setupPlayersObserver() {
         acceptsPlayersViewModel.getPlayersData()
             .observe(viewLifecycleOwner, object : ResourceObserver<List<UserBo>>() {
                 override fun onSuccess(response: List<UserBo>?) {
@@ -55,6 +70,7 @@ class AcceptPlayersFragment : BaseFragment<FragmentAcceptsPlayersBinding>(), Acc
                     showErrorDialog(getString(error.errorMessageId))
                 }
             })
+        acceptsPlayersViewModel.getPlayers()
     }
 
     private fun setupList() {
@@ -88,7 +104,7 @@ class AcceptPlayersFragment : BaseFragment<FragmentAcceptsPlayersBinding>(), Acc
     }
 
     override fun onPlayerAccepted(user: UserBo) {
-        Toast.makeText(context, "Aceptado", Toast.LENGTH_LONG).show()
+        acceptsPlayersViewModel.acceptPlayer(user)
     }
 
     override fun onPlayerRefused(user: UserBo) {

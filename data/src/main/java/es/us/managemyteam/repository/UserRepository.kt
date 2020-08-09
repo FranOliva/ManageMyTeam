@@ -36,7 +36,6 @@ interface UserRepository {
 
     suspend fun logout()
 
-    suspend fun getPlayers(): LiveData<Resource<List<UserBo>>>
 }
 
 class UserRepositoryImpl : UserRepository {
@@ -47,7 +46,6 @@ class UserRepositoryImpl : UserRepository {
     private val userData = MutableLiveData<Resource<UserBo>>()
     private val userTable = RepositoryUtil.getDatabaseTable(DatabaseTables.USER_TABLE)
     private val loginData = MutableLiveData<Resource<String>>()
-    private val playersData = MutableLiveData<Resource<List<UserBo>>>()
 
     override suspend fun createUser(
         email: String,
@@ -87,25 +85,6 @@ class UserRepositoryImpl : UserRepository {
 
     override suspend fun logout() {
         auth.signOut()
-    }
-
-    override suspend fun getPlayers(): LiveData<Resource<List<UserBo>>> {
-        playersData.postValue(null)
-        userTable.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-                playersData.value = Resource.error(Error(serverErrorMessage = error.message))
-            }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val playersNotEnabled = snapshot.children.mapNotNull { it.getValue(UserBo::class.java) }
-                    .filter { it.isPlayer() && it.enable != null && !it.enable }
-                playersData.value =
-                    Resource.success(playersNotEnabled)
-            }
-
-        })
-
-        return playersData
     }
 
     override suspend fun getUserByUid(uid: String): LiveData<Resource<UserBo>> {

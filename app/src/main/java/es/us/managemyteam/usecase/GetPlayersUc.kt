@@ -1,8 +1,8 @@
 package es.us.managemyteam.usecase
 
-import es.us.managemyteam.repository.UserRepository
+import es.us.managemyteam.repository.AdminRepository
 
-class GetPlayersUc(private val userRepository: UserRepository) {
+class GetPlayersUc(private val adminRepository: AdminRepository) {
 
-    suspend operator fun invoke() = userRepository.getPlayers()
+    suspend operator fun invoke() = adminRepository.getPlayersNotEnabled()
 }

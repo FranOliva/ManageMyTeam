@@ -89,7 +89,11 @@ val appModule = module {
         GetPlayersUc(get())
     }
 
+    factory {
+        AcceptPlayerUc(get())
+    }
+
     viewModel {
-        AcceptPlayersViewModel(get())
+        AcceptPlayersViewModel(get(), get())
     }
 }
