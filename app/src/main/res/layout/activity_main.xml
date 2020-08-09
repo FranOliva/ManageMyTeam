@@ -64,6 +64,31 @@
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:navGraph="@navigation/main_nav_graph" />
 
+            <FrameLayout
+                android:id="@+id/main__container__loader"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="#D9FFFFFF"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+                <com.bluehomestudio.progressimage.ProgressPicture
+                    android:id="@+id/main__progress_bar"
+                    android:layout_width="@dimen/size_eighty"
+                    android:layout_height="@dimen/size_eighty"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_soccer_ball"
+                    app:animation="rotate"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </FrameLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView

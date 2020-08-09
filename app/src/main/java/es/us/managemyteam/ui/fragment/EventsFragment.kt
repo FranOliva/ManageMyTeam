@@ -89,11 +89,7 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(), BaseAdapterClickLi
 
                 override fun onLoading(loading: Boolean) {
                     super.onLoading(loading)
-                    if (loading) {
-                        viewBinding.eventsProgressBar.startAnimation()
-                    } else {
-                        viewBinding.eventsProgressBar.stopAnimationAndHide()
-                    }
+                    showLoader(loading)
                 }
             })
 

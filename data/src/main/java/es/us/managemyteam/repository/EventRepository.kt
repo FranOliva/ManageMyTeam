@@ -73,15 +73,19 @@ class EventRepositoryImpl : EventRepository {
         location: LocationBo?,
         assistants: List<UserBo>?
     ): LiveData<Resource<Boolean>> {
-        eventsRef.push().setValue(
-            EventBo(
-                title, date, location, description, assistants, type
-            )
-        ) { databaseError, _ ->
+        val eventToCreate = EventBo(
+            title, date, location, description, assistants, type
+        )
+        eventsRef.push().setValue(eventToCreate) { databaseError, ref ->
             if (databaseError != null) {
                 eventCreateData.value =
                     Resource.error(Error(serverErrorMessage = databaseError.message))
             } else {
+                ref.updateChildren(
+                    mapOf(
+                        Pair("uuid", ref.key)
+                    )
+                )
                 eventCreateData.value = Resource.success(true)
             }
         }

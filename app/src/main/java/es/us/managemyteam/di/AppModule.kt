@@ -75,6 +75,10 @@ val appModule = module {
         LogoutUc(get())
     }
 
+    factory {
+        RemoveUserUc(get())
+    }
+
     viewModel {
         RegistrationViewModel(get())
     }
@@ -94,6 +98,6 @@ val appModule = module {
     }
 
     viewModel {
-        AcceptPlayersViewModel(get(), get())
+        AcceptPlayersViewModel(get(), get(), get())
     }
 }

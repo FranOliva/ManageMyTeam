@@ -15,9 +15,9 @@ interface AdminRepository {
 
     suspend fun getPlayersNotEnabled(): LiveData<Resource<List<UserBo>>>
 
-    suspend fun acceptPlayer(player: UserBo): LiveData<Resource<Boolean>>
+    suspend fun acceptPlayer(uuid: String): LiveData<Resource<Boolean>>
 
-    suspend fun rejectPlayer(player: UserBo): LiveData<Resource<Boolean>>
+    suspend fun rejectPlayer(uuid: String): LiveData<Resource<Boolean>>
 }
 
 class AdminRepositoryImpl : AdminRepository {
@@ -46,31 +46,31 @@ class AdminRepositoryImpl : AdminRepository {
         return playersData
     }
 
-    override suspend fun acceptPlayer(player: UserBo): LiveData<Resource<Boolean>> {
+    override suspend fun acceptPlayer(uuid: String): LiveData<Resource<Boolean>> {
         playerNotEnabledData.postValue(null)
-        player.id?.let {
-            userTable.child(it).setValue(true) { error, _ ->
+        userTable.child(uuid).child("enable")
+            .setValue(true) { error, _ ->
                 playerNotEnabledData.value = if (error != null) {
                     Resource.error(Error(serverErrorMessage = error.message))
                 } else {
                     Resource.success(true)
                 }
             }
-        }
+
         return playerNotEnabledData
     }
 
-    override suspend fun rejectPlayer(player: UserBo): LiveData<Resource<Boolean>> {
+    override suspend fun rejectPlayer(uuid: String): LiveData<Resource<Boolean>> {
         playerNotEnabledData.postValue(null)
-        player.id?.let {
-            userTable.child(it).setValue(true) { error, _ ->
+        userTable.child(uuid).child("enable")
+            .setValue(false) { error, _ ->
                 playerNotEnabledData.value = if (error != null) {
                     Resource.error(Error(serverErrorMessage = error.message))
                 } else {
-                    Resource.success(false)
+                    Resource.success(true)
                 }
             }
-        }
+
         return playerNotEnabledData
     }
 

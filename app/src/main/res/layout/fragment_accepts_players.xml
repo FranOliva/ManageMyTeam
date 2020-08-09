@@ -15,4 +15,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <include
+        android:id="@+id/accepts_player__view__empty_requests"
+        layout="@layout/view_empty_requests"
+        android:visibility="gone" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

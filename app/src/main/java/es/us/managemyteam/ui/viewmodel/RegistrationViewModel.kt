@@ -31,6 +31,7 @@ class RegistrationViewModel(
         phoneNumber: String,
         role: Role
     ) = viewModelScope.launch {
+        createUser.setData(Resource.loading())
         if (validateForm(email, password, confirmPassword, name, surname, phoneNumber)) {
             withContext(Dispatchers.IO) {
                 createUser.changeSource(

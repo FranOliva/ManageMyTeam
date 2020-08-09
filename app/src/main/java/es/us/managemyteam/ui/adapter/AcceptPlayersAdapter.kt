@@ -32,10 +32,10 @@ class AcceptPlayersAdapter(private val acceptPlayerListener: AcceptPlayerListene
         override fun setup(viewBinding: RowAcceptPlayerBinding, item: UserBo) {
             viewBinding.rowAcceptPlayerLabelName.text = item.name.plus(" ").plus(item.surname)
             viewBinding.rowAcceptPlayerBtnAccept.setOnClickListener {
-                acceptPlayerListener.onPlayerAccepted(item)
+                acceptPlayerListener.onPlayerAccepted(item.uuid ?: "")
             }
             viewBinding.rowAcceptPlayerBtnRefuse.setOnClickListener {
-                acceptPlayerListener.onPlayerRefused(item)
+                acceptPlayerListener.onPlayerRefused(item.uuid ?: "")
             }
         }
 

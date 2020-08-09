@@ -36,6 +36,8 @@ interface UserRepository {
 
     suspend fun logout()
 
+    suspend fun removeUser(uuid: String): LiveData<Resource<Boolean>>
+
 }
 
 class UserRepositoryImpl : UserRepository {
@@ -46,6 +48,7 @@ class UserRepositoryImpl : UserRepository {
     private val userData = MutableLiveData<Resource<UserBo>>()
     private val userTable = RepositoryUtil.getDatabaseTable(DatabaseTables.USER_TABLE)
     private val loginData = MutableLiveData<Resource<String>>()
+    private val removeUserData = MutableLiveData<Resource<Boolean>>()
 
     override suspend fun createUser(
         email: String,
@@ -87,6 +90,18 @@ class UserRepositoryImpl : UserRepository {
         auth.signOut()
     }
 
+    override suspend fun removeUser(uuid: String): LiveData<Resource<Boolean>> {
+        removeUserData.postValue(null)
+        userTable.child(uuid).removeValue { error, _ ->
+            removeUserData.value = if (error != null) {
+                Resource.error(Error(serverErrorMessage = error.message))
+            } else {
+                Resource.success(false)
+            }
+        }
+        return removeUserData
+    }
+
     override suspend fun getUserByUid(uid: String): LiveData<Resource<UserBo>> {
         userData.postValue(null)
         userTable.child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
@@ -117,7 +132,9 @@ class UserRepositoryImpl : UserRepository {
         role: Role
     ): LiveData<Resource<Boolean>> {
         val user =
-            UserBo(name, surname, email, phoneNumber, null, role, null, false)
+            UserBo(name, surname, email, phoneNumber, null, role, null, false).apply {
+                uuid = auth.currentUser?.uid
+            }
 
         userTable
             .child(FirebaseAuth.getInstance().currentUser?.uid!!).setValue(user)

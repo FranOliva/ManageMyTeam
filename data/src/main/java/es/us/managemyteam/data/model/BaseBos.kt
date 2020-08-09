@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 open class BaseBo(
-    val id: String? = null
+    var uuid: String? = null
 )
 
 @Parcelize

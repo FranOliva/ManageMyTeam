@@ -3,8 +3,9 @@ package es.us.managemyteam.ui.fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -39,12 +40,14 @@ class AcceptPlayersFragment : BaseFragment<FragmentAcceptsPlayersBinding>(), Acc
             .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
                 override fun onSuccess(response: Boolean?) {
                     response?.let {
-                        if (it) {
-                            acceptsPlayersViewModel.getPlayers()
-                        }
+                        acceptsPlayersViewModel.getPlayers()
                     }
                 }
 
+                override fun onError(error: Error) {
+                    super.onError(error)
+                    showErrorDialog(getString(error.errorMessageId))
+                }
             })
     }
 
@@ -53,16 +56,21 @@ class AcceptPlayersFragment : BaseFragment<FragmentAcceptsPlayersBinding>(), Acc
             .observe(viewLifecycleOwner, object : ResourceObserver<List<UserBo>>() {
                 override fun onSuccess(response: List<UserBo>?) {
                     response?.let {
-                        acceptPlayersAdapter?.apply {
-                            setData(it)
-                            notifyDataSetChanged()
+                        if (response.isNotEmpty()) {
+                            viewBinding.acceptsPlayerViewEmptyRequests.root.visibility = GONE
+                            acceptPlayersAdapter?.apply {
+                                setData(it)
+                                notifyDataSetChanged()
+                            }
+                        } else {
+                            viewBinding.acceptsPlayerViewEmptyRequests.root.visibility = VISIBLE
                         }
                     }
                 }
 
                 override fun onLoading(loading: Boolean) {
                     super.onLoading(loading)
-                    // TODO
+                    showLoader(loading)
                 }
 
                 override fun onError(error: Error) {
@@ -103,11 +111,11 @@ class AcceptPlayersFragment : BaseFragment<FragmentAcceptsPlayersBinding>(), Acc
         bottomNavigationView.show()
     }
 
-    override fun onPlayerAccepted(user: UserBo) {
-        acceptsPlayersViewModel.acceptPlayer(user)
+    override fun onPlayerAccepted(uuid: String) {
+        acceptsPlayersViewModel.acceptPlayer(uuid)
     }
 
-    override fun onPlayerRefused(user: UserBo) {
-        Toast.makeText(context, "Rechazado", Toast.LENGTH_LONG).show()
+    override fun onPlayerRefused(uuid: String) {
+        acceptsPlayersViewModel.rejectPlayer(uuid)
     }
 }
