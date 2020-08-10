@@ -48,7 +48,8 @@
     <string name="user_created_successfully">Solicitud de registro enviada con éxito</string>
     <string name="login_email">Correo electrónico</string>
     <string name="login_password">Contraseña</string>
-    <string name="login_message_registration">¿Aún no has solicitado acceso? Regístrate aquí</string>
+    <string name="login_message_registration">¿Aún no has solicitado acceso?</string>
+    <string name="login_message_registration_here">Regístrate aquí</string>
     <string name="registration_player_title">Registro de jugador</string>
     <string name="registration_error_invalid_email">Introduzca un correo electrónico válido</string>
     <string name="registration_error_invalid_password">Las contraseñas introducidas no coinciden</string>
@@ -71,5 +72,8 @@
     <string name="edit_club_select_shield">Pulse para subir archivo y editar el escudo</string>
     <string name="edit_club_success">Datos del club editados correctamente</string>
     <string name="edit_club_title">Editar datos del club</string>
+
+    <!-- Others -->
+    <string name="administration_accept_players">Solicitudes de jugadores</string>
 
 </resources>

@@ -28,6 +28,14 @@ abstract class BaseFragment<Any : ViewBinding> : Fragment() {
         (activity as MainActivity).getVerticalNavigation().notifyUserChanged()
     }*/
 
+    fun showLoader(show: Boolean) {
+        activity?.findViewById<View>(R.id.main__container__loader)?.visibility = if (show) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)

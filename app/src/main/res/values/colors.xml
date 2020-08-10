@@ -9,4 +9,5 @@
     <color name="bluegrey">#849db6</color>
     <color name="primaryWithAlpha">#654285f1</color>
     <color name="pale_grey">#f4f7fa</color>
+    <color name="dark_gray">#a0a0a0</color>
 </resources>

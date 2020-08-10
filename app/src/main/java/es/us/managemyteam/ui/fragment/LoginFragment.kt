@@ -38,7 +38,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     }
 
     private fun setupViews() {
-        viewBinding.loginLabelGoToRegistration.setOnClickListener {
+        viewBinding.loginLabelGoToRegistrationHere.setOnClickListener {
             findNavController().navigate(R.id.action_login_to_registration)
         }
     }
