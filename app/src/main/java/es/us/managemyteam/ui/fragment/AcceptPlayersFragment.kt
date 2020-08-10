@@ -58,12 +58,12 @@ class AcceptPlayersFragment : BaseFragment<FragmentAcceptsPlayersBinding>(), Acc
                     response?.let {
                         if (response.isNotEmpty()) {
                             viewBinding.acceptsPlayerViewEmptyRequests.root.visibility = GONE
-                            acceptPlayersAdapter?.apply {
-                                setData(it)
-                                notifyDataSetChanged()
-                            }
                         } else {
                             viewBinding.acceptsPlayerViewEmptyRequests.root.visibility = VISIBLE
+                        }
+                        acceptPlayersAdapter?.apply {
+                            setData(it)
+                            notifyDataSetChanged()
                         }
                     }
                 }
