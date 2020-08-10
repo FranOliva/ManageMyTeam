@@ -44,7 +44,7 @@ val appModule = module {
     }
 
     viewModel {
-        CreateEventViewModel(get(), get(), get(), get(), get())
+        CreateEventViewModel(get(), get(), get(), get(), get(), get(), get(), get())
     }
 
     // Club

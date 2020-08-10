@@ -6,9 +6,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import es.us.managemyteam.data.database.DatabaseTables
+import es.us.managemyteam.data.model.CallBo
 import es.us.managemyteam.data.model.EventBo
 import es.us.managemyteam.data.model.LocationBo
-import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.RepositoryUtil
 import es.us.managemyteam.repository.util.Resource
@@ -32,8 +32,12 @@ interface EventRepository {
         type: String,
         description: String?,
         location: LocationBo?,
-        assistants: List<UserBo>?
+        call: CallBo?
     ): LiveData<Resource<Boolean>>
+
+    suspend fun getCurrentCall(): CallBo?
+
+    suspend fun setCurrentCall(call: CallBo?)
 
 }
 
@@ -43,6 +47,7 @@ class EventRepositoryImpl : EventRepository {
     private val eventsRef = RepositoryUtil.getDatabaseTable(DatabaseTables.EVENT_TABLE)
     private val events = MutableLiveData<Resource<List<EventBo>>>()
     private var currentEvent: EventBo? = EventBo()
+    private var currentCall: CallBo? = CallBo()
     private val eventCreateData = MutableLiveData<Resource<Boolean>>()
 
     init {
@@ -71,10 +76,10 @@ class EventRepositoryImpl : EventRepository {
         type: String,
         description: String?,
         location: LocationBo?,
-        assistants: List<UserBo>?
+        call: CallBo?
     ): LiveData<Resource<Boolean>> {
         val eventToCreate = EventBo(
-            title, date, location, description, assistants, type
+            title, date, location, description, call, type
         )
         eventsRef.push().setValue(eventToCreate) { databaseError, ref ->
             if (databaseError != null) {
@@ -90,6 +95,14 @@ class EventRepositoryImpl : EventRepository {
             }
         }
         return eventCreateData
+    }
+
+    override suspend fun getCurrentCall(): CallBo? {
+        return currentCall
+    }
+
+    override suspend fun setCurrentCall(call: CallBo?) {
+        this.currentCall = call
     }
 
     override suspend fun getEvents(): LiveData<Resource<List<EventBo>>> {

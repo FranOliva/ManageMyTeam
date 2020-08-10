@@ -64,6 +64,9 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
     private fun setupClickListeners() {
         setupDateClickListener()
         setupEventTypeClickListener()
+        viewBinding.createEventBtnSelectPlayers.setOnClickListener {
+            findNavController().navigate(R.id.action_create_event_to_select_players)
+        }
         viewBinding.createEventBtnSave.setOnClickListener {
             clickOnSave()
         }
@@ -197,11 +200,11 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
         }
         val description = viewBinding.createEventEditTextDescription.text.trim()
         val eventType = viewBinding.createEventEditTextEventType.text.trim()
-        val assistants = null
+        val call = null
 
         createEventViewModel.setCurrentNewEvent(
             EventBo(
-                title, date, locationSelected, description, assistants, eventType
+                title, date, locationSelected, description, call, eventType
             )
         )
     }

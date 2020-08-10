@@ -10,6 +10,6 @@ data class EventBo(
     val date: Date? = null,
     val location: LocationBo? = null,
     val description: String? = null,
-    val assistants: List<UserBo>? = null,
+    val call: CallBo? = null,
     val eventType: String? = null
 ) : BaseBo(), Parcelable
