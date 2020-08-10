@@ -18,13 +18,23 @@
     <es.us.managemyteam.ui.view.input.EditableTextView
         android:id="@+id/chat__input__message"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/size_sixty"
         app:input_hint="Escribe tu mensaje"
         app:input_ime="done"
         app:input_type="text"
         app:input_hint_color="@color/dark_gray"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/chat__btn__send"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/chat__btn__send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/chat_send"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/primary"
+        android:padding="@dimen/size_sixteen"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

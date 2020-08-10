@@ -47,7 +47,7 @@ class MessageAdapter :
     }
 
     abstract class MessageViewHolder(
-        viewBinding: ViewBinding,
+        viewBinding: ViewBinding
     ) : BaseViewHolder<MessageBo, ViewBinding>(viewBinding) {
 
         override fun setup(viewBinding: ViewBinding, item: MessageBo) {}
