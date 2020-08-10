@@ -32,9 +32,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_fourty"
-        android:fontFamily="@font/chewy_regular"
+        android:fontFamily="@font/fonts_galano_extrabold_italic"
         android:text="@string/app_name_separated"
-        android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="@dimen/text_thirty"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,6 +45,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/size_twenty"
+        android:layout_marginTop="@dimen/size_fourty"
         android:layout_marginEnd="@dimen/size_twenty"
         android:layout_marginBottom="@dimen/size_twenty"
         android:background="@drawable/background_rounded_white"
@@ -82,26 +82,49 @@
             android:id="@+id/login__btn__enter"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_fourty"
+            android:layout_marginTop="@dimen/size_twentyeight"
             app:btn_background_color="@color/primaryDark"
             app:btn_has_radius="true"
             app:btn_text="Entrar"
             app:btn_text_color="@color/white"
+            app:btn_text_style="@style/Bold.Eighteen.White"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/login__edit_text__password" />
 
         <TextView
             android:id="@+id/login__label__go_to_registration"
-            style="@style/Regular.Sixteen.Black"
+            style="@style/Regular.Sixteen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_twenty"
+            android:layout_marginTop="@dimen/size_thirty"
             android:gravity="center_horizontal"
             android:text="@string/login_message_registration"
+            android:textColor="@color/dark_gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/login__btn__enter" />
+
+        <TextView
+            android:id="@+id/login__label__go_to_registration_here"
+            style="@style/Regular.Sixteen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_ten"
+            android:gravity="center_horizontal"
+            android:text="@string/login_message_registration_here"
+            android:textColor="@color/primaryDark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login__label__go_to_registration" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_two"
+            android:background="@color/primaryDark"
+            app:layout_constraintEnd_toEndOf="@id/login__label__go_to_registration_here"
+            app:layout_constraintStart_toStartOf="@id/login__label__go_to_registration_here"
+            app:layout_constraintTop_toBottomOf="@id/login__label__go_to_registration_here" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

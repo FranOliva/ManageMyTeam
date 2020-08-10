@@ -314,6 +314,18 @@
         <item name="android:fontFamily">@font/fonts_notosans_bold</item>
     </style>
 
+    <style name="Bold.Eighteen" parent="Bold">
+        <item name="android:textSize">@dimen/text_eighteen</item>
+    </style>
+
+    <style name="Bold.Eighteen.Black" parent="Bold.Eighteen">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Bold.Eighteen.White" parent="Bold.Eighteen">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <style name="Bold.Twenty" parent="Bold">
         <item name="android:textSize">@dimen/text_twenty</item>
     </style>
