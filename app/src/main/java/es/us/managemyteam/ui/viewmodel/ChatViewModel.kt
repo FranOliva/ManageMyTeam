@@ -3,6 +3,7 @@ package es.us.managemyteam.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import es.us.managemyteam.data.model.MessageBo
+import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.repository.util.Resource
 import es.us.managemyteam.usecase.GetMessagesUc
 import es.us.managemyteam.usecase.GetUserUc
@@ -22,6 +23,7 @@ class ChatViewModel(
         CustomMediatorLiveData()
     private val messageCreated: CustomMediatorLiveData<Resource<Boolean>> =
         CustomMediatorLiveData()
+    var currentUser: UserBo? = null
 
     init {
         getMessages()
@@ -40,13 +42,13 @@ class ChatViewModel(
     }
 
 
-    fun postMessage(message: String, from: String) {
+    fun postMessage(message: String, from: String, fromName: String) {
         viewModelScope.launch(Dispatchers.Main) {
             messageCreated.setData(Resource.loading(data = null))
             withContext(Dispatchers.IO) {
                 messageCreated.changeSource(
                     Dispatchers.Main,
-                    postMessageUc(message, from)
+                    postMessageUc(message, from, fromName)
                 )
             }
         }

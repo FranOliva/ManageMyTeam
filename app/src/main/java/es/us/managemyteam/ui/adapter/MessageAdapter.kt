@@ -24,7 +24,7 @@ class MessageAdapter :
 
     override fun getItemViewType(position: Int): Int {
         return if (currentUserId.isNotBlank() &&
-            currentUserId == data[position].from
+            currentUserId == data[position].fromId
         ) {
             VIEW_TYPE_OUTGOING
         } else {
@@ -77,6 +77,8 @@ class MessageAdapter :
             (viewBinding as RowChatOutgoingBinding).apply {
                 rowChatOutgoingLabelMessage.text = item.message
                 rowChatOutgoingLabelDate.text = DateUtil.format(item.date)
+                    .plus(" - ")
+                    .plus(item.fromName)
             }
         }
 

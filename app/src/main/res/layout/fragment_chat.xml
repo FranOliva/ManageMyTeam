@@ -35,7 +35,7 @@
         android:src="@drawable/chat_send"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@color/primary"
+        android:background="@color/primaryWithAlpha"
         android:padding="@dimen/size_sixteen"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

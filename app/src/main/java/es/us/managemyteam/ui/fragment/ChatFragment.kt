@@ -10,11 +10,10 @@ import es.us.managemyteam.R
 import es.us.managemyteam.data.model.MessageBo
 import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.databinding.FragmentChatBinding
-import es.us.managemyteam.extension.setNavIcon
-import es.us.managemyteam.extension.setToolbarTitle
-import es.us.managemyteam.extension.show
+import es.us.managemyteam.extension.*
 import es.us.managemyteam.repository.util.ResourceObserver
 import es.us.managemyteam.ui.adapter.MessageAdapter
+import es.us.managemyteam.ui.view.input.EditableTextChangeListener
 import es.us.managemyteam.ui.viewmodel.ChatViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -26,6 +25,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUserObserver()
+        setupWatcher()
         viewBinding.chatBtnSend.setOnClickListener {
             clickOnSend()
         }
@@ -38,12 +38,14 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
                 response?.let {
                     messageAdapter.setData(it)
                     messageAdapter.notifyDataSetChanged()
+                    viewBinding.chatListMessages.scrollToPosition(messageAdapter.data.lastIndex)
                 }
             }
         })
         chatViewModel.getUserData()
             .observe(viewLifecycleOwner, object : ResourceObserver<UserBo>() {
                 override fun onSuccess(response: UserBo?) {
+                    chatViewModel.currentUser = response
                     response?.let {
                         setupList(it.uuid ?: "")
                         chatViewModel.getMessages()
@@ -60,10 +62,28 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
         }
     }
 
+    private fun setupWatcher() {
+        viewBinding.chatInputMessage.listener = object : EditableTextChangeListener {
+            override fun onTextChanged(text: String) {
+                viewBinding.chatBtnSend.isEnabled = !text.isBlank()
+                viewBinding.chatBtnSend.setBackgroundResource(
+                    if (text.isBlank()) {
+                        R.color.primaryWithAlpha
+                    } else {
+                        R.color.primary
+                    }
+                )
+            }
+        }
+    }
+
     private fun clickOnSend() {
-        val message = viewBinding.chatInputMessage.text.trim()
-        val user = messageAdapter.getCurrentUserId()
-        chatViewModel.postMessage(message, user)
+        chatViewModel.currentUser?.let {
+            val message = viewBinding.chatInputMessage.text.trim()
+            chatViewModel.postMessage(message, it.uuid ?: "", it.name ?: "")
+            viewBinding.chatInputMessage.setText("")
+            getFocusedView().hideKeyboard()
+        }
     }
 
     override fun inflateViewBinding(
