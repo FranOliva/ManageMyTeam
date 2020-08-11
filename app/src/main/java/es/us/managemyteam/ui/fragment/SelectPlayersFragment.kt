@@ -1,7 +1,6 @@
 package es.us.managemyteam.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,8 +46,10 @@ class SelectPlayersFragment : BaseFragment<FragmentSelectPlayersBinding>() {
             unselectedPlayers,
             Date(System.currentTimeMillis())
         )
-
-        Log.d("CALLBO", call.toString())
+        /*eventoActual = createEventViewModel.getCurrentNewEvent()
+        eventoActual.setCall(call)
+        createEventViewModel.setCurrentNewEvent(eventActual)
+        popBack()*/
     }
 
     private fun setupPlayersObserver() {

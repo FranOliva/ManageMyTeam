@@ -39,6 +39,8 @@ interface EventRepository {
 
     suspend fun setCurrentCall(call: CallBo?)
 
+    //suspend fun getPlayersCalled(eventUuid: String)
+
 }
 
 class EventRepositoryImpl : EventRepository {
@@ -104,6 +106,21 @@ class EventRepositoryImpl : EventRepository {
     override suspend fun setCurrentCall(call: CallBo?) {
         this.currentCall = call
     }
+
+    /*   override suspend fun getPlayersCalled(eventUuid: String) {
+           val call = eventsRef.child(eventUuid).child("call")
+               .addValueEventListener(object : ValueEventListener {
+                   override fun onCancelled(databaseError: DatabaseError) {
+                       call.value = Resource.error(Error(serverErrorMessage = databaseError.message))
+                   }
+
+                   override fun onDataChange(dataSnapshot: DataSnapshot) {
+                       call.value =
+                           Resource.success(dataSnapshot.children.mapNotNull { it.getValue(CallBo::class.java) })
+                   }
+
+               })
+       }*/
 
     override suspend fun getEvents(): LiveData<Resource<List<EventBo>>> {
         return events
