@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
         when (itemId) {
             //R.id.action_events -> getNavGraph().navigate((1))
             //R.id.action_menu_to_club -> getNavGraph().navigate((1))
-           // R.id.action_chat -> getNavGraph().navigate((1))*/
+            R.id.action_chat -> getNavGraph().navigate((R.id.action_menu_to_chat))
             else -> Log.d("", "No action found for this id")
         }
     }

@@ -18,11 +18,12 @@
     <es.us.managemyteam.ui.view.input.EditableTextView
         android:id="@+id/chat__input__message"
         android:layout_width="0dp"
-        android:layout_height="@dimen/size_sixty"
+        android:layout_height="0dp"
         app:input_hint="Escribe tu mensaje"
         app:input_ime="done"
         app:input_type="text"
         app:input_hint_color="@color/dark_gray"
+        app:layout_constraintTop_toTopOf="@+id/chat__btn__send"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/chat__btn__send"
         app:layout_constraintBottom_toBottomOf="parent"/>

@@ -20,13 +20,15 @@ class MessageAdapter :
         currentUserId = userId
     }
 
+    fun getCurrentUserId() = currentUserId
+
     override fun getItemViewType(position: Int): Int {
         return if (currentUserId.isNotBlank() &&
             currentUserId == data[position].from
         ) {
-            VIEW_TYPE_INCOME
-        } else {
             VIEW_TYPE_OUTGOING
+        } else {
+            VIEW_TYPE_INCOME
         }
     }
 
