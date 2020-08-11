@@ -35,6 +35,8 @@ interface EventRepository {
         assistants: List<UserBo>?
     ): LiveData<Resource<Boolean>>
 
+    suspend fun getEventDetail(uuid: String): LiveData<Resource<EventBo>>
+
 }
 
 class EventRepositoryImpl : EventRepository {
@@ -44,6 +46,7 @@ class EventRepositoryImpl : EventRepository {
     private val events = MutableLiveData<Resource<List<EventBo>>>()
     private var currentEvent: EventBo? = EventBo()
     private val eventCreateData = MutableLiveData<Resource<Boolean>>()
+    private val eventDetail = MutableLiveData<Resource<EventBo>>()
 
     init {
         initializeEventsListener()
@@ -90,6 +93,21 @@ class EventRepositoryImpl : EventRepository {
             }
         }
         return eventCreateData
+    }
+
+    override suspend fun getEventDetail(uuid: String): LiveData<Resource<EventBo>> {
+        eventDetail.postValue(null)
+        eventsRef.child(uuid).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                eventDetail.value = Resource.error(Error(serverErrorMessage = error.message))
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                eventDetail.value = Resource.success(snapshot.getValue(EventBo::class.java))
+            }
+
+        })
+        return eventDetail
     }
 
     override suspend fun getEvents(): LiveData<Resource<List<EventBo>>> {

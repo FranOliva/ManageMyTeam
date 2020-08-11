@@ -39,12 +39,20 @@ val appModule = module {
         SetCurrentNewEventUc(get())
     }
 
+    factory {
+        GetEventDetailUc(get())
+    }
+
     viewModel {
         EventsViewModel(get(), get())
     }
 
     viewModel {
         CreateEventViewModel(get(), get(), get(), get(), get())
+    }
+
+    viewModel {
+        EventDetailViewModel(get())
     }
 
     // Club
