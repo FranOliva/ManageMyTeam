@@ -25,8 +25,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:clickable="true"
-                app:srcCompat="@drawable/ic_back"
-                android:focusable="true" />
+                android:focusable="true"
+                app:srcCompat="@drawable/ic_back" />
 
             <TextView
                 android:id="@+id/registration__label__title"
@@ -113,6 +113,7 @@
             android:layout_marginTop="@dimen/size_sixteen"
             app:input_header="@string/user_phone"
             app:input_ime="done"
+            app:input_type="phone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/registration__edit_text_confirm_password" />
