@@ -3,15 +3,64 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/size_twenty">
 
-    <TextView
-        android:id="@+id/event_detail__label__title"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/event_detail__container__header"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/primary"
+        app:cardCornerRadius="@dimen/size_eight"
+        app:contentPadding="@dimen/size_sixteen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Hola" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/event_detail__label__date"
+                style="@style/SemiBold.Sixteen.White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/size_fourteen"
+                tools:text="20/01/2021 12:00" />
+
+            <TextView
+                android:id="@+id/event_detail__label__title"
+                style="@style/Bold.Twenty.White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/size_fourteen"
+                android:textSize="@dimen/text_twentyfour"
+                tools:text="Azahar CF - CD Alcalá" />
+
+            <TextView
+                android:id="@+id/event_detail__label__type"
+                style="@style/Medium.Sixteen.White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Partido" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/event_detail__label__body"
+        style="@style/Medium.Sixteen.Black"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_twentytwo"
+        android:padding="@dimen/size_sixteen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/event_detail__container__header"
+        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque arcu eros, finibus ac convallis ac, pellentesque quis eros. Pellentesque sodales egestas eros, a imperdiet magna suscipit eu. Mauris laoreet consequat feugiat. Suspendisse convallis, metus ac fringilla luctus, velit urna dictum ligula, non consectetur nulla magna id libero. Fusce at condimentum nulla. Aliquam congue dui magna, eget semper ante rhoncus et. Suspendisse vitae lacinia ligula. Nullam ut ultricies metus, in maximus metus. Ut efficitur tincidunt enim at ultrices. Sed nec tempor enim. Integer sagittis mauris nibh, non fringilla est ultricies et. Sed ac dapibus nisi. Nullam ultrices posuere consectetur. Nullam blandit, felis imperdiet molestie posuere, lacus metus auctor metus, a dapibus lorem eros vel massa." />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
