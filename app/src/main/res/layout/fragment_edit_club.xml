@@ -94,7 +94,7 @@ android:clipToPadding="false">
     </FrameLayout>
 
     <es.us.managemyteam.ui.view.loading_button.LoadingButtonView
-        android:id="@+id/edit_club__btn__save"
+        android:id="@+id/edit_club__fab__save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_thirty"

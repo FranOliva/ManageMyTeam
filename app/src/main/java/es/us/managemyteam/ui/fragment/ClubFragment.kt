@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
 import es.us.managemyteam.repository.util.Error
-import es.us.managemyteam.contract.BaseAdapterClickListener
 import es.us.managemyteam.data.model.ClubBo
 import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.databinding.FragmentClubBinding
