@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import es.us.managemyteam.R
 import es.us.managemyteam.data.model.ClubBo
+import es.us.managemyteam.extension.isEmail
+import es.us.managemyteam.extension.isURL
 import es.us.managemyteam.repository.util.Resource
 import es.us.managemyteam.usecase.GetClubUc
 import es.us.managemyteam.usecase.GetUserUc
@@ -21,7 +23,7 @@ class EditClubViewModel(
 ) : BaseLoggedViewModel(getUserUc) {
 
     private val club: CustomMediatorLiveData<Resource<ClubBo>> = CustomMediatorLiveData()
-    private val editClub = CustomMediatorLiveData<Resource<ClubBo>>()
+    private val editClub = CustomMediatorLiveData<Resource<Boolean>>()
 
     fun getClub() {
         viewModelScope.launch(Dispatchers.Main) {
@@ -40,21 +42,22 @@ class EditClubViewModel(
     }
 
     fun editClub(
+        uuid: String,
         name: String,
         dateFundation: String,
         location: String,
         president: String,
         coach: String,
-        phoneNumber: Long,
+        phoneNumber: String,
         mail: String,
         web: String
     ) =
         viewModelScope.launch(Dispatchers.Main) {
-            if (validateForm(name, dateFundation, location, president, coach, phoneNumber, mail)) {
+            if (validateForm(name, dateFundation, location, president, coach, phoneNumber, mail, web)) {
                 withContext(Dispatchers.IO) {
                     editClub.changeSource(
                         Dispatchers.Main,
-                        editClubUc(name, dateFundation, location, president, coach, phoneNumber, mail, web)
+                        editClubUc(uuid, name, dateFundation, location, president, coach, phoneNumber, mail, web)
                     )
                 }
             }
@@ -66,8 +69,9 @@ class EditClubViewModel(
         location: String,
         president: String,
         coach: String,
-        phoneNumber: Long,
-        mail: String
+        phoneNumber: String,
+        mail: String,
+        web: String
     ): Boolean {
         return when {
             name.isBlank() -> {
@@ -118,10 +122,18 @@ class EditClubViewModel(
                 )
                 false
             }
-            mail.matches(Regex("^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})")) -> {
+            mail.isEmail() -> {
                 editClub.setData(
                     Resource.error(
                         Error(R.string.edit_club_error_mail)
+                    )
+                )
+                false
+            }
+            web.isURL() -> {
+                editClub.setData(
+                    Resource.error(
+                        Error(R.string.edit_club_error_web)
                     )
                 )
                 false

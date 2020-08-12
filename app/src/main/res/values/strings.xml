@@ -80,8 +80,10 @@
     <string name="edit_club_error_phone_number">Debe introducir un número de teléfono válido\n</string>
     <string name="edit_club_error_mail">Debe introducir un email válido\n</string>
     <string name="edit_club_error_web">Debe introducir una dirección web válida\n</string>
+    <string name="edit_club_date_format">%02d/%02d/%04d</string>
 
     <!-- Others -->
     <string name="administration_accept_players">Solicitudes de jugadores</string>
+    <string name="administration_create_coach">Crear entrenador</string>
 
 </resources>

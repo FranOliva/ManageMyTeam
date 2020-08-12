@@ -1,5 +1,7 @@
 package es.us.managemyteam.ui.fragment
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +27,8 @@ class EditClubFragment : BaseFragment<FragmentEditClubBinding>() {
 
     private val editClubViewModel: EditClubViewModel by viewModel()
     private var userIsAdmin = false
+    private var clubUuid = ""
+    private var selectedDate = Calendar.getInstance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,6 +55,7 @@ class EditClubFragment : BaseFragment<FragmentEditClubBinding>() {
             .observe(viewLifecycleOwner, object : ResourceObserver<ClubBo>() {
                 override fun onSuccess(response: ClubBo?) {
                     response?.let {
+                        clubUuid = it.uuid ?:""
                         setupView(it)
                         Toast.makeText(
                             context,
@@ -94,6 +99,7 @@ class EditClubFragment : BaseFragment<FragmentEditClubBinding>() {
     }
 
     private fun setupClickListeners() {
+        setupDateClickListener()
         viewBinding.editClubFabSave.setOnClickListener {
             findNavController().navigate(R.id.action_club_to_edit_club)
             clickOnSave()
@@ -137,15 +143,86 @@ class EditClubFragment : BaseFragment<FragmentEditClubBinding>() {
         getFocusedView().hideKeyboard()
 
         editClubViewModel.editClub(
+            clubUuid,
             name,
             dateFundation,
+            location,
             president,
             coach,
-            location,
             phoneNumber,
             mail,
             web
         )
+    }
+
+    private fun setupDateClickListener() {
+
+        viewBinding.editClubEditDateFundation.clickListener {
+            showDateDialog(
+                selectedDate,
+                DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+                    updateSelectedDate(dayOfMonth, month + 1, year)
+                    showTimePickerDialog(dayOfMonth, month + 1, year)
+                })
+        }
+    }
+
+    //endregion
+
+    //region Dialogs
+
+    private fun updateSelectedDate(day: Int, month: Int, year: Int) {
+        selectedDate = Calendar.getInstance().apply {
+            set(Calendar.DAY_OF_MONTH, day)
+            set(Calendar.MONTH, month)
+            set(Calendar.YEAR, year)
+        }
+    }
+
+    private fun showDateDialog(
+        date: Calendar,
+        dateListener: DatePickerDialog.OnDateSetListener
+    ) {
+        val year = date[Calendar.YEAR]
+        val month = date[Calendar.MONTH]
+        val day = date[Calendar.DAY_OF_MONTH]
+
+        context?.let {
+            DatePickerDialog(
+                it,
+                R.style.DialogTheme,
+                dateListener,
+                year,
+                month,
+                day
+            ).apply {
+                datePicker.minDate = Date().time
+                show()
+            }
+        }
+    }
+
+    private fun showTimePickerDialog(day: Int, month: Int, year: Int) {
+        context?.let {
+            TimePickerDialog(
+                it,
+                TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+                    viewBinding.editClubEditDateFundation.setText(
+                        String.format(
+                            getString(R.string.edit_club_date_format),
+                            day,
+                            month,
+                            year,
+                            hourOfDay,
+                            minute
+                        )
+                    )
+                }, 0, 0, true
+            ).apply {
+                setCancelable(false)
+                show()
+            }
+        }
     }
 
 
