@@ -39,6 +39,14 @@ val appModule = module {
         SetCurrentNewEventUc(get())
     }
 
+    factory {
+        GetCurrentCallUc(get())
+    }
+
+    factory {
+        SetCurrentCallUc(get())
+    }
+
     viewModel {
         EventsViewModel(get(), get())
     }
