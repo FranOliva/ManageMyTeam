@@ -75,5 +75,9 @@ dependencies {
     implementation "org.koin:koin-android-scope:$koin_version"
     implementation "org.koin:koin-android-viewmodel:$koin_version"
 
-    compile 'com.github.mmoamenn:ProgressImage_Android:0.0.2'
+    // Paypal
+
+    implementation "com.paypal.sdk:paypal-android-sdk:$paypal_version"
+
+    implementation "com.github.mmoamenn:ProgressImage_Android:$progress_image_version"
 }

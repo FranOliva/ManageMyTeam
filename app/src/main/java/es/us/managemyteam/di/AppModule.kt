@@ -1,5 +1,7 @@
 package es.us.managemyteam.di
 
+import es.us.managemyteam.contract.PaypalInterface
+import es.us.managemyteam.manager.PaypalManager
 import es.us.managemyteam.ui.viewmodel.*
 import es.us.managemyteam.usecase.*
 import org.koin.android.viewmodel.dsl.viewModel
@@ -8,6 +10,10 @@ import org.koin.dsl.module
 val appModule = module {
 
     // General
+
+    single<PaypalInterface> {
+        PaypalManager().apply { initialize(get()) }
+    }
 
     viewModel {
         MenuViewModel(get(), get())
@@ -55,6 +61,12 @@ val appModule = module {
 
     viewModel {
         ClubViewModel(get())
+    }
+
+    //Payment
+
+    viewModel {
+        PaymentViewModel(get())
     }
 
     // User
