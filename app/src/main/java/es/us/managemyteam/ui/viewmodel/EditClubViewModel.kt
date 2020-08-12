@@ -5,16 +5,18 @@ import androidx.lifecycle.viewModelScope
 import es.us.managemyteam.R
 import es.us.managemyteam.data.model.ClubBo
 import es.us.managemyteam.extension.isEmail
+import es.us.managemyteam.extension.isPhone
 import es.us.managemyteam.extension.isURL
+import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.Resource
+import es.us.managemyteam.usecase.EditClubUc
 import es.us.managemyteam.usecase.GetClubUc
 import es.us.managemyteam.usecase.GetUserUc
-import es.us.managemyteam.repository.util.Error
-import es.us.managemyteam.usecase.EditClubUc
 import es.us.managemyteam.util.CustomMediatorLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 
 class EditClubViewModel(
     private val getClubUc: GetClubUc,
@@ -44,7 +46,7 @@ class EditClubViewModel(
     fun editClub(
         uuid: String,
         name: String,
-        dateFundation: String,
+        dateFundation: Date?,
         location: String,
         president: String,
         coach: String,
@@ -53,15 +55,40 @@ class EditClubViewModel(
         web: String
     ) =
         viewModelScope.launch(Dispatchers.Main) {
-            if (validateForm(name, dateFundation, location, president, coach, phoneNumber, mail, web)) {
+            if (validateForm(
+                    name,
+                    dateFundation.toString(),
+                    location,
+                    president,
+                    coach,
+                    phoneNumber,
+                    mail,
+                    web
+                )
+            ) {
                 withContext(Dispatchers.IO) {
                     editClub.changeSource(
                         Dispatchers.Main,
-                        editClubUc(uuid, name, dateFundation, location, president, coach, phoneNumber, mail, web)
+                        editClubUc(
+                            uuid,
+                            name,
+                            dateFundation,
+                            location,
+                            president,
+                            coach,
+                            phoneNumber,
+                            mail,
+                            web
+                        )
                     )
                 }
             }
         }
+
+    fun editClubData(): LiveData<Resource<Boolean>> {
+        editClub.setData(null)
+        return editClub.liveData()
+    }
 
     private fun validateForm(
         name: String,
@@ -114,7 +141,7 @@ class EditClubViewModel(
                 )
                 false
             }
-            phoneNumber.toDouble().isNaN() -> {
+            !phoneNumber.isPhone() -> {
                 editClub.setData(
                     Resource.error(
                         Error(R.string.edit_club_error_phone_number)
@@ -122,7 +149,7 @@ class EditClubViewModel(
                 )
                 false
             }
-            mail.isEmail() -> {
+            !mail.isEmail() -> {
                 editClub.setData(
                     Resource.error(
                         Error(R.string.edit_club_error_mail)
@@ -130,7 +157,7 @@ class EditClubViewModel(
                 )
                 false
             }
-            web.isURL() -> {
+            !web.isURL() -> {
                 editClub.setData(
                     Resource.error(
                         Error(R.string.edit_club_error_web)

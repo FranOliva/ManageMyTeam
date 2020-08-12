@@ -10,6 +10,7 @@ import es.us.managemyteam.data.model.ClubBo
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.RepositoryUtil
 import es.us.managemyteam.repository.util.Resource
+import java.util.*
 
 interface ClubRepository {
 
@@ -18,7 +19,7 @@ interface ClubRepository {
     suspend fun editClub(
         uuid: String,
         name: String,
-        dateFundation: String,
+        dateFundation: Date?,
         location: String,
         president: String,
         coach: String,
@@ -46,7 +47,7 @@ class ClubRepositoryImpl : ClubRepository {
     override suspend fun editClub(
         uuid: String,
         name: String,
-        dateFundation: String,
+        dateFundation: Date?,
         location: String,
         president: String,
         coach: String,
@@ -57,8 +58,10 @@ class ClubRepositoryImpl : ClubRepository {
         val newClub =
             ClubBo(
                 name, dateFundation, location, president, coach, phoneNumber, mail, web
-            )
-        clubRef.child(uuid).setValue(newClub)
+            ).apply {
+                this.uuid = uuid
+            }
+        clubRef.setValue(newClub)
         { error, _ ->
             clubCreateData.value = if (error != null) {
                 Resource.error(Error(serverErrorMessage = error.message))

@@ -1,27 +1,30 @@
 package es.us.managemyteam.ui.fragment
 
 import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
 import es.us.managemyteam.data.model.ClubBo
 import es.us.managemyteam.data.model.UserBo
-import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.databinding.FragmentEditClubBinding
 import es.us.managemyteam.extension.*
+import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.ResourceObserver
 import es.us.managemyteam.ui.viewmodel.EditClubViewModel
+import es.us.managemyteam.util.DateUtil
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
+
+const val CLUB_DATE_FORMAT = "dd/MM/yyyy"
 
 class EditClubFragment : BaseFragment<FragmentEditClubBinding>() {
 
@@ -46,24 +49,18 @@ class EditClubFragment : BaseFragment<FragmentEditClubBinding>() {
     }
 
     private fun setupObservers() {
+        setupGetClubObserver()
         setupEditClubObserver()
     }
 
     //region Observers
-    private fun setupEditClubObserver() {
+    private fun setupGetClubObserver() {
         editClubViewModel.getClubData()
             .observe(viewLifecycleOwner, object : ResourceObserver<ClubBo>() {
                 override fun onSuccess(response: ClubBo?) {
                     response?.let {
-                        clubUuid = it.uuid ?:""
+                        clubUuid = it.uuid ?: ""
                         setupView(it)
-                        Toast.makeText(
-                            context,
-                            getString(R.string.edit_club_success),
-                            Toast.LENGTH_LONG
-                        )
-                            .show()
-                        popBack()
                     }
                 }
 
@@ -77,8 +74,10 @@ class EditClubFragment : BaseFragment<FragmentEditClubBinding>() {
                 override fun onLoading(loading: Boolean) {
                     super.onLoading(loading)
                     if (loading) {
+                        viewBinding.editClubContainerContent.visibility = GONE
                         viewBinding.clubProgressBar.startAnimation()
                     } else {
+                        viewBinding.editClubContainerContent.visibility = VISIBLE
                         viewBinding.clubProgressBar.stopAnimationAndHide()
                     }
                 }
@@ -86,48 +85,71 @@ class EditClubFragment : BaseFragment<FragmentEditClubBinding>() {
             })
     }
 
-    private fun setupUserIsAdminObserver(){
-        editClubViewModel.getUserData().observe(viewLifecycleOwner, object : ResourceObserver<UserBo>(){
-            override fun onSuccess(response: UserBo?) {
-                response?.let {
-                    userIsAdmin = it.isAdmin()
-                    editClubViewModel.getClub()
+    private fun setupEditClubObserver() {
+        editClubViewModel.editClubData()
+            .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
+                override fun onSuccess(response: Boolean?) {
+                    Toast.makeText(
+                        context,
+                        getString(R.string.edit_club_success),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    popBack()
                 }
-            }
-        })
+
+                override fun onError(error: Error) {
+                    super.onError(error)
+                    showErrorDialog(getString(error.errorMessageId))
+                }
+
+                override fun onLoading(loading: Boolean) {
+                    super.onLoading(loading)
+                    viewBinding.editClubBtnSave.showLoading(loading)
+                }
+            })
+    }
+
+    private fun setupUserIsAdminObserver() {
+        editClubViewModel.getUserData()
+            .observe(viewLifecycleOwner, object : ResourceObserver<UserBo>() {
+                override fun onSuccess(response: UserBo?) {
+                    response?.let {
+                        userIsAdmin = it.isAdmin()
+                        editClubViewModel.getClub()
+                    }
+                }
+            })
         editClubViewModel.getUser()
     }
 
     private fun setupClickListeners() {
         setupDateClickListener()
-        viewBinding.editClubFabSave.setOnClickListener {
-            findNavController().navigate(R.id.action_club_to_edit_club)
+        viewBinding.editClubBtnSave.setOnClickListener {
             clickOnSave()
         }
     }
 
-    private fun setupView(club : ClubBo) {
+    private fun setupView(club: ClubBo) {
         viewBinding.editClubEditName.setText(club.name)
-        viewBinding.editClubEditDateFundation.setText(club.dateFundation)
+        viewBinding.editClubEditDateFundation.setText(club.dateFundation?.let {
+            DateUtil.format(
+                it,
+                CLUB_DATE_FORMAT
+            )
+        })
         viewBinding.editClubEditPresident.setText(club.president)
         viewBinding.editClubEditCoach.setText(club.coach)
         viewBinding.editClubEditLocation.setText(club.location)
         viewBinding.editClubEditMail.setText(club.mail)
         viewBinding.editClubEditPhoneNumber.setText(club.phoneNumber.toString())
         viewBinding.editClubEditWeb.setText(club.web)
-
-        viewBinding.editClubFabSave.visibility = if (userIsAdmin){
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
     }
 
     //region Clicks
 
     private fun clickOnSave() {
         val name = viewBinding.editClubEditName.text.trim()
-        val sdf = SimpleDateFormat(getString(R.string.date_time_format), Locale.getDefault())
+        val sdf = SimpleDateFormat(CLUB_DATE_FORMAT, Locale.getDefault())
         val dateFundation = if (!viewBinding.editClubEditDateFundation.text.isBlank()) {
             sdf.parse(viewBinding.editClubEditDateFundation.text)
         } else {
@@ -162,7 +184,6 @@ class EditClubFragment : BaseFragment<FragmentEditClubBinding>() {
                 selectedDate,
                 DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                     updateSelectedDate(dayOfMonth, month + 1, year)
-                    showTimePickerDialog(dayOfMonth, month + 1, year)
                 })
         }
     }
@@ -177,6 +198,14 @@ class EditClubFragment : BaseFragment<FragmentEditClubBinding>() {
             set(Calendar.MONTH, month)
             set(Calendar.YEAR, year)
         }
+        viewBinding.editClubEditDateFundation.setText(
+            String.format(
+                getString(R.string.edit_club_date_format),
+                day,
+                month,
+                year
+            )
+        )
     }
 
     private fun showDateDialog(
@@ -195,36 +224,10 @@ class EditClubFragment : BaseFragment<FragmentEditClubBinding>() {
                 year,
                 month,
                 day
-            ).apply {
-                datePicker.minDate = Date().time
-                show()
-            }
+            ).show()
+
         }
     }
-
-    private fun showTimePickerDialog(day: Int, month: Int, year: Int) {
-        context?.let {
-            TimePickerDialog(
-                it,
-                TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-                    viewBinding.editClubEditDateFundation.setText(
-                        String.format(
-                            getString(R.string.edit_club_date_format),
-                            day,
-                            month,
-                            year,
-                            hourOfDay,
-                            minute
-                        )
-                    )
-                }, 0, 0, true
-            ).apply {
-                setCancelable(false)
-                show()
-            }
-        }
-    }
-
 
     override fun setupToolbar(toolbar: Toolbar) {
         toolbar.apply {
@@ -236,7 +239,7 @@ class EditClubFragment : BaseFragment<FragmentEditClubBinding>() {
     }
 
     override fun setupBottomBar(bottomNavigationView: BottomNavigationView) {
-        bottomNavigationView.show()
+        bottomNavigationView.hide()
     }
 
 
