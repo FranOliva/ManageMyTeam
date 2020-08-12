@@ -31,6 +31,17 @@ class EventDetailFragment : BaseFragment<FragmentEventDetailBinding>() {
         setupClickListeners()
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (PermissionUtil.isPermissionGranted(requestCode, grantResults)) {
+            saveEvent()
+        }
+    }
+
     private fun setupClickListeners() {
         viewBinding.eventDetailImgBack.setOnClickListener {
             popBack()

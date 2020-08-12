@@ -41,6 +41,7 @@ private fun getContentValues(
     val values = ContentValues()
     dateIni?.let {
         values.put(CalendarContract.Events.DTSTART, dateIni)
+        values.put(CalendarContract.Events.DTEND, dateIni)
     }
     values.put(CalendarContract.Events.TITLE, title ?: "")
     values.put(CalendarContract.Events.CALENDAR_ID, CALENDAR_ID)
