@@ -15,5 +15,3 @@ android:
 
 before_install:
   - yes | sdkmanager "platforms;android-29"
-  - yes | sdkmanager --update
-  - yes | sdkmanager --licenses
