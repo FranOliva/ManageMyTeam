@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         getBottomBar().apply {
             setOnNavigationItemSelectedListener {
                 when (it.itemId) {
-                    R.id.action_events -> findNavController().navigate(R.id.action_menu_to_club)
+                    R.id.action_events -> getNavGraph().navigate(R.id.action_menu_to_events)
                     R.id.action_menu -> viewBinding.dashboardDrawerMain.openDrawer(
                         GravityCompat.END
                     )

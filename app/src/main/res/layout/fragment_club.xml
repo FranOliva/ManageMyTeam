@@ -62,7 +62,7 @@
                         style="@style/Regular.Twenty.Black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nombre" />
+                        android:text="@string/edit_club_club_name" />
 
                     <View
                         android:layout_width="@dimen/size_fourty"
@@ -91,7 +91,7 @@
                         style="@style/Regular.Twenty.Black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Fecha de fundación" />
+                        android:text="@string/edit_club_club_date_fundation" />
 
                     <View
                         android:layout_width="@dimen/size_fourty"
@@ -120,7 +120,7 @@
                         style="@style/Regular.Twenty.Black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Presidente" />
+                        android:text="@string/edit_club_club_president" />
 
                     <View
                         android:layout_width="@dimen/size_fourty"
@@ -149,7 +149,7 @@
                         style="@style/Regular.Twenty.Black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Entrenador" />
+                        android:text="@string/edit_club_club_coach" />
 
                     <View
                         android:layout_width="@dimen/size_fourty"
@@ -178,7 +178,7 @@
                         style="@style/Regular.Twenty.Black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ubicación" />
+                        android:text="@string/edit_club_club_location" />
 
                     <View
                         android:layout_width="@dimen/size_fourty"
@@ -208,7 +208,7 @@
                         style="@style/Regular.Twenty.Black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Email" />
+                        android:text="@string/edit_club_club_mail" />
 
                     <View
                         android:layout_width="@dimen/size_fourty"
@@ -238,7 +238,7 @@
                         style="@style/Regular.Twenty.Black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Número de teléfono" />
+                        android:text="@string/edit_club_club_phone_number" />
 
                     <View
                         android:layout_width="@dimen/size_fourty"
@@ -268,7 +268,7 @@
                         style="@style/Regular.Twenty.Black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Página web" />
+                        android:text="@string/edit_club_club_web" />
 
                     <View
                         android:layout_width="@dimen/size_fourty"
@@ -308,7 +308,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/size_sixteen"
         android:backgroundTint="@color/primary"
-        android:src="@drawable/ic_add"
+        android:src="@drawable/ic_edit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="@null" />
