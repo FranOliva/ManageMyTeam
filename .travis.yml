@@ -7,19 +7,6 @@ android:
     # - tools
     # - platform-tools
 
-    - build-tools-27.0.3
-    - android-28
-
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
-    - addon-google_apis-google-26
-
-    - android-26
-    - sys-img-armeabi-v7a-addon-google_apis-google-android-26
-
-before_script:
-  - echo no | android create avd --force -n test -t android-26 --abi google_apis/armeabi-v7a
-  - emulator -avd test -no-skin -no-audio -no-window &
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
