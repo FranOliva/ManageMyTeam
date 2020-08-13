@@ -1,109 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:clipToPadding="false">
-
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/size_sixteen"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    android:layout_height="match_parent">
 
-
-    <es.us.managemyteam.ui.view.input.EditableTextView
-        android:id="@+id/edit_club__edit__name"
-        android:layout_width="match_parent"
+    <ScrollView
+        android:id="@+id/edit_club__container__content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_twentyfour"
-        app:input_header="@string/edit_club_club_name"
-        app:input_type="text" />
+        android:clipToPadding="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <es.us.managemyteam.ui.view.input.EditableTextView
-        android:id="@+id/edit_club__edit__date_fundation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_twentyfour"
-        app:input_header="@string/edit_club_club_date_fundation"
-        app:input_hint="dd/MM/yyyy"
-        app:input_type="none" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/size_sixteen"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <es.us.managemyteam.ui.view.input.EditableTextView
-        android:id="@+id/edit_club__edit__president"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_twentyfour"
-        app:input_header="@string/edit_club_club_president"
-        app:input_type="none" />
+            <es.us.managemyteam.ui.view.input.EditableTextView
+                android:id="@+id/edit_club__edit__name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_twentyfour"
+                app:input_header="@string/edit_club_club_name"
+                app:input_type="text" />
 
-    <es.us.managemyteam.ui.view.input.EditableTextView
-        android:id="@+id/edit_club__edit__coach"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_twentyfour"
-        app:input_header="@string/edit_club_club_coach"
-        app:input_type="none" />
+            <es.us.managemyteam.ui.view.input.EditableTextView
+                android:id="@+id/edit_club__edit__date_fundation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_twentyfour"
+                app:input_header="@string/edit_club_club_date_fundation"
+                app:input_hint="dd/MM/yyyy"
+                app:input_type="none" />
 
-    <es.us.managemyteam.ui.view.input.EditableTextView
-        android:id="@+id/edit_club__edit__location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_twentyfour"
-        app:input_header="@string/edit_club_club_location"
-        app:input_hint="C/ Ejemplo Nº2, Sevilla(Sevilla)"
-        app:input_type="none" />
+            <es.us.managemyteam.ui.view.input.EditableTextView
+                android:id="@+id/edit_club__edit__president"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_twentyfour"
+                app:input_header="@string/edit_club_club_president"
+                app:input_type="text" />
 
-    <es.us.managemyteam.ui.view.input.EditableTextView
-        android:id="@+id/edit_club__edit__mail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_twentyfour"
-        app:input_header="@string/edit_club_club_mail"
-        app:input_hint="ejemplo@ejemplo.com"
-        app:input_type="none" />
+            <es.us.managemyteam.ui.view.input.EditableTextView
+                android:id="@+id/edit_club__edit__coach"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_twentyfour"
+                app:input_header="@string/edit_club_club_coach"
+                app:input_type="text" />
 
-    <es.us.managemyteam.ui.view.input.EditableTextView
-        android:id="@+id/edit_club__edit__phone_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_twentyfour"
-        app:input_header="@string/edit_club_club_phone_number"
-        app:input_hint="666666666"
-        app:input_type="none" />
+            <es.us.managemyteam.ui.view.input.EditableTextView
+                android:id="@+id/edit_club__edit__location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_twentyfour"
+                app:input_header="@string/edit_club_club_location"
+                app:input_hint="C/ Ejemplo Nº2, Sevilla(Sevilla)"
+                app:input_type="text" />
 
-    <es.us.managemyteam.ui.view.input.EditableTextView
-        android:id="@+id/edit_club__edit__web"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_twentyfour"
-        app:input_header="@string/edit_club_club_web"
-        app:input_hint="Introduzca una url válida"
-        app:input_type="none" />
+            <es.us.managemyteam.ui.view.input.EditableTextView
+                android:id="@+id/edit_club__edit__mail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_twentyfour"
+                app:input_header="@string/edit_club_club_mail"
+                app:input_hint="ejemplo@ejemplo.com"
+                app:input_type="text" />
 
-    <FrameLayout
-        android:id="@+id/create_event__container__location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_twentyfour"
-        android:background="@drawable/input_background"
-        android:foreground="?attr/selectableItemBackground">
-    </FrameLayout>
+            <es.us.managemyteam.ui.view.input.EditableTextView
+                android:id="@+id/edit_club__edit__phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_twentyfour"
+                app:input_header="@string/edit_club_club_phone_number"
+                app:input_hint="666666666"
+                app:input_type="phone" />
 
-    <es.us.managemyteam.ui.view.loading_button.LoadingButtonView
-        android:id="@+id/edit_club__btn__save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_thirty"
-        app:btn_background_color="@color/primary"
-        app:btn_has_radius="true"
-        app:btn_text="@string/save"
-        app:btn_text_color="@color/white" />
+            <es.us.managemyteam.ui.view.input.EditableTextView
+                android:id="@+id/edit_club__edit__web"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_twentyfour"
+                app:input_header="@string/edit_club_club_web"
+                app:input_hint="Introduzca una url válida"
+                app:input_type="text" />
 
-</LinearLayout>
+            <es.us.managemyteam.ui.view.loading_button.LoadingButtonView
+                android:id="@+id/edit_club__btn__save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_thirty"
+                app:btn_background_color="@color/primary"
+                app:btn_has_radius="true"
+                app:btn_text="@string/save"
+                app:btn_text_color="@color/white" />
+
+        </LinearLayout>
 
 
-</ScrollView>
+    </ScrollView>
+
+    <com.bluehomestudio.progressimage.ProgressPicture
+        android:id="@+id/club__progress_bar"
+        android:layout_width="@dimen/size_eighty"
+        android:layout_height="@dimen/size_eighty"
+        android:src="@drawable/ic_soccer_ball"
+        app:animation="rotate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,8 +53,16 @@ val appModule = module {
         GetClubUc(get())
     }
 
+    factory {
+        EditClubUc(get())
+    }
+
     viewModel {
-        ClubViewModel(get())
+        ClubViewModel(get(), get())
+    }
+
+    viewModel {
+        EditClubViewModel(get(), get(), get())
     }
 
     // User

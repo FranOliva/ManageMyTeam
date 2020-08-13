@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         getBottomBar().apply {
             setOnNavigationItemSelectedListener {
                 when (it.itemId) {
-                    R.id.action_events -> findNavController().navigate(R.id.action_menu_to_club)
+                    R.id.action_events -> getNavGraph().navigate(R.id.action_menu_to_events)
                     R.id.action_menu -> viewBinding.dashboardDrawerMain.openDrawer(
                         GravityCompat.END
                     )
@@ -76,9 +76,9 @@ class MainActivity : AppCompatActivity() {
     private fun onNavigationItemSelected(itemId: Int) {
         // TODO : Navigation of bottom menu items
         when (itemId) {
-            //R.id.action_events -> getNavGraph().navigate((1))
-            //R.id.action_menu_to_club -> getNavGraph().navigate((1))
-           // R.id.action_chat -> getNavGraph().navigate((1))*/
+            R.id.action_events -> getNavGraph().navigate(R.id.action_menu_to_events)
+            //R.id.action_menu_to_club -> getNavGraph().navigate(R.id.action_menu_to_club)
+            //R.id.action_chat -> getNavGraph().navigate((1))*/
             else -> Log.d("", "No action found for this id")
         }
     }
