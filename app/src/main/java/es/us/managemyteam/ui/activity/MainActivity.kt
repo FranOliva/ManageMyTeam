@@ -48,10 +48,11 @@ class MainActivity : AppCompatActivity() {
             setOnNavigationItemSelectedListener {
                 when (it.itemId) {
                     R.id.action_events -> getNavGraph().navigate(R.id.action_menu_to_events)
+                    R.id.action_chat -> getNavGraph().navigate((R.id.action_menu_to_chat))
                     R.id.action_menu -> viewBinding.dashboardDrawerMain.openDrawer(
                         GravityCompat.END
                     )
-                    else -> onNavigationItemSelected(it.itemId)
+                    else -> Log.d("", "No action found for this id")
                 }
                 true
             }
@@ -71,16 +72,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun closeDrawer() {
         viewBinding.dashboardDrawerMain.closeDrawers()
-    }
-
-    private fun onNavigationItemSelected(itemId: Int) {
-        // TODO : Navigation of bottom menu items
-        when (itemId) {
-            //R.id.action_events -> getNavGraph().navigate((1))
-            //R.id.action_menu_to_club -> getNavGraph().navigate((1))
-            R.id.action_chat -> getNavGraph().navigate((R.id.action_menu_to_chat))
-            else -> Log.d("", "No action found for this id")
-        }
     }
 
     fun getToolbar() = viewBinding.toolbar
