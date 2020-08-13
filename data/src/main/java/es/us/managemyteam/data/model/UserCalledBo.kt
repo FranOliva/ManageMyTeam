@@ -5,7 +5,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class UserCalledBo(
-    val user: UserBo,
+    val userId: String = "",
+    val userName: String = "",
     var enable: Boolean = false,
-    val observation: String? = null
+    val observation: String = ""
 ) : BaseBo(), Parcelable

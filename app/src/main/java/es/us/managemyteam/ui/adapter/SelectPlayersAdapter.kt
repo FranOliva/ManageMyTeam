@@ -30,7 +30,7 @@ class SelectPlayersAdapter :
     ) :
         BaseAdapter.BaseViewHolder<UserCalledBo, RowSelectPlayerBinding>(viewBinding) {
         override fun setup(viewBinding: RowSelectPlayerBinding, item: UserCalledBo) {
-            viewBinding.rowSelectPlayerLabelName.text = item.user.getFullName()
+            viewBinding.rowSelectPlayerLabelName.text = item.userName
             viewBinding.rowSelectPlayerSwitcher.apply {
                 setChecked(item.enable)
                 setOnCheckedChangeListener {

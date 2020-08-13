@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
 import es.us.managemyteam.data.model.CallBo
+import es.us.managemyteam.data.model.EventBo
 import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.data.model.UserCalledBo
 import es.us.managemyteam.databinding.FragmentSelectPlayersBinding
@@ -22,6 +23,7 @@ import java.util.*
 class SelectPlayersFragment : BaseFragment<FragmentSelectPlayersBinding>() {
 
     private var selectPlayersAdapter: SelectPlayersAdapter? = null
+    private var currentEvent: EventBo? = null
     private val createEventViewModel: CreateEventViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,18 +40,21 @@ class SelectPlayersFragment : BaseFragment<FragmentSelectPlayersBinding>() {
     }
 
     private fun generateCall() {
-        val selectedPlayers = selectPlayersAdapter?.getPlayers(true)
-        val unselectedPlayers = selectPlayersAdapter?.getPlayers(false)
+        val selectedPlayers = selectPlayersAdapter?.getPlayers(true) ?: arrayListOf()
+        val unselectedPlayers = selectPlayersAdapter?.getPlayers(false) ?: arrayListOf()
 
         val call = CallBo(
             selectedPlayers,
             unselectedPlayers,
             Date(System.currentTimeMillis())
         )
-        /*eventoActual = createEventViewModel.getCurrentNewEvent()
-        eventoActual.setCall(call)
-        createEventViewModel.setCurrentNewEvent(eventActual)
-        popBack()*/
+
+        currentEvent?.let {
+            it.call = call
+            createEventViewModel.setCurrentNewEvent(it)
+        }
+
+        popBack()
     }
 
     private fun setupPlayersObserver() {
@@ -58,7 +63,14 @@ class SelectPlayersFragment : BaseFragment<FragmentSelectPlayersBinding>() {
                 override fun onSuccess(response: List<UserBo>?) {
                     response?.let { players ->
                         val usersCalled =
-                            players.sortedBy { it.name }.map { user -> UserCalledBo(user, false) }
+                            players.sortedBy { it.name }
+                                .map { user ->
+                                    UserCalledBo(
+                                        user.uuid ?: "",
+                                        user.getFullName(),
+                                        false
+                                    )
+                                }
                         selectPlayersAdapter?.let {
                             it.setData(usersCalled)
                             it.notifyDataSetChanged()
@@ -66,7 +78,16 @@ class SelectPlayersFragment : BaseFragment<FragmentSelectPlayersBinding>() {
                     }
                 }
             })
-        createEventViewModel.getPlayers()
+        createEventViewModel.getCurrentNewEventData()
+            .observe(viewLifecycleOwner, object : ResourceObserver<EventBo>() {
+                override fun onSuccess(response: EventBo?) {
+                    response?.let { event ->
+                        currentEvent = event
+                        createEventViewModel.getPlayers()
+                    }
+                }
+            })
+        createEventViewModel.getCurrentNewEvent()
     }
 
     private fun setupList() {

@@ -6,7 +6,7 @@ import java.util.*
 
 @Parcelize
 data class CallBo(
-    val called: List<UserCalledBo>? = null,
-    val notCalled: List<UserCalledBo>? = null,
-    val date: Date? = null
+    val called: List<UserCalledBo> = listOf(),
+    val notCalled: List<UserCalledBo> = listOf(),
+    val date: Date = Date()
 ) : BaseBo(), Parcelable
