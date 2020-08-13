@@ -31,7 +31,7 @@ class EditClubFragment : BaseFragment<FragmentEditClubBinding>() {
     private val editClubViewModel: EditClubViewModel by viewModel()
     private var userIsAdmin = false
     private var clubUuid = ""
-    private var selectedDate = Calendar.getInstance()
+    private var selectedDate: Calendar? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -131,6 +131,11 @@ class EditClubFragment : BaseFragment<FragmentEditClubBinding>() {
 
     private fun setupView(club: ClubBo) {
         viewBinding.editClubEditName.setText(club.name)
+        selectedDate = Calendar.getInstance().apply {
+            if (club.dateFundation != null) {
+                time = club.dateFundation
+            }
+        }
         viewBinding.editClubEditDateFundation.setText(club.dateFundation?.let {
             DateUtil.format(
                 it,
@@ -181,7 +186,7 @@ class EditClubFragment : BaseFragment<FragmentEditClubBinding>() {
 
         viewBinding.editClubEditDateFundation.clickListener {
             showDateDialog(
-                selectedDate,
+                selectedDate ?: Calendar.getInstance(),
                 DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                     updateSelectedDate(dayOfMonth, month + 1, year)
                 })
