@@ -99,6 +99,10 @@ val appModule = module {
         LoginViewModel(get(), get())
     }
 
+    viewModel {
+        UserViewModel(get())
+    }
+
     // Chat
 
     factory {
