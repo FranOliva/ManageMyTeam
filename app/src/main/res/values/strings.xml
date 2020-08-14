@@ -37,6 +37,7 @@
     <string name="create_event_select_location_error">Debe seleccionar una localización</string>
     
     <!-- User -->
+    <string name="user">Usuario</string>
     <string name="user_email">Correo electrónico *</string>
     <string name="user_password">Contraseña *</string>
     <string name="user_confirm_password">Confirmar contraseña *</string>
@@ -45,6 +46,14 @@
     <string name="user_phone">Teléfono *</string>
     <string name="user_age">Edad</string>
     <string name="user_dorsal">Dorsal</string>
+    <string name="user_edit">Editar</string>
+    <string name="edit_user_user_name">Nombre</string>
+    <string name="edit_user_user_surname">Apellidos</string>
+    <string name="edit_user_user_mail">Email</string>
+    <string name="edit_user_user_phone_number">Número de teléfono</string>
+    <string name="edit_user_user_age">Edad</string>
+    <string name="edit_user_user_dorsal">Dorsal</string>
+    <string name="edit_user_title">Editar datos del usuario</string>
     <string name="user_created_successfully">Solicitud de registro enviada con éxito</string>
     <string name="login_email">Correo electrónico</string>
     <string name="login_password">Contraseña</string>
