@@ -154,6 +154,7 @@ class UserRepositoryImpl : UserRepository {
 
     override suspend fun updateEmail(email: String): LiveData<Resource<Boolean>> {
         val currentUser = auth.currentUser
+        updateEmailData.postValue(null)
         currentUser?.updateEmail(email)?.addOnCompleteListener {
             if (it.isSuccessful) {
                 updateEmailDatabase(currentUser.uid, email)
@@ -181,28 +182,15 @@ class UserRepositoryImpl : UserRepository {
     override suspend fun updatePassword(password: String): LiveData<Resource<Boolean>> {
         val currentUser = auth.currentUser
         val hashedPassword = PasswordUtil.hashPassword(password)
+        updatePasswordData.postValue(null)
         currentUser?.updatePassword(hashedPassword)?.addOnCompleteListener {
             if (it.isSuccessful) {
-                updatePasswordDatabase(currentUser.uid, hashedPassword)
+                updatePasswordData.value = Resource.success(true)
             } else {
-                updateEmailData.value = Resource.error(Error(R.string.unknown_error))
+                updatePasswordData.value = Resource.error(Error(R.string.unknown_error))
             }
         }
-        return updateEmailData
-    }
-
-    private fun updatePasswordDatabase(userUuid: String?, password: String) {
-        if (userUuid != null) {
-            userTable.child(userUuid).child("password").setValue(password) { error, _ ->
-                updateEmailData.value = if (error != null) {
-                    Resource.success(true)
-                } else {
-                    Resource.error(Error(serverErrorMessage = error?.message))
-                }
-            }
-        } else {
-            updateEmailData.postValue(Resource.error(Error(R.string.unknown_error)))
-        }
+        return updatePasswordData
     }
 
     override suspend fun getUserByUid(uid: String): LiveData<Resource<UserBo>> {
