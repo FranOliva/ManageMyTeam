@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/userFragment"
-        android:name="es.us.managemyteam.ui.fragment.UserFragment" />
+        android:name="es.us.managemyteam.ui.fragment.UserProfileFragment" />
 
     <fragment
         android:id="@+id/userEditFragment"

@@ -100,7 +100,7 @@ val appModule = module {
     }
 
     viewModel {
-        UserViewModel(get())
+        UserProfileViewModel(get())
     }
 
     // Chat
