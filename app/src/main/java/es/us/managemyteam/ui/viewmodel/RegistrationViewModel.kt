@@ -73,7 +73,7 @@ class RegistrationViewModel(
                 )
                 false
             }
-            password.isBlank() || password != passwordRepeated -> {
+            password != passwordRepeated -> {
                 createUser.setData(
                     Resource.error(
                         Error(

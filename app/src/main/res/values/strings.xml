@@ -64,6 +64,7 @@
     <string name="registration_error_invalid_password">Las contraseñas introducidas no coinciden</string>
     <string name="registration_error_empty_fields">Debe rellenar todos los campos</string>
     <string name="registration_information">Este formulario enviará una solicitud de registro en la aplicación. Si usted no pertenece al club esta solicitud se rechazará.</string>
+    <string name="update_user_fields_not_filled">Debe rellenar los campos marcados con (*)</string>
 
     <!-- Club module -->
     <string name="club_stats">Estadísticas</string>

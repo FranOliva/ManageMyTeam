@@ -47,7 +47,7 @@ interface UserRepository {
         phoneNumber: String,
         age: Int?,
         dorsal: Long?
-    )
+    ): LiveData<Resource<Boolean>>
 
     suspend fun updateEmail(email: String): LiveData<Resource<Boolean>>
 
@@ -130,10 +130,11 @@ class UserRepositoryImpl : UserRepository {
         phoneNumber: String,
         age: Int?,
         dorsal: Long?
-    ) {
+    ): LiveData<Resource<Boolean>> {
+        val currentUser = auth.currentUser
         updateUserData.postValue(null)
-        auth.currentUser?.let {
-            userTable.child(it.uid).updateChildren(
+        if (currentUser != null) {
+            userTable.child(currentUser.uid).updateChildren(
                 mapOf(
                     Pair("name", name),
                     Pair("surname", name),
@@ -142,7 +143,12 @@ class UserRepositoryImpl : UserRepository {
                     Pair("dorsal", dorsal)
                 )
             )
+            updateUserData.value = Resource.success(true)
+        } else {
+            updateUserData.value = Resource.error(Error(R.string.unknown_error))
         }
+
+        return updateUserData
 
     }
 
