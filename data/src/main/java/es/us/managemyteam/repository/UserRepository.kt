@@ -41,6 +41,18 @@ interface UserRepository {
 
     suspend fun removeUser(uuid: String): LiveData<Resource<Boolean>>
 
+    suspend fun updateUserData(
+        name: String,
+        surname: String,
+        phoneNumber: String,
+        age: Int?,
+        dorsal: Long?
+    )
+
+    suspend fun updateEmail(email: String): LiveData<Resource<Boolean>>
+
+    suspend fun updatePassword(password: String): LiveData<Resource<Boolean>>
+
 }
 
 class UserRepositoryImpl : UserRepository {
@@ -52,6 +64,9 @@ class UserRepositoryImpl : UserRepository {
     private val userTable = RepositoryUtil.getDatabaseTable(DatabaseTables.USER_TABLE)
     private val loginData = MutableLiveData<Resource<String>>()
     private val removeUserData = MutableLiveData<Resource<Boolean>>()
+    private val updateUserData = MutableLiveData<Resource<Boolean>>()
+    private val updateEmailData = MutableLiveData<Resource<Boolean>>()
+    private val updatePasswordData = MutableLiveData<Resource<Boolean>>()
 
     override suspend fun createUser(
         email: String,
@@ -107,6 +122,81 @@ class UserRepositoryImpl : UserRepository {
             }
         }
         return removeUserData
+    }
+
+    override suspend fun updateUserData(
+        name: String,
+        surname: String,
+        phoneNumber: String,
+        age: Int?,
+        dorsal: Long?
+    ) {
+        updateUserData.postValue(null)
+        auth.currentUser?.let {
+            userTable.child(it.uid).updateChildren(
+                mapOf(
+                    Pair("name", name),
+                    Pair("surname", name),
+                    Pair("phoneNumber", phoneNumber),
+                    Pair("age", age),
+                    Pair("dorsal", dorsal)
+                )
+            )
+        }
+
+    }
+
+    override suspend fun updateEmail(email: String): LiveData<Resource<Boolean>> {
+        val currentUser = auth.currentUser
+        currentUser?.updateEmail(email)?.addOnCompleteListener {
+            if (it.isSuccessful) {
+                updateEmailDatabase(currentUser.uid, email)
+            } else {
+                updateEmailData.value = Resource.error(Error(R.string.unknown_error))
+            }
+        }
+        return updateEmailData
+    }
+
+    private fun updateEmailDatabase(userUuid: String?, email: String) {
+        if (userUuid != null) {
+            userTable.child(userUuid).child("email").setValue(email) { error, _ ->
+                updateEmailData.value = if (error != null) {
+                    Resource.success(true)
+                } else {
+                    Resource.error(Error(serverErrorMessage = error?.message))
+                }
+            }
+        } else {
+            updateEmailData.postValue(Resource.error(Error(R.string.unknown_error)))
+        }
+    }
+
+    override suspend fun updatePassword(password: String): LiveData<Resource<Boolean>> {
+        val currentUser = auth.currentUser
+        val hashedPassword = PasswordUtil.hashPassword(password)
+        currentUser?.updatePassword(hashedPassword)?.addOnCompleteListener {
+            if (it.isSuccessful) {
+                updatePasswordDatabase(currentUser.uid, hashedPassword)
+            } else {
+                updateEmailData.value = Resource.error(Error(R.string.unknown_error))
+            }
+        }
+        return updateEmailData
+    }
+
+    private fun updatePasswordDatabase(userUuid: String?, password: String) {
+        if (userUuid != null) {
+            userTable.child(userUuid).child("password").setValue(password) { error, _ ->
+                updateEmailData.value = if (error != null) {
+                    Resource.success(true)
+                } else {
+                    Resource.error(Error(serverErrorMessage = error?.message))
+                }
+            }
+        } else {
+            updateEmailData.postValue(Resource.error(Error(R.string.unknown_error)))
+        }
     }
 
     override suspend fun getUserByUid(uid: String): LiveData<Resource<UserBo>> {

@@ -6,17 +6,17 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
-import es.us.managemyteam.databinding.FragmentEditUserBinding
+import es.us.managemyteam.databinding.FragmentEditUserProfileBinding
 import es.us.managemyteam.extension.*
 
-class EditUserFragment : BaseFragment<FragmentEditUserBinding>() {
+class EditUserProfileFragment : BaseFragment<FragmentEditUserProfileBinding>() {
 
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentEditUserBinding {
-        return FragmentEditUserBinding.inflate(inflater, container, false)
+    ): FragmentEditUserProfileBinding {
+        return FragmentEditUserProfileBinding.inflate(inflater, container, false)
     }
 
     override fun setupToolbar(toolbar: Toolbar) {
@@ -31,7 +31,6 @@ class EditUserFragment : BaseFragment<FragmentEditUserBinding>() {
     override fun setupBottomBar(bottomNavigationView: BottomNavigationView) {
         bottomNavigationView.hide()
     }
-
 
 
 }

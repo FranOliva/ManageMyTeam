@@ -10,7 +10,7 @@
 
     <fragment
         android:id="@+id/userEditFragment"
-        android:name="es.us.managemyteam.ui.fragment.EditUserFragment" />
+        android:name="es.us.managemyteam.ui.fragment.EditUserProfileFragment" />
 
     <action
         android:id="@+id/action_user_to_edit_user"
