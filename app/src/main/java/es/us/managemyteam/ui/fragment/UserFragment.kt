@@ -20,12 +20,12 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class UserFragment : BaseFragment<FragmentUserBinding>() {
 
     private val userViewModel: UserViewModel by viewModel()
-    private var userIsAdmin = false
+    private var userIsLogged = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupUserIsAdminObserver()
+        setupUserIsLoggedObserver()
         setupUserObserver()
         setupClickListeners()
 
@@ -58,12 +58,12 @@ class UserFragment : BaseFragment<FragmentUserBinding>() {
             })
     }
 
-    private fun setupUserIsAdminObserver() {
+    private fun setupUserIsLoggedObserver() {
         userViewModel.getUserData()
             .observe(viewLifecycleOwner, object : ResourceObserver<UserBo>() {
                 override fun onSuccess(response: UserBo?) {
                     response?.let {
-                        userIsAdmin = it.isAdmin()
+                        userIsLogged = it.isAdmin() or it.isPlayer() or it.isStaff()
                         userViewModel.getUser()
                     }
                 }
@@ -83,6 +83,12 @@ class UserFragment : BaseFragment<FragmentUserBinding>() {
         viewBinding.userLabelMailValue.text = user.email
         viewBinding.userLabelPhoneNumberValue.text = user.phoneNumber
         viewBinding.userLabelAgeValue.text = user.age.toString()
+
+        viewBinding.userFabEdit.visibility = if (userIsLogged) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
 
     }
 
