@@ -4,9 +4,6 @@ import es.us.managemyteam.usecase.GetUserUc
 
 class UserViewModel(
     getUserUc: GetUserUc
-) : BaseLoggedViewModel(getUserUc) {
-
-
-}
+) : BaseLoggedViewModel(getUserUc)
 
 

@@ -20,11 +20,22 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/user__container__logo"
                 android:layout_width="0dp"
-                android:layout_height="200dp"
+                android:layout_height="@dimen/size_twohundred"
                 android:background="@color/primary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/user__label__dorsal_value"
+                    style="@style/Regular.Twenty.Black"
+                    android:layout_width="@dimen/size_eighty"
+                    android:layout_height="@dimen/size_twohundred"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Dorsal" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/user__img__shield"

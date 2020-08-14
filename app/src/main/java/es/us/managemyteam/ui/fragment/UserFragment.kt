@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
@@ -21,11 +22,13 @@ class UserFragment : BaseFragment<FragmentUserBinding>() {
 
     private val userViewModel: UserViewModel by viewModel()
     private var userIsLogged = false
+    private var userIsPlayer = false
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupUserIsLoggedObserver()
+        setupUserIsPlayerObserver()
         setupUserObserver()
         setupClickListeners()
 
@@ -35,6 +38,7 @@ class UserFragment : BaseFragment<FragmentUserBinding>() {
         userViewModel.getUserData()
             .observe(viewLifecycleOwner, object : ResourceObserver<UserBo>() {
                 override fun onSuccess(response: UserBo?) {
+                    userIsLogged = response != null
                     response?.let { setupView(it) }
                 }
 
@@ -56,18 +60,6 @@ class UserFragment : BaseFragment<FragmentUserBinding>() {
                 }
 
             })
-    }
-
-    private fun setupUserIsLoggedObserver() {
-        userViewModel.getUserData()
-            .observe(viewLifecycleOwner, object : ResourceObserver<UserBo>() {
-                override fun onSuccess(response: UserBo?) {
-                    response?.let {
-                        userIsLogged = it.isAdmin() or it.isPlayer() or it.isStaff()
-                        userViewModel.getUser()
-                    }
-                }
-            })
         userViewModel.getUser()
     }
 
@@ -75,6 +67,19 @@ class UserFragment : BaseFragment<FragmentUserBinding>() {
         viewBinding.userFabEdit.setOnClickListener {
             findNavController().navigate(R.id.action_user_to_edit_user)
         }
+    }
+
+    private fun setupUserIsPlayerObserver() {
+        userViewModel.getUserData()
+            .observe(viewLifecycleOwner, object : ResourceObserver<UserBo>() {
+                override fun onSuccess(response: UserBo?) {
+                    response?.let {
+                        userIsPlayer = it.isPlayer()
+                        userViewModel.getUser()
+                    }
+                }
+            })
+        userViewModel.getUser()
     }
 
     private fun setupView(user: UserBo) {
@@ -90,6 +95,11 @@ class UserFragment : BaseFragment<FragmentUserBinding>() {
             View.GONE
         }
 
+        if (userIsPlayer) {
+            viewBinding.userLabelDorsalValue.text = user.dorsal.toString()
+        } else {
+            viewBinding.userLabelDorsalValue.text = ""
+        }
     }
 
     override fun inflateViewBinding(
@@ -102,7 +112,7 @@ class UserFragment : BaseFragment<FragmentUserBinding>() {
     override fun setupToolbar(toolbar: Toolbar) {
         toolbar.apply {
             setToolbarTitle(getString(R.string.user))
-            setNavIcon(null)
+            setNavIcon(ContextCompat.getDrawable(context, R.drawable.ic_back))
             show()
         }
     }
