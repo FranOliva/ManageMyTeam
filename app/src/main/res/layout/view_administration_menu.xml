@@ -6,7 +6,7 @@
 
 
     <LinearLayout
-        android:id="@+id/administrator__container__name"
+        android:id="@+id/administrator__container__create_coach"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -32,5 +32,60 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/administrator__container__accepts_player"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/size_onehundred"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/administration__accepts__players__img"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginTop="@dimen/text_thirty"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_gravity="end"
+            app:srcCompat="@drawable/ic_right_arrow" />
+
+        <TextView
+            android:id="@+id/administration__label__accepts_players_title"
+            style="@style/Regular.Twenty.Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/administration_accept_players" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/administrator__container__edit_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/size_twohundred"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/administration__edit__profile__img"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginTop="@dimen/text_thirty"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_gravity="end"
+            app:srcCompat="@drawable/ic_right_arrow" />
+
+        <TextView
+            android:id="@+id/administration__label__edit_profile_title"
+            style="@style/Regular.Twenty.Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_club_title" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

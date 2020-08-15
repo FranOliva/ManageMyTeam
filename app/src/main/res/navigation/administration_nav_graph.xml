@@ -6,4 +6,7 @@
     <fragment android:id="@+id/fragmentAcceptPlayers"
         android:name="es.us.managemyteam.ui.fragment.AcceptPlayersFragment" />
 
+    <fragment android:id="@+id/fragmentEditUser"
+        android:name="es.us.managemyteam.ui.fragment.EditUserFragment" />
+
 </navigation>
