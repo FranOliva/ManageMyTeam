@@ -137,15 +137,15 @@ class UserRepositoryImpl : UserRepository {
             userTable.child(currentUser.uid).updateChildren(
                 mapOf(
                     Pair("name", name),
-                    Pair("surname", name),
+                    Pair("surname", surname),
                     Pair("phoneNumber", phoneNumber),
                     Pair("age", age),
                     Pair("dorsal", dorsal)
                 )
             )
-            updateUserData.value = Resource.success(true)
+            updateUserData.postValue(Resource.success(true))
         } else {
-            updateUserData.value = Resource.error(Error(R.string.unknown_error))
+            updateUserData.postValue(Resource.error(Error(R.string.unknown_error)))
         }
 
         return updateUserData

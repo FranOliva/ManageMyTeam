@@ -1,27 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/size_sixteen">
+    android:clipToPadding="false"
+    android:padding="@dimen/size_sixteen"
+    android:scrollbars="none">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/edit_profile__img__back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_twenty"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_back" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        style="@style/Bold.Twenty.Black"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_twenty"
-        android:text="¿Qué te gustaría modificar?"
-        app:layout_constraintBottom_toBottomOf="@id/edit_profile__img__back"
-        app:layout_constraintStart_toEndOf="@id/edit_profile__img__back"
-        app:layout_constraintTop_toTopOf="@id/edit_profile__img__back" />
+        <es.us.managemyteam.ui.view.input.EditableTextView
+            android:id="@+id/edit_user_profile__edit_text_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_twenty"
+            app:input_header="@string/user_name"
+            app:input_ime="next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <es.us.managemyteam.ui.view.input.EditableTextView
+            android:id="@+id/edit_user_profile__edit_text_surname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_sixteen"
+            app:input_header="@string/user_surname"
+            app:input_ime="next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_user_profile__edit_text_name" />
+
+        <es.us.managemyteam.ui.view.input.EditableTextView
+            android:id="@+id/edit_user_profile__edit_text_dorsal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_sixteen"
+            android:visibility="gone"
+            app:input_header="@string/user_dorsal"
+            app:input_ime="next"
+            app:input_type="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_user_profile__edit_text_surname" />
+
+        <es.us.managemyteam.ui.view.input.EditableTextView
+            android:id="@+id/edit_user_profile__edit_text_age"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_sixteen"
+            app:input_header="@string/user_age"
+            app:input_ime="next"
+            app:input_type="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_user_profile__edit_text_dorsal" />
+
+        <es.us.managemyteam.ui.view.input.EditableTextView
+            android:id="@+id/edit_user_profile__edit_text_phonenumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_sixteen"
+            app:input_header="@string/user_phone"
+            app:input_ime="done"
+            app:input_type="phone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_user_profile__edit_text_age" />
+
+        <es.us.managemyteam.ui.view.loading_button.LoadingButtonView
+            android:id="@+id/edit_user_profile__btn__send_request"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_twentyfour"
+            app:btn_background_color="@color/primaryDark"
+            app:btn_has_radius="true"
+            app:btn_text="@string/accept"
+            app:btn_text_color="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_user_profile__edit_text_phonenumber" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

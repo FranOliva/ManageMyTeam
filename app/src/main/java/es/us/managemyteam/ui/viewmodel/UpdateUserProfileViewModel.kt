@@ -46,7 +46,7 @@ class UpdateUserProfileViewModel(
         phoneNumber: String
     ): Boolean {
         return when {
-            name.isBlank() || name.isBlank() || surname.isBlank() || phoneNumber.isBlank() -> {
+            name.isBlank() || surname.isBlank() || phoneNumber.isBlank() -> {
                 updateUserProfile.setData(
                     Resource.error(
                         Error(
