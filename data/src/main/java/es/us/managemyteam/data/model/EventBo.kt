@@ -6,10 +6,10 @@ import java.util.*
 
 @Parcelize
 data class EventBo(
-    val title: String? = null,
-    val date: Date? = null,
-    val location: LocationBo? = null,
-    val description: String? = null,
+    var title: String? = null,
+    var date: Date? = null,
+    var location: LocationBo? = null,
+    var description: String? = null,
     var call: CallBo? = null,
-    val eventType: String? = null
+    var eventType: String? = null
 ) : BaseBo(), Parcelable

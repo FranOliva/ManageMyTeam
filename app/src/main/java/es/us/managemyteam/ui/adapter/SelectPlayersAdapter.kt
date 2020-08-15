@@ -22,7 +22,7 @@ class SelectPlayersAdapter :
         holder.setup(holder.getViewBinding(), data[position])
     }
 
-    fun getPlayers(selected: Boolean) = data.filter { it.enable == selected }
+    fun getPlayers(selected: Boolean) = data.filter { it.called == selected }
 
     class SelectPlayerViewHolder(
         viewBinding: RowSelectPlayerBinding,
@@ -32,7 +32,7 @@ class SelectPlayersAdapter :
         override fun setup(viewBinding: RowSelectPlayerBinding, item: UserCalledBo) {
             viewBinding.rowSelectPlayerLabelName.text = item.userName
             viewBinding.rowSelectPlayerSwitcher.apply {
-                setChecked(item.enable)
+                setChecked(item.called)
                 setOnCheckedChangeListener {
                     setChecked(it)
                     playerSelectedListener.onPlayerSelected(adapterPosition, it)
@@ -42,7 +42,7 @@ class SelectPlayersAdapter :
     }
 
     override fun onPlayerSelected(position: Int, enable: Boolean) {
-        data[position].enable = enable
+        data[position].called = enable
     }
 
 }

@@ -83,7 +83,17 @@ class SelectPlayersFragment : BaseFragment<FragmentSelectPlayersBinding>() {
                 override fun onSuccess(response: EventBo?) {
                     response?.let { event ->
                         currentEvent = event
-                        createEventViewModel.getPlayers()
+                        val isEmpty = event.call?.called.isNullOrEmpty() &&
+                                event.call?.notCalled.isNullOrEmpty()
+                        if (isEmpty) {
+                            createEventViewModel.getPlayers()
+                        } else {
+                            selectPlayersAdapter?.let {
+                                it.setData(event.call?.called ?: arrayListOf())
+                                it.addData(event.call?.notCalled ?: arrayListOf())
+                                it.notifyDataSetChanged()
+                            }
+                        }
                     }
                 }
             })
@@ -110,7 +120,7 @@ class SelectPlayersFragment : BaseFragment<FragmentSelectPlayersBinding>() {
 
     override fun setupToolbar(toolbar: Toolbar) {
         toolbar.apply {
-            setToolbarTitle(getString(R.string.edit_club_title))
+            setToolbarTitle(getString(R.string.create_event_select_call))
             setNavIcon(ContextCompat.getDrawable(context, R.drawable.ic_back))
             setNavAction { popBack() }
             show()

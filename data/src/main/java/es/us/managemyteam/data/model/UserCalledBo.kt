@@ -7,6 +7,13 @@ import kotlinx.android.parcel.Parcelize
 data class UserCalledBo(
     val userId: String = "",
     val userName: String = "",
-    var enable: Boolean = false,
+    var called: Boolean = false,
+    var enable: Int = CallStatus.PENDING.ordinal,
     val observation: String = ""
 ) : BaseBo(), Parcelable
+
+enum class CallStatus {
+    PENDING,
+    ACCEPTED,
+    DENIED
+}
