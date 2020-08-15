@@ -52,10 +52,39 @@
         app:popExitAnim="@anim/nav_exit_to_bottom"
         app:popUpToInclusive="true" />
 
+    <action
+        android:id="@+id/action_menu_to_events"
+        app:destination="@+id/events_nav_graph"
+        app:enterAnim="@anim/nav_enter_from_bottom"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popUpToInclusive="true"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_exit_to_bottom" />
+
+    <action
+        android:id="@+id/action_menu_to_profile"
+        app:destination="@+id/user_nav_graph"
+        app:enterAnim="@anim/nav_enter_from_bottom"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_exit_to_bottom"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_menu_to_chat"
+        app:destination="@+id/chat_nav_graph"
+        app:enterAnim="@anim/nav_enter_from_bottom"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_exit_to_bottom"
+        app:popUpToInclusive="true" />
+
 
     <include app:graph="@navigation/club_nav_graph" />
+    <include app:graph="@navigation/chat_nav_graph" />
     <include app:graph="@navigation/login_nav_graph" />
     <include app:graph="@navigation/events_nav_graph" />
+    <include app:graph="@navigation/user_nav_graph"/>
     <include app:graph="@navigation/administration_nav_graph" />
 
 </navigation>

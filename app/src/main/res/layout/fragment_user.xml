@@ -18,29 +18,40 @@
             android:layout_height="wrap_content">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/club__container__logo"
+                android:id="@+id/user__container__logo"
                 android:layout_width="0dp"
-                android:layout_height="200dp"
+                android:layout_height="@dimen/size_twohundred"
                 android:background="@color/primary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <TextView
+                    android:id="@+id/user__label__dorsal_value"
+                    style="@style/Regular.Twenty.Black"
+                    android:layout_width="@dimen/size_eighty"
+                    android:layout_height="@dimen/size_twohundred"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Dorsal" />
+
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/club__img__shield"
+                    android:id="@+id/user__img__shield"
                     android:layout_width="@dimen/size_onehundred"
                     android:layout_height="@dimen/size_onehundred"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_football"
+                    app:srcCompat="@drawable/ic_profile"
                     app:tint="@color/white" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
-                android:id="@+id/club_profile__container__content"
+                android:id="@+id/user_profile__container__content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_rounded_white"
@@ -48,21 +59,21 @@
                 android:padding="@dimen/size_sixteen"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/club__container__logo">
+                app:layout_constraintTop_toBottomOf="@+id/user__container__logo">
 
                 <LinearLayout
-                    android:id="@+id/club__container__name"
+                    android:id="@+id/user__container__name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_ten"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/club__label__name_title"
+                        android:id="@+id/user__label__name_title"
                         style="@style/Regular.Twenty.Black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/edit_club_club_name" />
+                        android:text="@string/edit_user_user_name" />
 
                     <View
                         android:layout_width="@dimen/size_fourty"
@@ -71,7 +82,7 @@
                         android:background="@color/primary" />
 
                     <TextView
-                        android:id="@+id/club__label__name_value"
+                        android:id="@+id/user__label__name_value"
                         style="@style/Regular.Sixteen.Black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -80,18 +91,18 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/club__container__date_fundation"
+                    android:id="@+id/user__container__surname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_twenty"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/club__label__date_fundation_title"
+                        android:id="@+id/user__label__surname_title"
                         style="@style/Regular.Twenty.Black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/edit_club_club_date_fundation" />
+                        android:text="@string/edit_user_user_surname" />
 
                     <View
                         android:layout_width="@dimen/size_fourty"
@@ -100,27 +111,27 @@
                         android:background="@color/primary" />
 
                     <TextView
-                        android:id="@+id/club__label__date_fundation_value"
+                        android:id="@+id/user__label__surname_value"
                         style="@style/Regular.Sixteen.Black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="Fecha de fundación" />
+                        tools:text="Apellidos" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/club__container__president"
+                    android:id="@+id/user__container__mail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_twenty"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/club__label__president_title"
+                        android:id="@+id/user__label__mail_title"
                         style="@style/Regular.Twenty.Black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/edit_club_club_president" />
+                        android:text="@string/edit_user_user_mail" />
 
                     <View
                         android:layout_width="@dimen/size_fourty"
@@ -129,95 +140,7 @@
                         android:background="@color/primary" />
 
                     <TextView
-                        android:id="@+id/club__label__president_value"
-                        style="@style/Regular.Sixteen.Black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="Presidente" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/club__container__coach"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_twenty"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/club__label__coach_title"
-                        style="@style/Regular.Twenty.Black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/edit_club_club_coach" />
-
-                    <View
-                        android:layout_width="@dimen/size_fourty"
-                        android:layout_height="@dimen/size_four"
-                        android:layout_marginBottom="@dimen/size_twelve"
-                        android:background="@color/primary" />
-
-                    <TextView
-                        android:id="@+id/club__label__coach_value"
-                        style="@style/Regular.Sixteen.Black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="Entrenador" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/club__container__location"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_twenty"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/club__label__location_title"
-                        style="@style/Regular.Twenty.Black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/edit_club_club_location" />
-
-                    <View
-                        android:layout_width="@dimen/size_fourty"
-                        android:layout_height="@dimen/size_four"
-                        android:layout_marginBottom="@dimen/size_twelve"
-                        android:background="@color/primary" />
-
-                    <TextView
-                        android:id="@+id/club__label__location_value"
-                        style="@style/Regular.Sixteen.Black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="Ubicación" />
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/club__container__mail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_twenty"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/club__label__mail_title"
-                        style="@style/Regular.Twenty.Black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/edit_club_club_mail" />
-
-                    <View
-                        android:layout_width="@dimen/size_fourty"
-                        android:layout_height="@dimen/size_four"
-                        android:layout_marginBottom="@dimen/size_twelve"
-                        android:background="@color/primary" />
-
-                    <TextView
-                        android:id="@+id/club__label__mail_value"
+                        android:id="@+id/user__label__mail_value"
                         style="@style/Regular.Sixteen.Black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -225,20 +148,19 @@
 
                 </LinearLayout>
 
-
                 <LinearLayout
-                    android:id="@+id/club__container__phone_number"
+                    android:id="@+id/user__container__phone_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_twenty"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/club__label__phone_number_title"
+                        android:id="@+id/user__label__phone_number_title"
                         style="@style/Regular.Twenty.Black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/edit_club_club_phone_number" />
+                        android:text="@string/edit_user_user_phone_number" />
 
                     <View
                         android:layout_width="@dimen/size_fourty"
@@ -247,7 +169,7 @@
                         android:background="@color/primary" />
 
                     <TextView
-                        android:id="@+id/club__label__phone_number_value"
+                        android:id="@+id/user__label__phone_number_value"
                         style="@style/Regular.Sixteen.Black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -255,20 +177,19 @@
 
                 </LinearLayout>
 
-
                 <LinearLayout
-                    android:id="@+id/club__container__web"
+                    android:id="@+id/user__container__age"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_twenty"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/club__label__web_title"
+                        android:id="@+id/user__label__age_title"
                         style="@style/Regular.Twenty.Black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/edit_club_club_web" />
+                        android:text="@string/edit_user_user_age" />
 
                     <View
                         android:layout_width="@dimen/size_fourty"
@@ -277,11 +198,11 @@
                         android:background="@color/primary" />
 
                     <TextView
-                        android:id="@+id/club__label__web_value"
+                        android:id="@+id/user__label__age_value"
                         style="@style/Regular.Sixteen.Black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="Página web" />
+                        tools:text="Edad" />
 
                 </LinearLayout>
 
@@ -292,7 +213,7 @@
     </ScrollView>
 
     <com.bluehomestudio.progressimage.ProgressPicture
-        android:id="@+id/club__progress_bar"
+        android:id="@+id/user__progress_bar"
         android:layout_width="@dimen/size_eighty"
         android:layout_height="@dimen/size_eighty"
         android:src="@drawable/ic_soccer_ball"
@@ -303,7 +224,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/club__fab__edit"
+        android:id="@+id/user__fab__edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/size_sixteen"

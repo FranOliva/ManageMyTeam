@@ -10,18 +10,20 @@ import es.us.managemyteam.data.model.ClubBo
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.RepositoryUtil
 import es.us.managemyteam.repository.util.Resource
+import java.util.*
 
 interface ClubRepository {
 
     suspend fun getClub(): LiveData<Resource<ClubBo>>
 
-    suspend fun createClub(
+    suspend fun editClub(
+        uuid: String,
         name: String,
-        dateFundation: String,
+        dateFundation: Date?,
         location: String,
         president: String,
         coach: String,
-        phoneNumber: Long,
+        phoneNumber: String,
         mail: String,
         web: String
     ): LiveData<Resource<Boolean>>
@@ -42,26 +44,29 @@ class ClubRepositoryImpl : ClubRepository {
         return club
     }
 
-    override suspend fun createClub(
+    override suspend fun editClub(
+        uuid: String,
         name: String,
-        dateFundation: String,
+        dateFundation: Date?,
         location: String,
         president: String,
         coach: String,
-        phoneNumber: Long,
+        phoneNumber: String,
         mail: String,
         web: String
     ): LiveData<Resource<Boolean>> {
-        clubRef.push().setValue(
+        val newClub =
             ClubBo(
                 name, dateFundation, location, president, coach, phoneNumber, mail, web
-            )
-        ) { databaseError, _ ->
-            if (databaseError != null) {
-                clubCreateData.value =
-                    Resource.error(Error(serverErrorMessage = databaseError.message))
+            ).apply {
+                this.uuid = uuid
+            }
+        clubRef.setValue(newClub)
+        { error, _ ->
+            clubCreateData.value = if (error != null) {
+                Resource.error(Error(serverErrorMessage = error.message))
             } else {
-                clubCreateData.value = Resource.success(true)
+                Resource.success(true)
             }
         }
         return clubCreateData

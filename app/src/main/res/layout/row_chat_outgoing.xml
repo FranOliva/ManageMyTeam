@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2dp"
+    android:layout_marginTop="2dp"
+    android:minWidth="120dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/rowChatOutgoingContainerRoot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="0dp"
+            app:cardBackgroundColor="@color/pale_grey"
+            app:contentPadding="@dimen/size_sixteen">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/rowChatOutgoingLabelMessage"
+                    style="@style/Regular.Sixteen.Black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    tools:text="Hola!" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/rowChatOutgoingImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/chat_arrow_1"
+            android:elevation="6dp"
+            android:layout_marginStart="-2dp"
+            android:layout_toEndOf="@+id/rowChatOutgoingContainerRoot"
+            android:layout_toRightOf="@+id/rowChatOutgoingContainerRoot"
+            android:layout_marginLeft="-2dp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/rowChatOutgoingLabelDate"
+        style="@style/Regular.Fourteen.Primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="14dp"
+        tools:text="22:03"
+        android:layout_marginRight="14dp" />
+
+</LinearLayout>

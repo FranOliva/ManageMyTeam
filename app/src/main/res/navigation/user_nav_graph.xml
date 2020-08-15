@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/user_nav_graph"
+    app:startDestination="@id/userFragment">
+
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="es.us.managemyteam.ui.fragment.UserFragment" />
+
+    <fragment
+        android:id="@+id/userEditFragment"
+        android:name="es.us.managemyteam.ui.fragment.EditUserFragment" />
+
+    <action
+        android:id="@+id/action_user_to_edit_user"
+        app:destination="@id/userEditFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+</navigation>

@@ -9,3 +9,7 @@ fun String.isEmail(): Boolean {
 fun String.isURL(): Boolean {
     return (isNotBlank() && Patterns.WEB_URL.matcher(this).matches());
 }
+
+fun String.isPhone(): Boolean {
+    return (isNotBlank() && Patterns.PHONE.matcher(this).matches())
+}

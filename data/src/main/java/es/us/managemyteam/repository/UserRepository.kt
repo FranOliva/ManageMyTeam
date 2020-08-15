@@ -13,8 +13,11 @@ import es.us.managemyteam.data.database.DatabaseTables
 import es.us.managemyteam.data.model.Role
 import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.repository.util.Error
+import es.us.managemyteam.repository.util.PasswordUtil
 import es.us.managemyteam.repository.util.RepositoryUtil
 import es.us.managemyteam.repository.util.Resource
+
+const val HMAC_KEY = "K3dHdeTVvja5SOBzD6zf"
 
 interface UserRepository {
 
@@ -58,7 +61,9 @@ class UserRepositoryImpl : UserRepository {
         phoneNumber: String,
         role: Role
     ): LiveData<Resource<Boolean>> {
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+        val hashedPassword = PasswordUtil.hashPassword(password)
+
+        auth.createUserWithEmailAndPassword(email, hashedPassword).addOnCompleteListener {
             if (it.isSuccessful) {
                 createUserFirebaseDatabase(name, surname, email, phoneNumber, role)
             } else {
@@ -73,7 +78,9 @@ class UserRepositoryImpl : UserRepository {
 
     override suspend fun login(email: String, password: String): LiveData<Resource<String>> {
         loginData.postValue(null)
-        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+        val hashedPassword = PasswordUtil.hashPassword(password)
+
+        auth.signInWithEmailAndPassword(email, hashedPassword).addOnCompleteListener {
             if (it.isSuccessful) {
                 loginData.value = Resource.success(auth.currentUser?.uid)
             } else {

@@ -55,14 +55,26 @@ val appModule = module {
         CreateEventViewModel(get(), get(), get(), get(), get(), get(), get(), get())
     }
 
+    viewModel {
+        ChatViewModel(get(), get(), get())
+    }
+
     // Club
 
     factory {
         GetClubUc(get())
     }
 
+    factory {
+        EditClubUc(get())
+    }
+
     viewModel {
-        ClubViewModel(get())
+        ClubViewModel(get(), get())
+    }
+
+    viewModel {
+        EditClubViewModel(get(), get(), get())
     }
 
     // User
@@ -93,6 +105,20 @@ val appModule = module {
 
     viewModel {
         LoginViewModel(get(), get())
+    }
+
+    viewModel {
+        UserViewModel(get())
+    }
+
+    // Chat
+
+    factory {
+        GetMessagesUc(get())
+    }
+
+    factory {
+        PostMessageUc(get())
     }
 
     // Administration
