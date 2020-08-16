@@ -3,6 +3,7 @@ package es.us.managemyteam.contract
 import android.content.Context
 import android.content.Intent
 import androidx.fragment.app.Fragment
+import com.paypal.android.sdk.payments.ProofOfPayment
 
 private const val ISO_CODE = "EUR"
 
@@ -23,7 +24,7 @@ interface PaypalInterface {
 
     interface PaypalResultListener {
 
-        fun onPaymentOk()
+        fun onPaymentOk(concept: String, quantity: String, paymentProof: ProofOfPayment)
 
         fun onPaymentError()
 

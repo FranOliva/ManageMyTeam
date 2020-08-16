@@ -15,7 +15,8 @@ private const val REQUEST_CODE_PAYMENT = 1
 private const val REQUEST_CODE_FUTURE_PAYMENT = 2
 private const val REQUEST_CODE_PROFILE_SHARING = 3
 
-private const val CONFIG_CLIENT_ID = "AS6bpF9z23r85dwuFs5CWhwzDNDHYgqGKTAtxWr8ht4BpXYhDY2pzqDyS8vHObxt7WHPjD1WyFgnpZZw"
+private const val CONFIG_CLIENT_ID =
+    "AYxExxPewJCCP8n5rihDlSRFjLeuKT4ksM7zEZxdS0Q85--P70l3M0OIkRy1w6dG56G40G85RKX7hqo_"
 
 private const val CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_NO_NETWORK
 //private const val CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX
@@ -29,7 +30,7 @@ class PaypalManager : PaypalInterface {
         .environment(CONFIG_ENVIRONMENT)
         .clientId(CONFIG_CLIENT_ID)
         .merchantName("ManageMyTeam")
-        .sandboxUserPassword(">=0u+@Nf")
+        .sandboxUserPassword("eh^lfV4_")
         .merchantPrivacyPolicyUri(Uri.parse("https://www.example.com/privacy"))
         .merchantUserAgreementUri(Uri.parse("https://www.example.com/legal"))
     private var resultListener: PaypalInterface.PaypalResultListener? = null
@@ -74,7 +75,13 @@ class PaypalManager : PaypalInterface {
                          * https://github.com/paypal/rest-api-sdk-python/tree/master/samples/mobile_backend
                          */
 
-                        resultListener?.onPaymentOk()
+                        resultListener?.onPaymentOk(
+                            confirm.payment.toJSONObject().getString("short_description"),
+                            confirm.payment.toJSONObject().getString("amount").plus(" ").plus(
+                                confirm.payment.toJSONObject().getString("currency_code")
+                            ),
+                            confirm.proofOfPayment
+                        )
 
 
                     } catch (e: JSONException) {
@@ -93,69 +100,7 @@ class PaypalManager : PaypalInterface {
                 )
                 resultListener?.onPaymentError()
             }
-        } else if (requestCode == REQUEST_CODE_FUTURE_PAYMENT) {
-            if (resultCode == Activity.RESULT_OK) {
-                val auth =
-                    data?.getParcelableExtra<PayPalAuthorization>(PayPalFuturePaymentActivity.EXTRA_RESULT_AUTHORIZATION)
-                if (auth != null) {
-                    try {
-                        Log.i("FuturePaymentExample", auth.toJSONObject().toString(4))
 
-                        val authorization_code = auth.authorizationCode
-                        Log.i("FuturePaymentExample", authorization_code)
-
-                        resultListener?.onPaymentOk()
-
-                    } catch (e: JSONException) {
-                        Log.e("FuturePaymentExample", "an extremely unlikely failure occurred: ", e)
-                        resultListener?.onPaymentError()
-                    }
-
-                }
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                Log.i("FuturePaymentExample", "The user canceled.")
-                resultListener?.onPaymentCancelled()
-            } else if (resultCode == PayPalFuturePaymentActivity.RESULT_EXTRAS_INVALID) {
-                Log.i(
-                    "FuturePaymentExample",
-                    "Probably the attempt to previously start the PayPalService had an invalid PayPalConfiguration. Please see the docs."
-                )
-                resultListener?.onPaymentError()
-            }
-        } else if (requestCode == REQUEST_CODE_PROFILE_SHARING) {
-            if (resultCode == Activity.RESULT_OK) {
-                val auth = data?.getParcelableExtra<PayPalAuthorization>(
-                    PayPalProfileSharingActivity.EXTRA_RESULT_AUTHORIZATION
-                )
-                if (auth != null) {
-                    try {
-                        Log.i("ProfileSharingExample", auth.toJSONObject().toString(4))
-
-                        val authorization_code = auth.authorizationCode
-                        Log.i("ProfileSharingExample", authorization_code)
-
-                        resultListener?.onPaymentOk()
-
-                    } catch (e: JSONException) {
-                        Log.e(
-                            "ProfileSharingExample",
-                            "an extremely unlikely failure occurred: ",
-                            e
-                        )
-                        resultListener?.onPaymentError()
-                    }
-
-                }
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                Log.i("ProfileSharingExample", "The user canceled.")
-                resultListener?.onPaymentCancelled()
-            } else if (resultCode == PayPalFuturePaymentActivity.RESULT_EXTRAS_INVALID) {
-                Log.i(
-                    "ProfileSharingExample",
-                    "Probably the attempt to previously start the PayPalService had an invalid PayPalConfiguration. Please see the docs."
-                )
-                resultListener?.onPaymentError()
-            }
         }
     }
 

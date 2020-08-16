@@ -85,8 +85,12 @@ val appModule = module {
 
     //Payment
 
+    factory {
+        CreatePaymentUc(get())
+    }
+
     viewModel {
-        PaymentViewModel(get())
+        PaymentViewModel(get(), get())
     }
 
     // User
