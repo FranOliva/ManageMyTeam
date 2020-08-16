@@ -83,16 +83,16 @@ class UserProfileFragment : BaseFragment<FragmentUserProfileBinding>() {
         viewBinding.userLabelSurnameValue.text = user.surname
         viewBinding.userLabelMailValue.text = user.email
         viewBinding.userLabelPhoneNumberValue.text = user.phoneNumber
-        viewBinding.userLabelAgeValue.text = user.age.toString()
+        viewBinding.userLabelAgeValue.text = user.age?.toString() ?: "--"
 
         viewBinding.userFabEdit.visibility = if (userIsLogged) {
-            View.VISIBLE
+            VISIBLE
         } else {
-            View.GONE
+            GONE
         }
 
         if (userIsPlayer) {
-            viewBinding.userLabelDorsalValue.text = user.dorsal.toString()
+            viewBinding.userLabelDorsalValue.text = user.dorsal?.toString() ?: ""
         } else {
             viewBinding.userLabelDorsalValue.text = ""
         }
