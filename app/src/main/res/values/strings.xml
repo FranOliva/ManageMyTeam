@@ -117,4 +117,8 @@
 
     <string name="my_team_title">Plantilla</string>
 
+    <!-- Calls -->
+
+    <string name="calls">Mis convocatorias</string>
+
 </resources>

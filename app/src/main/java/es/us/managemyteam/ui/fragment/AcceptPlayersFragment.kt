@@ -10,7 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
-import es.us.managemyteam.contract.AcceptPlayerListener
+import es.us.managemyteam.contract.AcceptListener
 import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.databinding.FragmentAcceptsPlayersBinding
 import es.us.managemyteam.extension.*
@@ -20,7 +20,7 @@ import es.us.managemyteam.ui.adapter.AcceptPlayersAdapter
 import es.us.managemyteam.ui.viewmodel.AcceptPlayersViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class AcceptPlayersFragment : BaseFragment<FragmentAcceptsPlayersBinding>(), AcceptPlayerListener {
+class AcceptPlayersFragment : BaseFragment<FragmentAcceptsPlayersBinding>(), AcceptListener {
 
     private var acceptPlayersAdapter: AcceptPlayersAdapter? = null
     private val acceptsPlayersViewModel: AcceptPlayersViewModel by viewModel()
@@ -111,11 +111,11 @@ class AcceptPlayersFragment : BaseFragment<FragmentAcceptsPlayersBinding>(), Acc
         bottomNavigationView.show()
     }
 
-    override fun onPlayerAccepted(uuid: String) {
+    override fun onAccepted(uuid: String) {
         acceptsPlayersViewModel.acceptPlayer(uuid)
     }
 
-    override fun onPlayerRefused(uuid: String) {
+    override fun onRefused(uuid: String) {
         acceptsPlayersViewModel.rejectPlayer(uuid)
     }
 }

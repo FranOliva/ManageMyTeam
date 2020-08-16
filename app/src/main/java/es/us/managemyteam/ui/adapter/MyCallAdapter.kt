@@ -3,34 +3,34 @@ package es.us.managemyteam.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import es.us.managemyteam.contract.AcceptListener
-import es.us.managemyteam.data.model.UserBo
+import es.us.managemyteam.data.model.EventBo
 import es.us.managemyteam.databinding.RowAcceptPlayerBinding
 
-class AcceptPlayersAdapter(private val acceptListener: AcceptListener) :
-    BaseAdapter<UserBo, RowAcceptPlayerBinding, AcceptPlayersAdapter.AcceptPlayersViewHolder>() {
+class MyCallAdapter(private val acceptListener: AcceptListener) :
+    BaseAdapter<EventBo, RowAcceptPlayerBinding, MyCallAdapter.AcceptCallViewHolder>() {
 
     override fun onCreate(
         inflater: LayoutInflater,
         parent: ViewGroup,
         viewType: Int
-    ): AcceptPlayersViewHolder {
-        return AcceptPlayersViewHolder(
+    ): AcceptCallViewHolder {
+        return AcceptCallViewHolder(
             RowAcceptPlayerBinding.inflate(inflater, parent, false),
             acceptListener
         )
     }
 
-    override fun onBind(item: UserBo, position: Int, holder: AcceptPlayersViewHolder) {
-        holder.setup(holder.getViewBinding(), data[position])
+    override fun onBind(item: EventBo, position: Int, holder: AcceptCallViewHolder) {
+        holder.setup(holder.getViewBinding(), item)
     }
 
-    class AcceptPlayersViewHolder(
+    class AcceptCallViewHolder(
         viewBinding: RowAcceptPlayerBinding,
         private val acceptListener: AcceptListener
     ) :
-        BaseAdapter.BaseViewHolder<UserBo, RowAcceptPlayerBinding>(viewBinding) {
-        override fun setup(viewBinding: RowAcceptPlayerBinding, item: UserBo) {
-            viewBinding.rowAcceptPlayerLabelName.text = item.name.plus(" ").plus(item.surname)
+        BaseAdapter.BaseViewHolder<EventBo, RowAcceptPlayerBinding>(viewBinding) {
+        override fun setup(viewBinding: RowAcceptPlayerBinding, item: EventBo) {
+            viewBinding.rowAcceptPlayerLabelName.text = item.title
             viewBinding.rowAcceptPlayerBtnAccept.setOnClickListener {
                 acceptListener.onAccepted(item.uuid ?: "")
             }
