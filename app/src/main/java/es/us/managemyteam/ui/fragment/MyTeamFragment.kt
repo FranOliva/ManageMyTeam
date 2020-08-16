@@ -1,5 +1,6 @@
 package es.us.managemyteam.ui.fragment
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import es.us.managemyteam.contract.BaseAdapterClickListener
 import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.databinding.FragmentMyTeamBinding
 import es.us.managemyteam.extension.*
+import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.ResourceObserver
 import es.us.managemyteam.ui.adapter.MyTeamAdapter
 import es.us.managemyteam.ui.viewmodel.MyTeamViewModel
@@ -50,6 +52,19 @@ class MyTeamFragment : BaseFragment<FragmentMyTeamBinding>(), BaseAdapterClickLi
                     myTeamAdapter.setData(it)
                     myTeamAdapter.notifyDataSetChanged()
                 }
+            }
+
+            override fun onLoading(loading: Boolean) {
+                showLoader(loading)
+
+            }
+
+            override fun onError(error: Error) {
+                super.onError(error)
+                showErrorDialog(error.serverErrorMessage ?: "",
+                    DialogInterface.OnClickListener { _, _ ->
+                        popBack()
+                    })
             }
         })
     }

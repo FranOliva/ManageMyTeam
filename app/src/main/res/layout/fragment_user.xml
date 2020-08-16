@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:scrollbars="none"
-        android:padding="@dimen/size_ten">
+        android:padding="@dimen/size_ten"
+        android:scrollbars="none">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -32,8 +32,8 @@
                     android:layout_width="@dimen/size_eighty"
                     android:layout_height="@dimen/size_twohundred"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Dorsal" />
 
@@ -223,15 +223,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/user__fab__edit"
+    <FrameLayout
+        android:visibility="gone"
+        android:id="@+id/user__container__edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/size_sixteen"
-        android:backgroundTint="@color/primary"
-        android:src="@drawable/ic_edit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@null" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/user__fab__edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/size_sixteen"
+            android:backgroundTint="@color/primary"
+            android:src="@drawable/ic_edit"
+            app:tint="@null" />
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

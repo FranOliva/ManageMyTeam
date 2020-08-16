@@ -3,6 +3,8 @@ package es.us.managemyteam.ui.fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -27,19 +29,26 @@ class UserFragment : BaseFragment<FragmentUserBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val userId = arguments?.getString(getString(R.string.argument__user_uuid))
 
-        setupUserIsPlayerObserver()
-        setupUserObserver()
+        if (userId == null) {
+            viewBinding.userContainerEdit.visibility = VISIBLE
+        }
+
+        setupUserObserver(userId)
         setupClickListeners()
 
     }
 
-    private fun setupUserObserver() {
+    private fun setupUserObserver(userId: String?) {
         userViewModel.getUserData()
             .observe(viewLifecycleOwner, object : ResourceObserver<UserBo>() {
                 override fun onSuccess(response: UserBo?) {
                     userIsLogged = response != null
-                    response?.let { setupView(it) }
+                    response?.let {
+                        userIsPlayer = it.isPlayer()
+                        setupView(it)
+                    }
                 }
 
                 override fun onError(error: Error) {
@@ -60,26 +69,13 @@ class UserFragment : BaseFragment<FragmentUserBinding>() {
                 }
 
             })
-        userViewModel.getUser()
+        userViewModel.getUser(userId)
     }
 
     private fun setupClickListeners() {
         viewBinding.userFabEdit.setOnClickListener {
             findNavController().navigate(R.id.action_user_to_edit_user)
         }
-    }
-
-    private fun setupUserIsPlayerObserver() {
-        userViewModel.getUserData()
-            .observe(viewLifecycleOwner, object : ResourceObserver<UserBo>() {
-                override fun onSuccess(response: UserBo?) {
-                    response?.let {
-                        userIsPlayer = it.isPlayer()
-                        userViewModel.getUser()
-                    }
-                }
-            })
-        userViewModel.getUser()
     }
 
     private fun setupView(user: UserBo) {
