@@ -15,7 +15,10 @@ import es.us.managemyteam.repository.util.Resource
 
 interface CallRepository {
 
-    suspend fun getCallsByUserId(userUuid: String): LiveData<Resource<List<EventBo>>>
+    suspend fun getCallsByUserId(
+        userUuid: String,
+        status: CallStatus
+    ): LiveData<Resource<List<EventBo>>>
 
     suspend fun acceptCall(uuid: String, userUuid: String): LiveData<Resource<Boolean>>
 
@@ -32,7 +35,10 @@ class CallRepositoryImpl : CallRepository {
     private val callAcceptedData = MutableLiveData<Resource<Boolean>>()
     private val callsData = MutableLiveData<Resource<List<EventBo>>>()
 
-    override suspend fun getCallsByUserId(userUuid: String): LiveData<Resource<List<EventBo>>> {
+    override suspend fun getCallsByUserId(
+        userUuid: String,
+        status: CallStatus
+    ): LiveData<Resource<List<EventBo>>> {
         callsData.postValue(null)
         eventTable.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
@@ -42,7 +48,12 @@ class CallRepositoryImpl : CallRepository {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val calls =
                     snapshot.children.mapNotNull { it.getValue(EventBo::class.java) }
-                        .filter { it.call?.called?.find { user -> user.userId == userUuid } != null }
+                        .filter {
+                            it.call?.called?.find { call ->
+                                call.userId == userUuid &&
+                                        call.enable == status.ordinal
+                            } != null
+                        }
                         .sortedBy {
                             it.date?.time ?: 0L
                         }

@@ -170,4 +170,23 @@ val appModule = module {
     viewModel {
         AcceptPlayersViewModel(get(), get(), get())
     }
+
+    // Call
+
+    factory {
+        GetCallsByUserIdUC(get())
+    }
+
+    factory {
+        AcceptCallUc(get())
+    }
+
+    factory {
+        RejectCallUc(get())
+    }
+
+    viewModel {
+        CallViewModel(get(), get(), get(), get())
+    }
+
 }

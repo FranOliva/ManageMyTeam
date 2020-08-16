@@ -88,6 +88,15 @@
         app:popExitAnim="@anim/nav_exit_to_bottom"
         app:popUpToInclusive="true" />
 
+    <action
+        android:id="@+id/action_menu_to_call"
+        app:destination="@+id/call_nav_graph"
+        app:enterAnim="@anim/nav_enter_from_bottom"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_exit_to_bottom"
+        app:popUpToInclusive="true" />
+
 
     <include app:graph="@navigation/club_nav_graph" />
     <include app:graph="@navigation/chat_nav_graph" />
@@ -96,5 +105,6 @@
     <include app:graph="@navigation/user_nav_graph" />
     <include app:graph="@navigation/administration_nav_graph" />
     <include app:graph="@navigation/my_team_nav_graph" />
+    <include app:graph="@navigation/call_nav_graph" />
 
 </navigation>
