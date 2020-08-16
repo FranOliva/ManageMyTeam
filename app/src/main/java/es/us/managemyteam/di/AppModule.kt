@@ -45,12 +45,24 @@ val appModule = module {
         SetCurrentNewEventUc(get())
     }
 
+    factory {
+        GetCurrentCallUc(get())
+    }
+
+    factory {
+        SetCurrentCallUc(get())
+    }
+
     viewModel {
         EventsViewModel(get(), get())
     }
 
     viewModel {
-        CreateEventViewModel(get(), get(), get(), get(), get())
+        CreateEventViewModel(get(), get(), get(), get(), get(), get(), get(), get())
+    }
+
+    viewModel {
+        ChatViewModel(get(), get(), get())
     }
 
     // Club
@@ -59,8 +71,16 @@ val appModule = module {
         GetClubUc(get())
     }
 
+    factory {
+        EditClubUc(get())
+    }
+
     viewModel {
-        ClubViewModel(get())
+        ClubViewModel(get(), get())
+    }
+
+    viewModel {
+        EditClubViewModel(get(), get(), get())
     }
 
     //Payment
@@ -97,6 +117,20 @@ val appModule = module {
 
     viewModel {
         LoginViewModel(get(), get())
+    }
+
+    viewModel {
+        UserViewModel(get())
+    }
+
+    // Chat
+
+    factory {
+        GetMessagesUc(get())
+    }
+
+    factory {
+        PostMessageUc(get())
     }
 
     // Administration

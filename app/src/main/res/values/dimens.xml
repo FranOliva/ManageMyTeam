@@ -52,6 +52,7 @@
     <dimen name="size_onehundred">100dp</dimen>
     <dimen name="size_onehundredandtwenty">120dp</dimen>
     <dimen name="size_onetwentyeight">128dp</dimen>
+    <dimen name="size_twohundred">200dp</dimen>
     <dimen name="size_threehundred">300dp</dimen>
     <dimen name="size_threehundredtwenty">320dp</dimen>
 

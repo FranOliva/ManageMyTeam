@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2dp"
+    android:layout_marginTop="2dp"
+    android:minWidth="120dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/rowChatIncomingImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="-2dp"
+        android:elevation="6dp"
+        app:srcCompat="@drawable/chat_arrow_0" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/rowChatIncomingContainerRoot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/rowChatIncomingImg"
+        app:cardBackgroundColor="@color/primary"
+        app:cardCornerRadius="0dp"
+        app:contentPadding="@dimen/size_sixteen">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/rowChatIncomingLabelMessage"
+                style="@style/Regular.Sixteen.White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                tools:text="Hola!" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/rowChatIncomingLabelDate"
+        style="@style/Regular.Fourteen.Primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/rowChatIncomingContainerRoot"
+        android:layout_below="@+id/rowChatIncomingContainerRoot"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="6dp"
+        tools:text="22:03 - Lucia del carmen fuentes" />
+
+</RelativeLayout>

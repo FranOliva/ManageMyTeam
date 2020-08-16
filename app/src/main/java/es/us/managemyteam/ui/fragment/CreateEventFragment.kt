@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
+import es.us.managemyteam.data.model.CallBo
 import es.us.managemyteam.data.model.EventBo
 import es.us.managemyteam.data.model.LocationBo
 import es.us.managemyteam.databinding.FragmentCreateEventBinding
@@ -34,8 +35,10 @@ import java.util.*
 class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListener {
 
     private var selectedDate = Calendar.getInstance()
+    private var selectedEventType = ""
     private val createEventViewModel: CreateEventViewModel by viewModel()
     private var locationSelected: LocationBo? = null
+    private var currentNewEvent: EventBo = EventBo()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,6 +59,7 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
     }
 
     private fun setupObservers() {
+        setupCurrentEventObserver()
         setupCreateEventObserver()
         setupGetCurrentNewEventObserver()
         setupLocationSelectedObserver()
@@ -64,6 +68,10 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
     private fun setupClickListeners() {
         setupDateClickListener()
         setupEventTypeClickListener()
+        viewBinding.createEventBtnSelectPlayers.setOnClickListener {
+            setCurrentEvent()
+            findNavController().navigate(R.id.action_create_event_to_select_players)
+        }
         viewBinding.createEventBtnSave.setOnClickListener {
             clickOnSave()
         }
@@ -79,6 +87,7 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
             viewBinding.createEventContainerMap.visibility = VISIBLE
         }
     }
+
 
     //region Map
 
@@ -117,6 +126,22 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
     //endregion
 
     //region Observers
+
+    private fun setupCurrentEventObserver() {
+        createEventViewModel.getCurrentNewEventData()
+            .observe(viewLifecycleOwner, object : ResourceObserver<EventBo>() {
+                override fun onSuccess(response: EventBo?) {
+                    currentNewEvent = response ?: EventBo()
+                }
+
+                override fun onError(error: Error) {
+                    super.onError(error)
+                    currentNewEvent = EventBo()
+                }
+
+            })
+    }
+
     private fun setupCreateEventObserver() {
         createEventViewModel.createEventData()
             .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
@@ -167,12 +192,8 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
             .observe(viewLifecycleOwner, object : ResourceObserver<EventBo>() {
                 override fun onSuccess(response: EventBo?) {
                     response?.let {
-                        viewBinding.createEventEditTextTitle.setText(it.title)
-                        if (it.date != null) {
-                            viewBinding.createEventEditTextDate.setText(DateUtil.format(it.date!!))
-                        }
-                        viewBinding.createEventEditTextDescription.setText(it.description)
-                        viewBinding.createEventEditTextEventType.setText(it.eventType)
+                        currentNewEvent = it
+                        setupCurrentEvent(it)
                     }
                 }
 
@@ -187,6 +208,15 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
         createEventViewModel.getCurrentNewEvent()
     }
 
+    private fun setupCurrentEvent(event: EventBo) {
+        viewBinding.createEventEditTextTitle.setText(event.title)
+        event.date?.let {
+            viewBinding.createEventEditTextDate.setText(DateUtil.format(it))
+        }
+        viewBinding.createEventEditTextDescription.setText(event.description)
+        viewBinding.createEventEditTextEventType.setText(event.eventType)
+    }
+
     private fun setCurrentEvent() {
         val title = viewBinding.createEventEditTextTitle.text.trim()
         val sdf = SimpleDateFormat(getString(R.string.date_time_format), Locale.getDefault())
@@ -197,13 +227,16 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
         }
         val description = viewBinding.createEventEditTextDescription.text.trim()
         val eventType = viewBinding.createEventEditTextEventType.text.trim()
-        val assistants = null
 
-        createEventViewModel.setCurrentNewEvent(
-            EventBo(
-                title, date, locationSelected, description, assistants, eventType
-            )
-        )
+        currentNewEvent.apply {
+            this.title = title
+            this.description = description
+            this.date = date
+            this.eventType = eventType
+            this.location = locationSelected
+        }
+
+        createEventViewModel.setCurrentNewEvent(currentNewEvent)
     }
 
     //endregion
@@ -220,7 +253,6 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
         }
         val description = viewBinding.createEventEditTextDescription.text.trim()
         val eventType = viewBinding.createEventEditTextEventType.text.trim()
-        val assistants = null
 
         getFocusedView().hideKeyboard()
 
@@ -230,7 +262,11 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
             eventType,
             description,
             locationSelected,
-            assistants
+            CallBo(
+                currentNewEvent.call?.called ?: listOf(),
+                currentNewEvent.call?.notCalled ?: listOf(),
+                Date()
+            )
         )
     }
 
@@ -255,15 +291,19 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
                     setSingleChoiceItems(
                         list, -1
                     ) { _, which ->
-                        viewBinding.createEventEditTextEventType.setText(list[which])
+                        selectedEventType = list[which]
                     }
                     setCancelable(false)
                     setPositiveButton(R.string.accept) { dialog, _ ->
+                        viewBinding.createEventEditTextEventType.setText(selectedEventType)
                         dialog.cancel()
                     }
                     setNegativeButton(
                         R.string.cancel
-                    ) { dialog, _ -> dialog.cancel() }
+                    ) { dialog, _ ->
+                        selectedEventType = viewBinding.createEventEditTextEventType.text
+                        dialog.cancel()
+                    }
                     show()
                 }
             }
@@ -272,7 +312,6 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
     }
 
     private fun setupDateClickListener() {
-
         viewBinding.createEventEditTextDate.clickListener {
             showDateDialog(
                 selectedDate,
