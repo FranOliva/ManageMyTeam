@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.paypal.android.sdk.payments.ProofOfPayment
+import es.us.managemyteam.R
 import es.us.managemyteam.contract.PaypalInterface
+import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.Resource
 import es.us.managemyteam.usecase.CreatePaymentUc
 import es.us.managemyteam.util.CustomMediatorLiveData
@@ -13,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class PaymentViewModel(
+class CreatePaymentViewModel(
     private val paypalInterface: PaypalInterface,
     private val createPaymentUc: CreatePaymentUc
 ) : ViewModel(), PaypalInterface.PaypalResultListener {
@@ -24,14 +26,24 @@ class PaymentViewModel(
         paypalInterface.setResultListener(this)
     }
 
+    fun getPaypalData() = paymentProofData.liveData()
+
     fun goToPaypal(
         fragment: Fragment,
         price: String,
-        itemName: String
+        concept: String
     ) {
         viewModelScope.launch(Dispatchers.Main) {
-            paypalInterface.goToPaypal(fragment, price, itemName)
+            if (validateForm(price, concept)) {
+                paypalInterface.goToPaypal(fragment, price, concept)
+            } else {
+                paymentProofData.setData(Resource.error(Error(R.string.registration_error_empty_fields)))
+            }
         }
+    }
+
+    private fun validateForm(price: String, concept: String): Boolean {
+        return !price.isBlank() && !concept.isBlank()
     }
 
     fun catchResult(requestCode: Int, resultCode: Int, data: Intent?) {

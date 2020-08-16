@@ -25,9 +25,18 @@ data class VerticalMenuVO(val id: VerticalMenuId, val title: String, val icon: I
                 R.drawable.ic_settings
             )
 
+            val myPayments = VerticalMenuVO(
+                VerticalMenuId.PAYMENTS_ID,
+                "Mis pagos",
+                R.drawable.ic_settings
+            )
+
             verticalMenuList.add(club)
             if (isAdmin) {
                 verticalMenuList.add(administration)
+            }
+            if (!isAdmin) {
+                verticalMenuList.add(myPayments)
             }
             verticalMenuList.add(logout)
 

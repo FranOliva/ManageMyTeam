@@ -7,6 +7,7 @@ object CommonInputType {
     const val EMAIL = 2
     const val PHONE = 3
     const val MULTI_LINE = 4
+    const val NUMBER = 5
 }
 
 object CommonInputIme {
