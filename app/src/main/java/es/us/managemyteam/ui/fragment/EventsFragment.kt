@@ -7,6 +7,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
@@ -20,7 +21,6 @@ import es.us.managemyteam.repository.util.ResourceObserver
 import es.us.managemyteam.ui.adapter.EventsAdapter
 import es.us.managemyteam.ui.viewmodel.EventsViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
-
 
 class EventsFragment : BaseFragment<FragmentEventsBinding>(), BaseAdapterClickListener<EventBo> {
 
@@ -107,7 +107,11 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(), BaseAdapterClickLi
     }
 
     override fun onAdapterItemClicked(item: EventBo, position: Int) {
-        // TODO: go to detail
+        findNavController().navigate(
+            R.id.action_events_to_detail, bundleOf(
+                Pair(getString(R.string.navigation_event__uuid__argument), item.uuid)
+            )
+        )
     }
 
     override fun inflateViewBinding(

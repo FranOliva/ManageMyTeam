@@ -16,6 +16,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="@null" />
 
+    <include
+        android:id="@+id/events__empty_results"
+        layout="@layout/view_empty_results"
+        android:visibility="gone" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/events__list"
         android:layout_width="match_parent"
@@ -27,9 +32,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <include
-        android:id="@+id/events__empty_results"
-        layout="@layout/view_empty_results"
-        android:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
