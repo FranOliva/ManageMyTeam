@@ -35,7 +35,9 @@
     <string name="create_event_select_location">Pulse para seleccionar la localización del evento</string>
     <string name="create_event_success">Evento creado correctamente</string>
     <string name="create_event_select_location_error">Debe seleccionar una localización</string>
-    
+    <string name="create_event_select_call">Modifique la convocatoria</string>
+
+
     <!-- User -->
     <string name="user">Usuario</string>
     <string name="user_email">Correo electrónico *</string>
@@ -62,8 +64,20 @@
     <string name="registration_player_title">Registro de jugador</string>
     <string name="registration_error_invalid_email">Introduzca un correo electrónico válido</string>
     <string name="registration_error_invalid_password">Las contraseñas introducidas no coinciden</string>
+    <string name="registration_error_invalid_phone">Introduzca un teléfono válido</string>
     <string name="registration_error_empty_fields">Debe rellenar todos los campos</string>
     <string name="registration_information">Este formulario enviará una solicitud de registro en la aplicación. Si usted no pertenece al club esta solicitud se rechazará.</string>
+    <string name="update_user_fields_not_filled">Debe rellenar los campos marcados con (*)</string>
+    <string name="edit_user_question">¿Qué te gustaría modificar?</string>
+    <string name="edit_user_personal_data">Datos personales</string>
+    <string name="edit_user_password">Cambiar contraseña</string>
+    <string name="edit_user_email">Cambiar email</string>
+    <string name="update_user_success">Actualización realizada con éxito</string>
+    <string name="edit_password_old_password">Contraseña actual *</string>
+    <string name="edit_password_new">Nueva contraseña *</string>
+    <string name="edit_email_new">Nuevo correo electrónico *</string>
+    <string name="edit_user_wrong_password">Comprueba que tu contraseña actual es correcta</string>
+    <string name="user_profile">Perfil de usuario</string>
 
     <!-- Club module -->
     <string name="club_stats">Estadísticas</string>
@@ -97,5 +111,9 @@
     <string name="default_notification_channel_id" translatable="false">manage_my_team</string>
     <string name="administration_menu">Menú del administrador</string>
 
+
+    <!--My Team -->
+
+    <string name="my_team_title">Plantilla</string>
 
 </resources>

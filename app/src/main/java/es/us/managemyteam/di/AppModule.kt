@@ -39,16 +39,28 @@ val appModule = module {
         SetCurrentNewEventUc(get())
     }
 
+    factory {
+        GetCurrentCallUc(get())
+    }
+
+    factory {
+        SetCurrentCallUc(get())
+    }
+
     viewModel {
         EventsViewModel(get(), get())
     }
 
     viewModel {
-        CreateEventViewModel(get(), get(), get(), get(), get())
+        CreateEventViewModel(get(), get(), get(), get(), get(), get(), get(), get())
     }
 
     viewModel {
         ChatViewModel(get(), get(), get())
+    }
+
+    viewModel {
+        MyTeamViewModel(get(), get())
     }
 
     // Club
@@ -91,6 +103,18 @@ val appModule = module {
         RemoveUserUc(get())
     }
 
+    factory {
+        UpdateUserProfileUc(get())
+    }
+
+    factory {
+        UpdateEmailUc(get())
+    }
+
+    factory {
+        UpdatePasswordUc(get())
+    }
+
     viewModel {
         RegistrationViewModel(get())
     }
@@ -100,7 +124,19 @@ val appModule = module {
     }
 
     viewModel {
-        UserViewModel(get())
+        UserProfileViewModel(get())
+    }
+
+    viewModel {
+        UpdateUserProfileViewModel(get(), get())
+    }
+
+    viewModel {
+        UpdateEmailViewModel(get(), get())
+    }
+
+    viewModel {
+        UpdatePasswordViewModel(get(), get())
     }
 
     // Chat

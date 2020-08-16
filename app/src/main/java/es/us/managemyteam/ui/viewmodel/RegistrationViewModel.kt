@@ -1,5 +1,6 @@
 package es.us.managemyteam.ui.viewmodel
 
+import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import es.us.managemyteam.R
@@ -73,12 +74,23 @@ class RegistrationViewModel(
                 )
                 false
             }
-            password.isBlank() || password != passwordRepeated -> {
+            password != passwordRepeated -> {
                 createUser.setData(
                     Resource.error(
                         Error(
                             R.string.registration_error_invalid_password,
                             RegistrationError.PASSWORDS_NOT_FILL.ordinal
+                        )
+                    )
+                )
+                false
+            }
+            !Patterns.PHONE.matcher(phoneNumber).matches() -> {
+                createUser.setData(
+                    Resource.error(
+                        Error(
+                            R.string.registration_error_invalid_phone,
+                            RegistrationError.NOT_A_PHONE.ordinal
                         )
                     )
                 )

@@ -3,15 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/primary">
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:clipToPadding="false"
+        android:padding="@dimen/size_ten"
         android:scrollbars="none"
-        android:padding="@dimen/size_ten">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -21,21 +24,22 @@
                 android:id="@+id/user__container__logo"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/size_twohundred"
-                android:background="@color/primary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/user__label__dorsal_value"
-                    style="@style/Regular.Twenty.Black"
-                    android:layout_width="@dimen/size_eighty"
-                    android:layout_height="@dimen/size_twohundred"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Dorsal" />
+                    style="@style/Regular.TwentyTwo.White"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:textSize="@dimen/text_twentyeight"
+                    app:layout_constraintBottom_toBottomOf="@id/user__img__shield"
+                    app:layout_constraintEnd_toEndOf="@id/user__img__shield"
+                    app:layout_constraintStart_toStartOf="@id/user__img__shield"
+                    app:layout_constraintTop_toTopOf="@id/user__img__shield"
+                    tools:text="10" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/user__img__shield"
@@ -45,7 +49,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_profile"
+                    app:srcCompat="@drawable/ic_profile_shirt"
                     app:tint="@color/white" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -223,15 +227,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/user__fab__edit"
+    <FrameLayout
+        android:visibility="gone"
+        android:id="@+id/user__container__edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/size_sixteen"
-        android:backgroundTint="@color/primary"
-        android:src="@drawable/ic_edit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@null" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/user__fab__edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/size_sixteen"
+            android:backgroundTint="@color/primaryDark"
+            android:src="@drawable/ic_edit"
+            app:tint="@null" />
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
