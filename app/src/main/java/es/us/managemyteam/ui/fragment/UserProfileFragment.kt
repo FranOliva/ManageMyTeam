@@ -12,17 +12,17 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
 import es.us.managemyteam.data.model.UserBo
-import es.us.managemyteam.databinding.FragmentUserBinding
+import es.us.managemyteam.databinding.FragmentUserProfileBinding
 import es.us.managemyteam.extension.*
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.ResourceObserver
-import es.us.managemyteam.ui.viewmodel.UserViewModel
+import es.us.managemyteam.ui.viewmodel.UserProfileViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
-class UserFragment : BaseFragment<FragmentUserBinding>() {
+class UserProfileFragment : BaseFragment<FragmentUserProfileBinding>() {
 
-    private val userViewModel: UserViewModel by viewModel()
+    private val userProfileViewModel: UserProfileViewModel by viewModel()
     private var userIsLogged = false
     private var userIsPlayer = false
 
@@ -41,7 +41,7 @@ class UserFragment : BaseFragment<FragmentUserBinding>() {
     }
 
     private fun setupUserObserver(userId: String?) {
-        userViewModel.getUserData()
+        userProfileViewModel.getUserData()
             .observe(viewLifecycleOwner, object : ResourceObserver<UserBo>() {
                 override fun onSuccess(response: UserBo?) {
                     userIsLogged = response != null
@@ -69,7 +69,7 @@ class UserFragment : BaseFragment<FragmentUserBinding>() {
                 }
 
             })
-        userViewModel.getUser(userId)
+        userProfileViewModel.getUser(userId)
     }
 
     private fun setupClickListeners() {
@@ -101,13 +101,13 @@ class UserFragment : BaseFragment<FragmentUserBinding>() {
     override fun inflateViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentUserBinding {
-        return FragmentUserBinding.inflate(inflater, container, false)
+    ): FragmentUserProfileBinding {
+        return FragmentUserProfileBinding.inflate(inflater, container, false)
     }
 
     override fun setupToolbar(toolbar: Toolbar) {
         toolbar.apply {
-            setToolbarTitle(getString(R.string.user))
+            setToolbarTitle(getString(R.string.user_profile))
             setNavIcon(ContextCompat.getDrawable(context, R.drawable.ic_back))
             setNavAction {
                 popBack()

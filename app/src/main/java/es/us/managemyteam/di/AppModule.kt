@@ -103,6 +103,18 @@ val appModule = module {
         RemoveUserUc(get())
     }
 
+    factory {
+        UpdateUserProfileUc(get())
+    }
+
+    factory {
+        UpdateEmailUc(get())
+    }
+
+    factory {
+        UpdatePasswordUc(get())
+    }
+
     viewModel {
         RegistrationViewModel(get())
     }
@@ -112,7 +124,19 @@ val appModule = module {
     }
 
     viewModel {
-        UserViewModel(get())
+        UserProfileViewModel(get())
+    }
+
+    viewModel {
+        UpdateUserProfileViewModel(get(), get())
+    }
+
+    viewModel {
+        UpdateEmailViewModel(get(), get())
+    }
+
+    viewModel {
+        UpdatePasswordViewModel(get(), get())
     }
 
     // Chat

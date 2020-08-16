@@ -35,4 +35,6 @@ open class BaseLoggedViewModel(private val getUserUc: GetUserUc) : ViewModel() {
         }
     }
 
+    fun getUserLoggedEmail() = auth.currentUser?.email ?: ""
+
 }
