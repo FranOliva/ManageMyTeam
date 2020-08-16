@@ -95,5 +95,7 @@
     <string name="administration_accept_players">Solicitudes de jugadores</string>
     <string name="administration_create_coach">Crear entrenador</string>
     <string name="default_notification_channel_id" translatable="false">manage_my_team</string>
+    <string name="administration_menu">Menú del administrador</string>
+
 
 </resources>
