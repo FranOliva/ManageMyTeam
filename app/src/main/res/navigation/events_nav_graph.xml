@@ -16,6 +16,10 @@
         android:id="@+id/selectLocationFragment"
         android:name="es.us.managemyteam.ui.fragment.SelectLocationFragment" />
 
+    <fragment
+        android:id="@+id/selectPlayersFragment"
+        android:name="es.us.managemyteam.ui.fragment.SelectPlayersFragment" />
+
     <action
         android:id="@+id/action_events_to_create_event"
         app:destination="@id/eventsCreateFragment"
@@ -27,6 +31,14 @@
     <action
         android:id="@+id/action_create_event_to_select_location"
         app:destination="@id/selectLocationFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    <action
+        android:id="@+id/action_create_event_to_select_players"
+        app:destination="@id/selectPlayersFragment"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
