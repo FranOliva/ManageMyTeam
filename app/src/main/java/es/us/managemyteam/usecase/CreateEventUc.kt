@@ -1,8 +1,8 @@
 package es.us.managemyteam.usecase
 
 import androidx.lifecycle.LiveData
+import es.us.managemyteam.data.model.CallBo
 import es.us.managemyteam.data.model.LocationBo
-import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.repository.EventRepository
 import es.us.managemyteam.repository.util.Resource
 import java.util.*
@@ -15,7 +15,7 @@ class CreateEventUc(private val eventRepository: EventRepository) {
         type: String,
         description: String?,
         location: LocationBo?,
-        assistants: List<UserBo>?
+        call: CallBo?
     ): LiveData<Resource<Boolean>> {
 
         return eventRepository.createEvent(
@@ -24,7 +24,7 @@ class CreateEventUc(private val eventRepository: EventRepository) {
             type,
             description,
             location,
-            assistants
+            call
         )
 
     }

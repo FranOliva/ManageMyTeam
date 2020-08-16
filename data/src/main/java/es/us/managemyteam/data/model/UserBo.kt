@@ -22,6 +22,8 @@ data class UserBo(
     fun isPlayer() = Role.PLAYER == role
 
     fun isStaff() = Role.STAFF == role
+
+    fun getFullName() = name.plus(" ").plus(surname)
 }
 
 enum class Role {
