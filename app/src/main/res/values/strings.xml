@@ -70,6 +70,11 @@
     <string name="edit_user_password">Cambiar contraseña</string>
     <string name="edit_user_email">Cambiar email</string>
     <string name="update_user_success">Actualización realizada con éxito</string>
+    <string name="edit_password_old_password">Contraseña actual *</string>
+    <string name="edit_password_new">Nueva contraseña *</string>
+    <string name="edit_email_new">Nuevo correo electrónico *</string>
+    <string name="edit_user_wrong_password">Comprueba que tu contraseña actual es correcta</string>
+    <string name="user_profile">Perfil de usuario</string>
 
     <!-- Club module -->
     <string name="club_stats">Estadísticas</string>

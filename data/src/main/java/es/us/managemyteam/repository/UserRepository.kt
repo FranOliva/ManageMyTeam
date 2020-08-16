@@ -3,8 +3,10 @@ package es.us.managemyteam.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -16,8 +18,6 @@ import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.PasswordUtil
 import es.us.managemyteam.repository.util.RepositoryUtil
 import es.us.managemyteam.repository.util.Resource
-
-const val HMAC_KEY = "K3dHdeTVvja5SOBzD6zf"
 
 interface UserRepository {
 
@@ -49,9 +49,12 @@ interface UserRepository {
         dorsal: Long?
     ): LiveData<Resource<Boolean>>
 
-    suspend fun updateEmail(email: String): LiveData<Resource<Boolean>>
+    suspend fun updateEmail(currentPassword: String, email: String): LiveData<Resource<Boolean>>
 
-    suspend fun updatePassword(password: String): LiveData<Resource<Boolean>>
+    suspend fun updatePassword(
+        currentPassword: String,
+        password: String
+    ): LiveData<Resource<Boolean>>
 
 }
 
@@ -152,26 +155,48 @@ class UserRepositoryImpl : UserRepository {
 
     }
 
-    override suspend fun updateEmail(email: String): LiveData<Resource<Boolean>> {
+    override suspend fun updateEmail(
+        currentPassword: String,
+        email: String
+    ): LiveData<Resource<Boolean>> {
         val currentUser = auth.currentUser
+        if (currentUser != null) {
+            val credentials = EmailAuthProvider.getCredential(
+                currentUser.email!!,
+                PasswordUtil.hashPassword(currentPassword)
+            )
+            currentUser.reauthenticate(credentials).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    updateEmailFirebaseAuth(currentUser, email)
+                } else {
+                    updateEmailData.value =
+                        Resource.error(Error(errorMessageId = R.string.login_error_wrong_password))
+                }
+            }
+        } else {
+            showGenericError(updateEmailData)
+        }
+        return updateEmailData
+    }
+
+    private fun updateEmailFirebaseAuth(currentUser: FirebaseUser, email: String) {
         updateEmailData.postValue(null)
-        currentUser?.updateEmail(email)?.addOnCompleteListener {
+        currentUser.updateEmail(email).addOnCompleteListener {
             if (it.isSuccessful) {
                 updateEmailDatabase(currentUser.uid, email)
             } else {
-                updateEmailData.value = Resource.error(Error(R.string.unknown_error))
+                showGenericError(updateEmailData)
             }
         }
-        return updateEmailData
     }
 
     private fun updateEmailDatabase(userUuid: String?, email: String) {
         if (userUuid != null) {
             userTable.child(userUuid).child("email").setValue(email) { error, _ ->
-                updateEmailData.value = if (error != null) {
+                updateEmailData.value = if (error == null) {
                     Resource.success(true)
                 } else {
-                    Resource.error(Error(serverErrorMessage = error?.message))
+                    Resource.error(Error(serverErrorMessage = error.message))
                 }
             }
         } else {
@@ -179,18 +204,45 @@ class UserRepositoryImpl : UserRepository {
         }
     }
 
-    override suspend fun updatePassword(password: String): LiveData<Resource<Boolean>> {
+    override suspend fun updatePassword(
+        currentPassword: String,
+        password: String
+    ): LiveData<Resource<Boolean>> {
         val currentUser = auth.currentUser
-        val hashedPassword = PasswordUtil.hashPassword(password)
-        updatePasswordData.postValue(null)
-        currentUser?.updatePassword(hashedPassword)?.addOnCompleteListener {
-            if (it.isSuccessful) {
-                updatePasswordData.value = Resource.success(true)
-            } else {
-                updatePasswordData.value = Resource.error(Error(R.string.unknown_error))
+        if (currentUser != null) {
+            val credentials = EmailAuthProvider.getCredential(
+                currentUser.email!!,
+                PasswordUtil.hashPassword(currentPassword)
+            )
+            currentUser.reauthenticate(credentials).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    val hashedPassword = PasswordUtil.hashPassword(password)
+                    updatePassword(currentUser, hashedPassword)
+                } else {
+                    updatePasswordData.value =
+                        Resource.error(Error(errorMessageId = R.string.login_error_wrong_password))
+                }
             }
+        } else {
+            showGenericError(updatePasswordData)
         }
         return updatePasswordData
+    }
+
+    private fun updatePassword(currentUser: FirebaseUser, hashedPassword: String) {
+        updatePasswordData.postValue(null)
+        currentUser.updatePassword(hashedPassword)
+            .addOnCompleteListener { passwordTask ->
+                if (passwordTask.isSuccessful) {
+                    updatePasswordData.value = Resource.success(true)
+                } else {
+                    showGenericError(updatePasswordData)
+                }
+            }
+    }
+
+    private fun showGenericError(liveData: MutableLiveData<Resource<Boolean>>) {
+        liveData.value = Resource.error(Error(R.string.unknown_error))
     }
 
     override suspend fun getUserByUid(uid: String): LiveData<Resource<UserBo>> {
@@ -213,7 +265,6 @@ class UserRepositoryImpl : UserRepository {
 
         return userData
     }
-
 
     private fun createUserFirebaseDatabase(
         name: String,

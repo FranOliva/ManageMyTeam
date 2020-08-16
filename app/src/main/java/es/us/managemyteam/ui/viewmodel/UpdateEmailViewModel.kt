@@ -21,22 +21,32 @@ class UpdateEmailViewModel(
 
     fun getUpdateEmailData() = updateEmail.liveData()
 
-    fun getUpdateEmail(email: String) {
+    fun getUpdateEmail(currentPassword: String, email: String) {
         viewModelScope.launch(Dispatchers.Main) {
-            if (validateForm(email)) {
+            if (validateForm(currentPassword, email)) {
                 updateEmail.setData(Resource.loading(data = null))
                 withContext(Dispatchers.IO) {
                     updateEmail.changeSource(
                         Dispatchers.Main,
-                        updateEmailUc(email)
+                        updateEmailUc(currentPassword, email)
                     )
                 }
             }
         }
     }
 
-    private fun validateForm(email: String): Boolean {
+    private fun validateForm(currentPassword: String, email: String): Boolean {
         return when {
+            currentPassword.isBlank() || email.isBlank() -> {
+                updateEmail.setData(
+                    Resource.error(
+                        Error(
+                            R.string.registration_error_empty_fields
+                        )
+                    )
+                )
+                false
+            }
             !email.isEmail() -> {
                 updateEmail.setData(
                     Resource.error(

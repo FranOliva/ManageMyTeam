@@ -111,7 +111,7 @@ class UserProfileFragment : BaseFragment<FragmentUserProfileBinding>() {
 
     override fun setupToolbar(toolbar: Toolbar) {
         toolbar.apply {
-            setToolbarTitle(getString(R.string.user))
+            setToolbarTitle(getString(R.string.user_profile))
             setNavIcon(ContextCompat.getDrawable(context, R.drawable.ic_back))
             show()
         }

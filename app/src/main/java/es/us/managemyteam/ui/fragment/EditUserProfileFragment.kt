@@ -44,6 +44,17 @@ class EditUserProfileFragment : BaseFragment<FragmentEditUserProfileBinding>() {
                         setupUser(it, it.isPlayer())
                     }
                 }
+
+                override fun onLoading(loading: Boolean) {
+                    super.onLoading(loading)
+                    if (loading) {
+                        viewBinding.editUserProfileContainerRoot.visibility = GONE
+                        viewBinding.editUserProfileProgressBar.startAnimation()
+                    } else {
+                        viewBinding.editUserProfileContainerRoot.visibility = VISIBLE
+                        viewBinding.editUserProfileProgressBar.stopAnimationAndHide()
+                    }
+                }
             })
 
         editUserProfileViewModel.getUpdateUserProfileData()

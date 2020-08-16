@@ -20,14 +20,14 @@ class UpdatePasswordViewModel(
 
     fun getUpdatePasswordData() = updatePassword.liveData()
 
-    fun getUpdatePassword(password: String, passwordRepeated: String) {
+    fun getUpdatePassword(currentPassword: String, password: String, passwordRepeated: String) {
         viewModelScope.launch(Dispatchers.Main) {
             if (validateForm(password, passwordRepeated)) {
                 updatePassword.setData(Resource.loading(data = null))
                 withContext(Dispatchers.IO) {
                     updatePassword.changeSource(
                         Dispatchers.Main,
-                        updatePasswordUc(password)
+                        updatePasswordUc(currentPassword, password)
                     )
                 }
             }

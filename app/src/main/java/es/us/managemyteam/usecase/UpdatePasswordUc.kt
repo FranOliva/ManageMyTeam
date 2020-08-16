@@ -4,5 +4,6 @@ import es.us.managemyteam.repository.UserRepository
 
 class UpdatePasswordUc(private val userRepository: UserRepository) {
 
-    suspend operator fun invoke(password: String) = userRepository.updatePassword(password)
+    suspend operator fun invoke(currentPassword: String, password: String) =
+        userRepository.updatePassword(currentPassword, password)
 }
