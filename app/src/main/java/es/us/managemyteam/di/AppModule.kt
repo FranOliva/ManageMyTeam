@@ -40,6 +40,10 @@ val appModule = module {
     }
 
     factory {
+        GetEventDetailUc(get())
+    }
+
+    factory {
         GetCurrentCallUc(get())
     }
 
@@ -57,6 +61,14 @@ val appModule = module {
 
     viewModel {
         ChatViewModel(get(), get(), get())
+    }
+
+    viewModel {
+        MyTeamViewModel(get(), get())
+    }
+
+    viewModel {
+        EventDetailViewModel(get())
     }
 
     // Club

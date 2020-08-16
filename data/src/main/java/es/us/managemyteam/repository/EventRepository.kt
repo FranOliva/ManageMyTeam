@@ -35,6 +35,8 @@ interface EventRepository {
         call: CallBo?
     ): LiveData<Resource<Boolean>>
 
+    suspend fun getEventDetail(uuid: String): LiveData<Resource<EventBo>>
+
     suspend fun getCurrentCall(): CallBo?
 
     suspend fun setCurrentCall(call: CallBo?)
@@ -51,6 +53,7 @@ class EventRepositoryImpl : EventRepository {
     private var currentEvent: EventBo? = EventBo()
     private var currentCall: CallBo? = CallBo()
     private val eventCreateData = MutableLiveData<Resource<Boolean>>()
+    private val eventDetail = MutableLiveData<Resource<EventBo>>()
 
     init {
         initializeEventsListener()
@@ -97,6 +100,21 @@ class EventRepositoryImpl : EventRepository {
             }
         }
         return eventCreateData
+    }
+
+    override suspend fun getEventDetail(uuid: String): LiveData<Resource<EventBo>> {
+        eventDetail.postValue(null)
+        eventsRef.child(uuid).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                eventDetail.value = Resource.error(Error(serverErrorMessage = error.message))
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                eventDetail.value = Resource.success(snapshot.getValue(EventBo::class.java))
+            }
+
+        })
+        return eventDetail
     }
 
     override suspend fun getCurrentCall(): CallBo? {
