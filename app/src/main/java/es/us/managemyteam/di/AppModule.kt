@@ -43,12 +43,28 @@ val appModule = module {
         GetEventDetailUc(get())
     }
 
+    factory {
+        GetCurrentCallUc(get())
+    }
+
+    factory {
+        SetCurrentCallUc(get())
+    }
+
     viewModel {
         EventsViewModel(get(), get())
     }
 
     viewModel {
-        CreateEventViewModel(get(), get(), get(), get(), get())
+        CreateEventViewModel(get(), get(), get(), get(), get(), get(), get(), get())
+    }
+
+    viewModel {
+        ChatViewModel(get(), get(), get())
+    }
+
+    viewModel {
+        MyTeamViewModel(get(), get())
     }
 
     viewModel {
@@ -61,8 +77,16 @@ val appModule = module {
         GetClubUc(get())
     }
 
+    factory {
+        EditClubUc(get())
+    }
+
     viewModel {
-        ClubViewModel(get())
+        ClubViewModel(get(), get())
+    }
+
+    viewModel {
+        EditClubViewModel(get(), get(), get())
     }
 
     // User
@@ -87,12 +111,50 @@ val appModule = module {
         RemoveUserUc(get())
     }
 
+    factory {
+        UpdateUserProfileUc(get())
+    }
+
+    factory {
+        UpdateEmailUc(get())
+    }
+
+    factory {
+        UpdatePasswordUc(get())
+    }
+
     viewModel {
         RegistrationViewModel(get())
     }
 
     viewModel {
         LoginViewModel(get(), get())
+    }
+
+    viewModel {
+        UserProfileViewModel(get())
+    }
+
+    viewModel {
+        UpdateUserProfileViewModel(get(), get())
+    }
+
+    viewModel {
+        UpdateEmailViewModel(get(), get())
+    }
+
+    viewModel {
+        UpdatePasswordViewModel(get(), get())
+    }
+
+    // Chat
+
+    factory {
+        GetMessagesUc(get())
+    }
+
+    factory {
+        PostMessageUc(get())
     }
 
     // Administration

@@ -1,16 +1,20 @@
 language: android
+
 android:
   components:
-    - tools
-    - platform-tools
-    - build-tools-29.0.3
-    - android-29
+    # Uncomment the lines below if you want to
+    # use the latest revision of Android SDK Tools
+    # - tools
+    # - platform-tools
+
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
-jdk:
-  - oraclejdk8
+  licenses:
+    - 'android-sdk-license-.+'
+
 before_install:
-  - mkdir "$ANDROID_HOME/licenses" || true
-  - echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$ANDROID_HOME/licenses/android-sdk-license"
-  - chmod +x gradlew
+  - yes | sdkmanager "platforms;android-29"
+
+scripts:
+  - ./gradlew build

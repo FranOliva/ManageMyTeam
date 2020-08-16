@@ -92,6 +92,13 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/create_event__btn__select_players"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primaryDark"
+            android:text="Seleccionar jugadores" />
+
         <es.us.managemyteam.ui.view.loading_button.LoadingButtonView
             android:id="@+id/create_event__btn__save"
             android:layout_width="match_parent"

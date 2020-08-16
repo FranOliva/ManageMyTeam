@@ -38,8 +38,11 @@
     <string name="create_event_select_location">Pulse para seleccionar la localización del evento</string>
     <string name="create_event_success">Evento creado correctamente</string>
     <string name="create_event_select_location_error">Debe seleccionar una localización</string>
-    
+    <string name="create_event_select_call">Modifique la convocatoria</string>
+
+
     <!-- User -->
+    <string name="user">Usuario</string>
     <string name="user_email">Correo electrónico *</string>
     <string name="user_password">Contraseña *</string>
     <string name="user_confirm_password">Confirmar contraseña *</string>
@@ -48,6 +51,14 @@
     <string name="user_phone">Teléfono *</string>
     <string name="user_age">Edad</string>
     <string name="user_dorsal">Dorsal</string>
+    <string name="user_edit">Editar</string>
+    <string name="edit_user_user_name">Nombre</string>
+    <string name="edit_user_user_surname">Apellidos</string>
+    <string name="edit_user_user_mail">Email</string>
+    <string name="edit_user_user_phone_number">Número de teléfono</string>
+    <string name="edit_user_user_age">Edad</string>
+    <string name="edit_user_user_dorsal">Dorsal</string>
+    <string name="edit_user_title">Editar datos del usuario</string>
     <string name="user_created_successfully">Solicitud de registro enviada con éxito</string>
     <string name="login_email">Correo electrónico</string>
     <string name="login_password">Contraseña</string>
@@ -56,8 +67,20 @@
     <string name="registration_player_title">Registro de jugador</string>
     <string name="registration_error_invalid_email">Introduzca un correo electrónico válido</string>
     <string name="registration_error_invalid_password">Las contraseñas introducidas no coinciden</string>
+    <string name="registration_error_invalid_phone">Introduzca un teléfono válido</string>
     <string name="registration_error_empty_fields">Debe rellenar todos los campos</string>
     <string name="registration_information">Este formulario enviará una solicitud de registro en la aplicación. Si usted no pertenece al club esta solicitud se rechazará.</string>
+    <string name="update_user_fields_not_filled">Debe rellenar los campos marcados con (*)</string>
+    <string name="edit_user_question">¿Qué te gustaría modificar?</string>
+    <string name="edit_user_personal_data">Datos personales</string>
+    <string name="edit_user_password">Cambiar contraseña</string>
+    <string name="edit_user_email">Cambiar email</string>
+    <string name="update_user_success">Actualización realizada con éxito</string>
+    <string name="edit_password_old_password">Contraseña actual *</string>
+    <string name="edit_password_new">Nueva contraseña *</string>
+    <string name="edit_email_new">Nuevo correo electrónico *</string>
+    <string name="edit_user_wrong_password">Comprueba que tu contraseña actual es correcta</string>
+    <string name="user_profile">Perfil de usuario</string>
 
     <!-- Club module -->
     <string name="club_stats">Estadísticas</string>
@@ -75,8 +98,23 @@
     <string name="edit_club_select_shield">Pulse para subir archivo y editar el escudo</string>
     <string name="edit_club_success">Datos del club editados correctamente</string>
     <string name="edit_club_title">Editar datos del club</string>
+    <string name="edit_club_error_name">Debe introducir un nombre\n</string>
+    <string name="edit_club_error_date_fundation">Debe introducir una fecha\n</string>
+    <string name="edit_club_error_location">Debe introducir una dirección\n</string>
+    <string name="edit_club_error_president">Debe introducir el nombre del presidente\n</string>
+    <string name="edit_club_error_coach">Debe introducir el nombre del entrenador\n</string>
+    <string name="edit_club_error_phone_number">Debe introducir un número de teléfono válido\n</string>
+    <string name="edit_club_error_mail">Debe introducir un email válido\n</string>
+    <string name="edit_club_error_web">Debe introducir una dirección web válida\n</string>
+    <string name="edit_club_date_format">%02d/%02d/%04d</string>
 
     <!-- Others -->
     <string name="administration_accept_players">Solicitudes de jugadores</string>
+    <string name="administration_create_coach">Crear entrenador</string>
+    <string name="default_notification_channel_id" translatable="false">manage_my_team</string>
+
+    <!--My Team -->
+
+    <string name="my_team_title">Plantilla</string>
 
 </resources>

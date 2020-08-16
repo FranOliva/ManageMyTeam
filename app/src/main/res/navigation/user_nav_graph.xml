@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/user_nav_graph"
+    app:startDestination="@id/userFragment">
+
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="es.us.managemyteam.ui.fragment.UserProfileFragment" />
+
+    <fragment
+        android:id="@+id/userEditFragment"
+        android:name="es.us.managemyteam.ui.fragment.EditUserFragment" />
+
+    <fragment
+        android:id="@+id/userEditProfileFragment"
+        android:name="es.us.managemyteam.ui.fragment.EditUserProfileFragment" />
+
+    <fragment
+        android:id="@+id/userEditPasswordFragment"
+        android:name="es.us.managemyteam.ui.fragment.EditPasswordFragment" />
+
+    <fragment
+        android:id="@+id/userEditEmailFragment"
+        android:name="es.us.managemyteam.ui.fragment.EditEmailFragment" />
+
+    <action
+        android:id="@+id/action_user_to_edit_user"
+        app:destination="@id/userEditFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    <action
+        android:id="@+id/action_edit_user_to_edit_data"
+        app:destination="@id/userEditProfileFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    <action
+        android:id="@+id/action_edit_user_to_edit_password"
+        app:destination="@id/userEditPasswordFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    <action
+        android:id="@+id/action_edit_user_to_edit_email"
+        app:destination="@id/userEditEmailFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+</navigation>

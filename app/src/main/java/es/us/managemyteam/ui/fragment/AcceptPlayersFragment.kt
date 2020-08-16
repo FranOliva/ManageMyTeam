@@ -13,10 +13,7 @@ import es.us.managemyteam.R
 import es.us.managemyteam.contract.AcceptPlayerListener
 import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.databinding.FragmentAcceptsPlayersBinding
-import es.us.managemyteam.extension.setNavIcon
-import es.us.managemyteam.extension.setToolbarTitle
-import es.us.managemyteam.extension.show
-import es.us.managemyteam.extension.showErrorDialog
+import es.us.managemyteam.extension.*
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.ResourceObserver
 import es.us.managemyteam.ui.adapter.AcceptPlayersAdapter
@@ -103,6 +100,9 @@ class AcceptPlayersFragment : BaseFragment<FragmentAcceptsPlayersBinding>(), Acc
         toolbar.apply {
             setToolbarTitle(getString(R.string.administration_accept_players))
             setNavIcon(ContextCompat.getDrawable(context, R.drawable.ic_back))
+            setNavAction {
+                popBack()
+            }
             show()
         }
     }

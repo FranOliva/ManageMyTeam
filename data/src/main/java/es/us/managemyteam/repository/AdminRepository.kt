@@ -13,7 +13,7 @@ import es.us.managemyteam.repository.util.Resource
 
 interface AdminRepository {
 
-    suspend fun getPlayersNotEnabled(): LiveData<Resource<List<UserBo>>>
+    suspend fun getPlayers(enabled: Boolean): LiveData<Resource<List<UserBo>>>
 
     suspend fun acceptPlayer(uuid: String): LiveData<Resource<Boolean>>
 
@@ -26,7 +26,7 @@ class AdminRepositoryImpl : AdminRepository {
     private val playersData = MutableLiveData<Resource<List<UserBo>>>()
     private val playerNotEnabledData = MutableLiveData<Resource<Boolean>>()
 
-    override suspend fun getPlayersNotEnabled(): LiveData<Resource<List<UserBo>>> {
+    override suspend fun getPlayers(enabled: Boolean): LiveData<Resource<List<UserBo>>> {
         playersData.postValue(null)
         userTable.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
@@ -36,7 +36,9 @@ class AdminRepositoryImpl : AdminRepository {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val playersNotEnabled =
                     snapshot.children.mapNotNull { it.getValue(UserBo::class.java) }
-                        .filter { it.isPlayer() && it.enable != null && !it.enable }
+                        .filter { it.isPlayer() && it.enable == enabled }.sortedBy {
+                            it.getFullName()
+                        }
                 playersData.value =
                     Resource.success(playersNotEnabled)
             }

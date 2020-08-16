@@ -15,11 +15,14 @@ data class UserBo(
     val enable: Boolean? = null
 ) : BaseBo(), Parcelable {
 
+    fun getFullName() = (name ?: "").plus(" ").plus(surname ?: "")
+
     fun isAdmin() = Role.ADMIN == role
 
     fun isPlayer() = Role.PLAYER == role
 
     fun isStaff() = Role.STAFF == role
+
 }
 
 enum class Role {

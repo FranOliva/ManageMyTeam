@@ -20,8 +20,9 @@ open class BaseLoggedViewModel(private val getUserUc: GetUserUc) : ViewModel() {
         user.setData(null)
     }.liveData()
 
-    fun getUser() {
-        auth.currentUser?.uid?.let { uid ->
+    fun getUser(uuid: String? = null) {
+        val finalId = uuid ?: auth.currentUser?.uid
+        finalId?.let { uid ->
             viewModelScope.launch(Dispatchers.Main) {
                 user.setData(Resource.loading(data = null))
                 withContext(Dispatchers.IO) {
@@ -33,5 +34,7 @@ open class BaseLoggedViewModel(private val getUserUc: GetUserUc) : ViewModel() {
             }
         }
     }
+
+    fun getUserLoggedEmail() = auth.currentUser?.email ?: ""
 
 }
