@@ -12,16 +12,11 @@ import org.json.JSONException
 import java.math.BigDecimal
 
 private const val REQUEST_CODE_PAYMENT = 1
-private const val REQUEST_CODE_FUTURE_PAYMENT = 2
-private const val REQUEST_CODE_PROFILE_SHARING = 3
 
 private const val CONFIG_CLIENT_ID =
     "AYxExxPewJCCP8n5rihDlSRFjLeuKT4ksM7zEZxdS0Q85--P70l3M0OIkRy1w6dG56G40G85RKX7hqo_"
 
 private const val CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_NO_NETWORK
-//private const val CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX
-//private const val CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_PRODUCTION
-
 
 class PaypalManager : PaypalInterface {
 
@@ -49,7 +44,6 @@ class PaypalManager : PaypalInterface {
     ) {
         fragment.let {
             it.startActivityForResult(Intent(fragment.context, PaymentActivity::class.java).apply {
-                // send the same configuration for restart resiliency
                 putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config)
                 putExtra(PaymentActivity.EXTRA_PAYMENT, getItemToBuy(price, itemName, isoCode))
             }, REQUEST_CODE_PAYMENT)
@@ -65,15 +59,6 @@ class PaypalManager : PaypalInterface {
                     try {
                         Log.i(TAG, confirm.toJSONObject().toString(4))
                         Log.i(TAG, confirm.payment.toJSONObject().toString(4))
-                        /**
-                         * TODO: send 'confirm' (and possibly confirm.getPayment() to your server for verification
-                         * or consent completion.
-                         * See https://developer.paypal.com/webapps/developer/docs/integration/mobile/verify-mobile-payment/
-                         * for more details.
-
-                         * For sample mobile backend interactions, see
-                         * https://github.com/paypal/rest-api-sdk-python/tree/master/samples/mobile_backend
-                         */
 
                         resultListener?.onPaymentOk(
                             confirm.payment.toJSONObject().getString("short_description"),

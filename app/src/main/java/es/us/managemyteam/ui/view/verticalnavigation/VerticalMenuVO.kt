@@ -28,7 +28,7 @@ data class VerticalMenuVO(val id: VerticalMenuId, val title: String, val icon: I
             val myPayments = VerticalMenuVO(
                 VerticalMenuId.PAYMENTS_ID,
                 "Mis pagos",
-                R.drawable.ic_settings
+                R.drawable.ic_euro
             )
 
             verticalMenuList.add(club)

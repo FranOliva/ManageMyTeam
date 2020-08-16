@@ -95,7 +95,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
 
     override fun setupToolbar(toolbar: Toolbar) {
         toolbar.apply {
-            setToolbarTitle(getString(R.string.events))
+            setToolbarTitle("Chat")
             setNavIcon(null)
             show()
         }

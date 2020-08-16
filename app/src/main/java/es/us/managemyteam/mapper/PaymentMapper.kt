@@ -11,6 +11,7 @@ object PaymentMapper {
             proofOfPayment.state,
             moment = DateUtil.format(proofOfPayment.createTime),
             quantity = quantity,
-            concept = concept
+            concept = concept,
+            paymentId = proofOfPayment.paymentId
         )
 }

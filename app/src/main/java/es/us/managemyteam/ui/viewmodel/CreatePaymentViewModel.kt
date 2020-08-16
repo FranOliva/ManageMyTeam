@@ -22,6 +22,7 @@ class CreatePaymentViewModel(
 
     private val paymentProofData = CustomMediatorLiveData<Resource<Boolean>>()
 
+
     init {
         paypalInterface.setResultListener(this)
     }
@@ -69,9 +70,11 @@ class CreatePaymentViewModel(
     }
 
     override fun onPaymentError() {
+        paymentProofData.setData(Resource.error(Error(serverErrorMessage = "Ha ocurrido un error con su pago")))
     }
 
     override fun onPaymentCancelled() {
+        paymentProofData.setData(Resource.error(Error(serverErrorMessage = "Se ha cancelado su pago")))
     }
 
 }

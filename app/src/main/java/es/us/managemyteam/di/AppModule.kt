@@ -93,6 +93,18 @@ val appModule = module {
         GetMyPaymentsUc(get())
     }
 
+    factory {
+        GetPaypalConfigUc(get())
+    }
+
+    factory {
+        CreatePaypalConfigUc(get())
+    }
+
+    viewModel {
+        AdminPaypalViewModel(get(), get())
+    }
+
     viewModel {
         MyPaymentsViewModel(get())
     }

@@ -64,6 +64,8 @@ class MessageAdapter :
             (viewBinding as RowChatIncomingBinding).apply {
                 rowChatIncomingLabelMessage.text = item.message
                 rowChatIncomingLabelDate.text = DateUtil.format(item.date)
+                    .plus(" - ")
+                    .plus(item.fromName)
             }
         }
 
@@ -77,8 +79,6 @@ class MessageAdapter :
             (viewBinding as RowChatOutgoingBinding).apply {
                 rowChatOutgoingLabelMessage.text = item.message
                 rowChatOutgoingLabelDate.text = DateUtil.format(item.date)
-                    .plus(" - ")
-                    .plus(item.fromName)
             }
         }
 
