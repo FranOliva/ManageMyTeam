@@ -6,7 +6,11 @@ import es.us.managemyteam.R
 data class VerticalMenuVO(val id: VerticalMenuId, val title: String, val icon: Int) {
 
     companion object {
-        fun getDefaultMenu(context: Context, isAdmin: Boolean): List<VerticalMenuVO> {
+        fun getDefaultMenu(
+            context: Context,
+            isAdmin: Boolean,
+            isStaff: Boolean
+        ): List<VerticalMenuVO> {
             val verticalMenuList = mutableListOf<VerticalMenuVO>()
 
             val club = VerticalMenuVO(
@@ -19,6 +23,11 @@ data class VerticalMenuVO(val id: VerticalMenuId, val title: String, val icon: I
                 "Administración del club",
                 R.drawable.ic_settings
             )
+            val team = VerticalMenuVO(
+                VerticalMenuId.MY_TEAM_ID,
+                context.resources.getString(R.string.my_team_title),
+                R.drawable.ic_team
+            )
             val logout = VerticalMenuVO(
                 VerticalMenuId.LOGOUT_ID,
                 "Cerrar sesión",
@@ -29,6 +38,11 @@ data class VerticalMenuVO(val id: VerticalMenuId, val title: String, val icon: I
             if (isAdmin) {
                 verticalMenuList.add(administration)
             }
+
+            if (isAdmin || isStaff) {
+                verticalMenuList.add(team)
+            }
+
             verticalMenuList.add(logout)
 
 

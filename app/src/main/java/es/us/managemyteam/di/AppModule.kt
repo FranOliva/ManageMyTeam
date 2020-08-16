@@ -59,6 +59,10 @@ val appModule = module {
         ChatViewModel(get(), get(), get())
     }
 
+    viewModel {
+        MyTeamViewModel(get(), get())
+    }
+
     // Club
 
     factory {

@@ -36,7 +36,9 @@ class AdminRepositoryImpl : AdminRepository {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val playersNotEnabled =
                     snapshot.children.mapNotNull { it.getValue(UserBo::class.java) }
-                        .filter { it.isPlayer() && it.enable == enabled }
+                        .filter { it.isPlayer() && it.enable == enabled }.sortedBy {
+                            it.getFullName()
+                        }
                 playersData.value =
                     Resource.success(playersNotEnabled)
             }

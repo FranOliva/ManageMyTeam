@@ -227,15 +227,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/user__fab__edit"
+    <FrameLayout
+        android:visibility="gone"
+        android:id="@+id/user__container__edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/size_sixteen"
-        android:backgroundTint="@color/primaryDark"
-        android:src="@drawable/ic_edit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@null" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/user__fab__edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/size_sixteen"
+            android:backgroundTint="@color/primaryDark"
+            android:src="@drawable/ic_edit"
+            app:tint="@null" />
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
