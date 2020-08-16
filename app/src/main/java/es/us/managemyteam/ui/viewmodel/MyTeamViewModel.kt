@@ -27,7 +27,7 @@ class MyTeamViewModel
         viewModelScope.launch(Dispatchers.Main) {
             players.setData(Resource.loading())
             withContext(Dispatchers.IO) {
-                players.changeSource(Dispatchers.Main, getPlayersUc())
+                players.changeSource(Dispatchers.Main, getPlayersUc(true))
             }
         }
     }

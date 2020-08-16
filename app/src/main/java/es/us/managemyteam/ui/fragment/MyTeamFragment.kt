@@ -6,8 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
+import es.us.managemyteam.contract.BaseAdapterClickListener
 import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.databinding.FragmentMyTeamBinding
 import es.us.managemyteam.extension.*
@@ -16,33 +21,25 @@ import es.us.managemyteam.ui.adapter.MyTeamAdapter
 import es.us.managemyteam.ui.viewmodel.MyTeamViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class MyTeamFragment : BaseFragment<FragmentMyTeamBinding>() {
+class MyTeamFragment : BaseFragment<FragmentMyTeamBinding>(), BaseAdapterClickListener<UserBo> {
 
-    private val myTeamAdapter = MyTeamAdapter()
+    private val myTeamAdapter = MyTeamAdapter().apply {
+        setItemClickListener(this@MyTeamFragment)
+    }
     private val myTeamViewModel: MyTeamViewModel by viewModel()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupList()
-        setupUserObserver()
         setupPlayersObserver()
     }
 
     private fun setupList() {
-        viewBinding.myTeamListPlayers.adapter = myTeamAdapter
-    }
-
-    private fun setupUserObserver() {
-        myTeamViewModel.getUserData().observe(viewLifecycleOwner, object :
-            ResourceObserver<UserBo>() {
-            override fun onSuccess(response: UserBo?) {
-                response?.let {
-                    // TODO call get all users
-                }
-            }
-        })
-        myTeamViewModel.getUser()
+        viewBinding.myTeamListPlayers.apply {
+            addItemDecoration(DividerItemDecoration(context, VERTICAL))
+            adapter = myTeamAdapter
+        }
     }
 
     private fun setupPlayersObserver() {
@@ -79,6 +76,15 @@ class MyTeamFragment : BaseFragment<FragmentMyTeamBinding>() {
 
     override fun setupBottomBar(bottomNavigationView: BottomNavigationView) {
         bottomNavigationView.show()
+    }
+
+    override fun onAdapterItemClicked(item: UserBo, position: Int) {
+        findNavController().navigate(
+            R.id.action_my_team_to_profile,
+            bundleOf(
+                Pair(getString(R.string.argument__user_uuid), item.uuid)
+            )
+        )
     }
 
     //endregion

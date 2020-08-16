@@ -23,7 +23,6 @@ data class UserBo(
 
     fun isStaff() = Role.STAFF == role
 
-    fun getFullName() = name.plus(" ").plus(surname)
 }
 
 enum class Role {

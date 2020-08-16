@@ -113,6 +113,9 @@ class UserFragment : BaseFragment<FragmentUserBinding>() {
         toolbar.apply {
             setToolbarTitle(getString(R.string.user))
             setNavIcon(ContextCompat.getDrawable(context, R.drawable.ic_back))
+            setNavAction {
+                popBack()
+            }
             show()
         }
     }
