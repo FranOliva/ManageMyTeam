@@ -4,14 +4,21 @@
     android:id="@+id/administration_nav_graph"
     app:startDestination="@id/administrationFragment">
 
-    <fragment android:id="@+id/administrationFragment"
+    <fragment
+        android:id="@+id/administrationFragment"
         android:name="es.us.managemyteam.ui.fragment.AdministrationFragment" />
 
-    <fragment android:id="@+id/fragmentAcceptPlayers"
+    <fragment
+        android:id="@+id/fragmentAcceptPlayers"
         android:name="es.us.managemyteam.ui.fragment.AcceptPlayersFragment" />
 
-    <fragment android:id="@+id/fragmentEditClub"
+    <fragment
+        android:id="@+id/fragmentEditClub"
         android:name="es.us.managemyteam.ui.fragment.EditClubFragment" />
+
+    <fragment
+        android:id="@+id/fragmentAdminPaypalConfig"
+        android:name="es.us.managemyteam.ui.fragment.AdminPaypalConfigFragment" />
 
     <action
         android:id="@+id/action_administration_to_accept_player"
@@ -29,6 +36,15 @@
         app:exitAnim="@anim/nav_default_exit_anim"
         app:launchSingleTop="true"
         app:popUpTo="@id/fragmentEditClub"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_administration_to_paypal_config"
+        app:destination="@+id/fragmentAdminPaypalConfig"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:launchSingleTop="true"
+        app:popUpTo="@id/fragmentAdminPaypalConfig"
         app:popUpToInclusive="true" />
 
 </navigation>

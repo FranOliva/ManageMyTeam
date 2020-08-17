@@ -93,7 +93,7 @@ class PaymentRepositoryImpl : PaymentRepository {
 
     override suspend fun createPaypalConfig(paypalConfig: PaypalConfigBo): LiveData<Resource<Boolean>> {
         createPaypalConfigData.postValue(null)
-        paypalConfigRef.push().setValue(paypalConfig).addOnCompleteListener {
+        paypalConfigRef.setValue(paypalConfig).addOnCompleteListener {
             if (it.isSuccessful) {
                 createPaypalConfigData.value = Resource.success(true)
             } else {
