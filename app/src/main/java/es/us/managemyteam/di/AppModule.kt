@@ -102,7 +102,7 @@ val appModule = module {
     }
 
     viewModel {
-        AdminPaypalViewModel(get(), get(), get())
+        AdminPaypalViewModel(get(), get())
     }
 
     viewModel {
