@@ -23,7 +23,7 @@ class AdminPaypalConfigFragment : BaseFragment<FragmentPaypalConfigBinding>() {
     }
 
     private fun setupObservers() {
-        adminPaypalViewModel.getPaypalConfigData().observe(viewLifecycleOwner, object :)
+        //adminPaypalViewModel.getPaypalConfigData().observe(viewLifecycleOwner, object :)
     }
 
     override fun inflateViewBinding(
