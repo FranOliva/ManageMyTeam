@@ -49,34 +49,36 @@ class StateCallFragment : BaseFragment<FragmentPendingCallsBinding>(), AcceptLis
     }
 
     private fun setupAcceptPlayerObserver() {
-        callViewModel.getAcceptCallData()
-            .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
-                override fun onSuccess(response: Boolean?) {
-                    response?.let {
-                        showInformationDialog("Tu respuesta se envió con éxito")
-                        when (currentStatus) {
-                            CallStatus.PENDING -> {
-                                callViewModel.getPendingCalls()
-                            }
-                            CallStatus.ACCEPTED -> {
-                                callViewModel.getAcceptedCalls()
-                            }
-                            else -> {
-                                callViewModel.getRejectedCalls()
+        activity?.let {
+            callViewModel.getAcceptCallData()
+                .observe(it, object : ResourceObserver<Boolean>() {
+                    override fun onSuccess(response: Boolean?) {
+                        response?.let {
+                            showInformationDialog("Tu respuesta se envió con éxito")
+                            when (currentStatus) {
+                                CallStatus.PENDING -> {
+                                    callViewModel.getPendingCalls()
+                                }
+                                CallStatus.ACCEPTED -> {
+                                    callViewModel.getAcceptedCalls()
+                                }
+                                else -> {
+                                    callViewModel.getRejectedCalls()
+                                }
                             }
                         }
                     }
-                }
 
-                override fun onLoading(loading: Boolean) {
-                    showLoader(loading)
-                }
+                    override fun onLoading(loading: Boolean) {
+                        showLoader(loading)
+                    }
 
-                override fun onError(error: Error) {
-                    super.onError(error)
-                    showErrorDialog(getString(error.errorMessageId))
-                }
-            })
+                    override fun onError(error: Error) {
+                        super.onError(error)
+                        showErrorDialog(getString(error.errorMessageId))
+                    }
+                })
+        }
     }
 
     private fun setupCallsObserver() {
@@ -91,27 +93,30 @@ class StateCallFragment : BaseFragment<FragmentPendingCallsBinding>(), AcceptLis
                 callViewModel.getRejectedCallsData()
             }
         }
-        data.observe(viewLifecycleOwner, object :
-            ResourceObserver<List<EventBo>>() {
-            override fun onSuccess(response: List<EventBo>?) {
-                response?.let {
-                    callAdapter.setData(it)
-                    callAdapter.notifyDataSetChanged()
+        viewLifecycleOwner?.let {
+            data.removeObservers(it)
+            data.observe(it, object :
+                ResourceObserver<List<EventBo>>() {
+                override fun onSuccess(response: List<EventBo>?) {
+                    response?.let { list ->
+                        callAdapter.setData(list)
+                        callAdapter.notifyDataSetChanged()
+                    }
                 }
-            }
 
-            override fun onLoading(loading: Boolean) {
-                showLoader(loading)
-            }
+                override fun onLoading(loading: Boolean) {
+                    showLoader(loading)
+                }
 
-            override fun onError(error: Error) {
-                super.onError(error)
-                showErrorDialog(error.serverErrorMessage ?: "",
-                    DialogInterface.OnClickListener { _, _ ->
-                        popBack()
-                    })
-            }
-        })
+                override fun onError(error: Error) {
+                    super.onError(error)
+                    showErrorDialog(error.serverErrorMessage ?: "",
+                        DialogInterface.OnClickListener { _, _ ->
+                            popBack()
+                        })
+                }
+            })
+        }
     }
 
     //region BaseFragment

@@ -22,8 +22,9 @@ class CallFragment : BaseFragment<FragmentMyCallsBinding>() {
 
     private fun setupPager() {
         activity?.supportFragmentManager?.let {
+            viewBinding.myCallsPagerSlide.offscreenPageLimit = 2
             viewBinding.myCallsTabItems.setupWithViewPager(viewBinding.myCallsPagerSlide)
-            viewBinding.myCallsPagerSlide.adapter = CallPagerAdapter(it)
+            viewBinding.myCallsPagerSlide.adapter = CallPagerAdapter(it, resources)
         }
     }
 

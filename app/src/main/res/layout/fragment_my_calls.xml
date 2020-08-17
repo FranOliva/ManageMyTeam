@@ -15,27 +15,7 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/my_calls__tab__items"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/my_calls__tab__pending"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/my_calls_pending" />
-
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/my_calls__tab__accepted"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/my_calls_accepted" />
-
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/my_calls__tab__rejected"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/my_calls_rejected" />
-
-        </com.google.android.material.tabs.TabLayout>
+            android:layout_height="wrap_content"/>
 
     </androidx.viewpager.widget.ViewPager>
 

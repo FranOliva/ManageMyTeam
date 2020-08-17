@@ -30,6 +30,8 @@ class CallViewModel(
 
     init {
         getPendingCalls()
+        getAcceptedCalls()
+        getRejectedCalls()
     }
 
     fun getPendingCalls() {
