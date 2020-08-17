@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
@@ -29,13 +28,13 @@ class AdministrationFragment : BaseFragment<FragmentAdministrationBinding>() {
             findNavController().navigate(R.id.action_administration_to_accept_player)
         }
 
-        //viewBinding.administratorContainerEditProfile.setOnClickListener {
-        //    findNavController().navigate(R.id.action_edit_user_to_edit_password)
-        //}
+        viewBinding.administratorContainerEditClub?.setOnClickListener {
+            findNavController().navigate(R.id.action_administration_to_edit_club)
+        }
 
-        //viewBinding.editUserImgBack.setOnClickListener {
-        //   popBack()
-        //}
+        viewBinding.administrationMenuImgBack?.setOnClickListener {
+           popBack()
+        }
     }
 
     override fun inflateViewBinding(
@@ -46,12 +45,7 @@ class AdministrationFragment : BaseFragment<FragmentAdministrationBinding>() {
     }
 
     override fun setupToolbar(toolbar: Toolbar) {
-        toolbar.apply {
-            setToolbarTitle(getString(R.string.edit_club_title))
-            setNavIcon(ContextCompat.getDrawable(context, R.drawable.ic_back))
-            setNavAction { popBack() }
-            show()
-        }
+        toolbar.hide()
     }
 
     override fun setupBottomBar(bottomNavigationView: BottomNavigationView) {
