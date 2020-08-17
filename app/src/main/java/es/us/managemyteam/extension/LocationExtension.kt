@@ -19,3 +19,7 @@ fun MyLatLng.getMarkerItemVo(mapView: MapView) = MarkerItemVo(
 fun LatLng.toMyLatLng() = MyLatLng(latitude, longitude)
 
 fun MyLatLng.toLatLng() = LatLng(lat, long)
+
+fun LatLng.toGoogleMapsFormat(): String {
+    return "$latitude,$longitude"
+}

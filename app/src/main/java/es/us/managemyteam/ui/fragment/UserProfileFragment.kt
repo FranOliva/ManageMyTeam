@@ -3,6 +3,8 @@ package es.us.managemyteam.ui.fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -10,36 +12,43 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
 import es.us.managemyteam.data.model.UserBo
-import es.us.managemyteam.databinding.FragmentUserBinding
+import es.us.managemyteam.databinding.FragmentUserProfileBinding
 import es.us.managemyteam.extension.*
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.ResourceObserver
-import es.us.managemyteam.ui.viewmodel.UserViewModel
+import es.us.managemyteam.ui.viewmodel.UserProfileViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
-class UserFragment : BaseFragment<FragmentUserBinding>() {
+class UserProfileFragment : BaseFragment<FragmentUserProfileBinding>() {
 
-    private val userViewModel: UserViewModel by viewModel()
+    private val userProfileViewModel: UserProfileViewModel by viewModel()
     private var userIsLogged = false
     private var userIsPlayer = false
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val userId = arguments?.getString(getString(R.string.argument__user_uuid))
 
-        setupUserIsPlayerObserver()
-        setupUserObserver()
+        if (userId == null) {
+            viewBinding.userContainerEdit.visibility = VISIBLE
+        }
+
+        setupUserObserver(userId)
         setupClickListeners()
 
     }
 
-    private fun setupUserObserver() {
-        userViewModel.getUserData()
+    private fun setupUserObserver(userId: String?) {
+        userProfileViewModel.getUserData()
             .observe(viewLifecycleOwner, object : ResourceObserver<UserBo>() {
                 override fun onSuccess(response: UserBo?) {
                     userIsLogged = response != null
-                    response?.let { setupView(it) }
+                    response?.let {
+                        userIsPlayer = it.isPlayer()
+                        setupView(it)
+                    }
                 }
 
                 override fun onError(error: Error) {
@@ -60,7 +69,7 @@ class UserFragment : BaseFragment<FragmentUserBinding>() {
                 }
 
             })
-        userViewModel.getUser()
+        userProfileViewModel.getUser(userId)
     }
 
     private fun setupClickListeners() {
@@ -69,34 +78,21 @@ class UserFragment : BaseFragment<FragmentUserBinding>() {
         }
     }
 
-    private fun setupUserIsPlayerObserver() {
-        userViewModel.getUserData()
-            .observe(viewLifecycleOwner, object : ResourceObserver<UserBo>() {
-                override fun onSuccess(response: UserBo?) {
-                    response?.let {
-                        userIsPlayer = it.isPlayer()
-                        userViewModel.getUser()
-                    }
-                }
-            })
-        userViewModel.getUser()
-    }
-
     private fun setupView(user: UserBo) {
         viewBinding.userLabelNameValue.text = user.name
         viewBinding.userLabelSurnameValue.text = user.surname
         viewBinding.userLabelMailValue.text = user.email
         viewBinding.userLabelPhoneNumberValue.text = user.phoneNumber
-        viewBinding.userLabelAgeValue.text = user.age.toString()
+        viewBinding.userLabelAgeValue.text = user.age?.toString() ?: "--"
 
         viewBinding.userFabEdit.visibility = if (userIsLogged) {
-            View.VISIBLE
+            VISIBLE
         } else {
-            View.GONE
+            GONE
         }
 
         if (userIsPlayer) {
-            viewBinding.userLabelDorsalValue.text = user.dorsal.toString()
+            viewBinding.userLabelDorsalValue.text = user.dorsal?.toString() ?: ""
         } else {
             viewBinding.userLabelDorsalValue.text = ""
         }
@@ -105,14 +101,17 @@ class UserFragment : BaseFragment<FragmentUserBinding>() {
     override fun inflateViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentUserBinding {
-        return FragmentUserBinding.inflate(inflater, container, false)
+    ): FragmentUserProfileBinding {
+        return FragmentUserProfileBinding.inflate(inflater, container, false)
     }
 
     override fun setupToolbar(toolbar: Toolbar) {
         toolbar.apply {
-            setToolbarTitle(getString(R.string.user))
+            setToolbarTitle(getString(R.string.user_profile))
             setNavIcon(ContextCompat.getDrawable(context, R.drawable.ic_back))
+            setNavAction {
+                popBack()
+            }
             show()
         }
     }

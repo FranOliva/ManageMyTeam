@@ -100,9 +100,7 @@ class AcceptPlayersFragment : BaseFragment<FragmentAcceptsPlayersBinding>(), Acc
         toolbar.apply {
             setToolbarTitle(getString(R.string.administration_accept_players))
             setNavIcon(ContextCompat.getDrawable(context, R.drawable.ic_back))
-            setNavAction {
-                popBack()
-            }
+            setNavAction { popBack() }
             show()
         }
     }

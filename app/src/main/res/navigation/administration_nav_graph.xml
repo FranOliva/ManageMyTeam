@@ -1,9 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/administration_nav_graph"
-    app:startDestination="@id/fragmentAcceptPlayers">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/administration_nav_graph"
+    app:startDestination="@id/administrationFragment">
+
+    <fragment android:id="@+id/administrationFragment"
+        android:name="es.us.managemyteam.ui.fragment.AdministrationFragment" />
 
     <fragment android:id="@+id/fragmentAcceptPlayers"
         android:name="es.us.managemyteam.ui.fragment.AcceptPlayersFragment" />
+
+    <fragment android:id="@+id/fragmentEditClub"
+        android:name="es.us.managemyteam.ui.fragment.EditClubFragment" />
+
+    <action
+        android:id="@+id/action_administration_to_accept_player"
+        app:destination="@+id/fragmentAcceptPlayers"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:launchSingleTop="true"
+        app:popUpTo="@id/fragmentAcceptPlayers"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_administration_to_edit_club"
+        app:destination="@+id/fragmentEditClub"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:launchSingleTop="true"
+        app:popUpTo="@id/fragmentEditClub"
+        app:popUpToInclusive="true" />
 
 </navigation>

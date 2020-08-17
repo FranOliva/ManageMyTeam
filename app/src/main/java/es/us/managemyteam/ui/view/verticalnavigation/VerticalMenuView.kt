@@ -40,14 +40,14 @@ class VerticalMenuView @JvmOverloads constructor(
                     override fun onSuccess(response: UserBo?) {
                         response?.let { user ->
                             userIsAdmin = user.isAdmin()
-                            setupMenuList(userIsAdmin)
+                            setupMenuList(userIsAdmin, user.isStaff())
                         }
                     }
 
                     override fun onError(error: es.us.managemyteam.repository.util.Error) {
                         super.onError(error)
                         userIsAdmin = false
-                        setupMenuList(userIsAdmin)
+                        setupMenuList(userIsAdmin, false)
                     }
                 })
             menuViewModel.getUser()
@@ -55,11 +55,11 @@ class VerticalMenuView @JvmOverloads constructor(
 
     }
 
-    private fun setupMenuList(userIsAdmin: Boolean) {
+    private fun setupMenuList(userIsAdmin: Boolean, userIsStaff: Boolean) {
         viewBinding.verticalMenuListOption.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         viewBinding.verticalMenuListOption.adapter =
-            VerticalMenuAdapter(VerticalMenuVO.getDefaultMenu(context, userIsAdmin)).apply {
+            VerticalMenuAdapter(VerticalMenuVO.getDefaultMenu(context, userIsAdmin, userIsStaff)).apply {
                 setItemClickListener(this@VerticalMenuView)
             }
     }
@@ -75,6 +75,7 @@ class VerticalMenuView @JvmOverloads constructor(
             VerticalMenuId.LOGOUT_ID -> setupLogoutClick()
             VerticalMenuId.MY_CLUB_ID -> setupClubClick()
             VerticalMenuId.ADMINISTRATION_ID -> setupAdministrationClick()
+            VerticalMenuId.MY_TEAM_ID -> setupMyTeamClick()
             VerticalMenuId.PAYMENTS_ID -> setupPaymentsClick()
         }
         needClosingDrawerListener?.onNeedClosingDrawer()
@@ -96,7 +97,12 @@ class VerticalMenuView @JvmOverloads constructor(
 
     private fun setupAdministrationClick() {
         (getBaseActivity() as MainActivity).getNavGraph()
-            .navigate(R.id.action_menu_to_accept_players)
+            .navigate(R.id.action_menu_to_admin_menu)
+    }
+
+    private fun setupMyTeamClick() {
+        (getBaseActivity() as MainActivity).getNavGraph()
+            .navigate(R.id.action_menu_to_my_team)
     }
 
     private fun setupPaymentsClick() {
