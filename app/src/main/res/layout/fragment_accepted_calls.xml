@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/pending_calls__list__calls"
+        android:id="@+id/accepted_calls__list__calls"
         android:layout_width="0dp"
         android:layout_height="0dp"
         tools:listitem="@layout/row_call"

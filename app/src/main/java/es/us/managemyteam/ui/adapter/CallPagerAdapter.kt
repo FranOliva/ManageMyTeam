@@ -7,7 +7,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import es.us.managemyteam.R
 import es.us.managemyteam.data.model.CallStatus
-import es.us.managemyteam.ui.fragment.StateCallFragment
+import es.us.managemyteam.ui.fragment.AcceptedCallFragment
+import es.us.managemyteam.ui.fragment.RejectCallFragment
+import es.us.managemyteam.ui.fragment.PendingCallFragment
 
 class CallPagerAdapter(
     fm: FragmentManager,
@@ -18,13 +20,13 @@ class CallPagerAdapter(
     override fun getItem(position: Int): Fragment {
         return when (position) {
             0 -> {
-                StateCallFragment.newInstance(CallStatus.PENDING)
+                PendingCallFragment.newInstance()
             }
             1 -> {
-                StateCallFragment.newInstance(CallStatus.ACCEPTED)
+                AcceptedCallFragment.newInstance()
             }
             else -> {
-                StateCallFragment.newInstance(CallStatus.DENIED)
+                RejectCallFragment.newInstance()
             }
         }
     }

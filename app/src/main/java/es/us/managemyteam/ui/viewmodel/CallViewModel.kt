@@ -26,13 +26,8 @@ class CallViewModel(
     private val acceptedCalls = CustomMediatorLiveData<Resource<List<EventBo>>>()
     private val rejectedCalls = CustomMediatorLiveData<Resource<List<EventBo>>>()
     private val acceptCallData = CustomMediatorLiveData<Resource<Boolean>>()
+    private val rejectCallData = CustomMediatorLiveData<Resource<Boolean>>()
     private val auth = FirebaseAuth.getInstance()
-
-    init {
-        getPendingCalls()
-        getAcceptedCalls()
-        getRejectedCalls()
-    }
 
     fun getPendingCalls() {
         viewModelScope.launch(Dispatchers.Main) {
@@ -101,14 +96,19 @@ class CallViewModel(
 
     fun rejectCall(uuid: String, observation: String) {
         viewModelScope.launch(Dispatchers.Main) {
-            acceptCallData.setData(Resource.loading(data = null))
+            rejectCallData.setData(Resource.loading(data = null))
             withContext(Dispatchers.IO) {
-                acceptCallData.changeSource(
+                rejectCallData.changeSource(
                     Dispatchers.Main,
                     rejectCallUc(uuid, auth.currentUser?.uid ?: "", observation)
                 )
             }
         }
+    }
+
+    fun getRejectCallData(): LiveData<Resource<Boolean>> {
+        rejectCallData.setData(null)
+        return rejectCallData.liveData()
     }
 
 }
