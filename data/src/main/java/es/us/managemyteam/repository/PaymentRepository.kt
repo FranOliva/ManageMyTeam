@@ -82,7 +82,9 @@ class PaymentRepositoryImpl : PaymentRepository {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 paypalConfigData.value =
-                    Resource.success(snapshot.getValue(PaypalConfigBo::class.java))
+                    Resource.success(
+                        snapshot.getValue(PaypalConfigBo::class.java) ?: PaypalConfigBo()
+                    )
             }
 
         })

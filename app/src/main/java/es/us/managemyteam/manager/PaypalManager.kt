@@ -8,7 +8,12 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import com.paypal.android.sdk.payments.*
 import es.us.managemyteam.contract.PaypalInterface
+import es.us.managemyteam.data.model.PaypalConfigBo
+import es.us.managemyteam.repository.util.Error
+import es.us.managemyteam.repository.util.ResourceObserver
+import es.us.managemyteam.ui.viewmodel.AdminPaypalViewModel
 import org.json.JSONException
+import org.koin.android.viewmodel.ext.android.viewModel
 import java.math.BigDecimal
 
 private const val REQUEST_CODE_PAYMENT = 1
@@ -30,10 +35,12 @@ class PaypalManager : PaypalInterface {
         .merchantUserAgreementUri(Uri.parse("https://www.example.com/legal"))
     private var resultListener: PaypalInterface.PaypalResultListener? = null
 
+
     override fun initialize(context: Context) {
         context.startService(Intent(context, PayPalService::class.java).apply {
             putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config)
         })
+
     }
 
     override fun goToPaypal(
@@ -42,12 +49,21 @@ class PaypalManager : PaypalInterface {
         itemName: String,
         isoCode: String
     ) {
-        fragment.let {
-            it.startActivityForResult(Intent(fragment.context, PaymentActivity::class.java).apply {
-                putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config)
-                putExtra(PaymentActivity.EXTRA_PAYMENT, getItemToBuy(price, itemName, isoCode))
-            }, REQUEST_CODE_PAYMENT)
-        }
+        val viewModel: AdminPaypalViewModel by fragment.viewModel()
+        viewModel.getPaypalConfigData().removeObservers(fragment)
+        viewModel.getPaypalConfigData().observe(fragment, object :
+            ResourceObserver<PaypalConfigBo>() {
+            override fun onSuccess(response: PaypalConfigBo?) {
+                response?.let {
+                    startPaypalService(fragment, getItemToBuy(price, itemName, isoCode, it))
+                }
+            }
+
+            override fun onError(error: Error) {
+                super.onError(error)
+                startPaypalService(fragment, getItemToBuy(price, itemName, isoCode))
+            }
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -93,29 +109,45 @@ class PaypalManager : PaypalInterface {
         this.resultListener = resultListener
     }
 
+    private fun startPaypalService(fragment: Fragment, paypalPayment: PayPalPayment? = null) {
+        fragment.startActivityForResult(
+            Intent(
+                fragment.context,
+                PaymentActivity::class.java
+            ).apply {
+                putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config)
+                putExtra(PaymentActivity.EXTRA_PAYMENT, paypalPayment)
+            }, REQUEST_CODE_PAYMENT
+        )
+    }
+
     private fun getItemToBuy(
         price: String,
         itemName: String,
-        isoCode: String
+        isoCode: String,
+        paypalConfigBo: PaypalConfigBo? = null
     ): PayPalPayment {
         return PayPalPayment(
             BigDecimal(price), isoCode, itemName,
             PayPalPayment.PAYMENT_INTENT_SALE
         ).apply {
-            addAppProvidedShippingAddress(this)
+            addAppProvidedShippingAddress(this, paypalConfigBo)
         }
     }
 
     /*
     * Add app-provided shipping address to payment
     */
-    private fun addAppProvidedShippingAddress(paypalPayment: PayPalPayment) {
+    private fun addAppProvidedShippingAddress(
+        paypalPayment: PayPalPayment,
+        paypalConfigBo: PaypalConfigBo? = null
+    ) {
         val shippingAddress = ShippingAddress()
-            .recipientName("Mom Parker")
-            .line1("52 North Main St.")
-            .city("Austin")
-            .state("TX")
-            .postalCode("78729")
+            .recipientName(paypalConfigBo?.recipient ?: "")
+            .line1(paypalConfigBo?.address ?: "")
+            .city(paypalConfigBo?.city ?: "")
+            .state(paypalConfigBo?.province ?: "")
+            .postalCode(paypalConfigBo?.postcode ?: "")
             .countryCode("ES")
         paypalPayment.providedShippingAddress(shippingAddress)
     }

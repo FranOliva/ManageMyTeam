@@ -1,6 +1,7 @@
 package es.us.managemyteam.ui.viewmodel
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import es.us.managemyteam.data.model.PaypalConfigBo
 import es.us.managemyteam.repository.util.Resource
@@ -12,9 +13,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class AdminPaypalViewModel(
+    application: Application,
     private val getPaypalConfigUc: GetPaypalConfigUc,
     private val createPaypalConfigUc: CreatePaypalConfigUc
-) : ViewModel() {
+) : AndroidViewModel(application) {
 
     private val paypalConfig = CustomMediatorLiveData<Resource<PaypalConfigBo>>()
     private val createPaypalConfigData = CustomMediatorLiveData<Resource<Boolean>>()
@@ -25,7 +27,7 @@ class AdminPaypalViewModel(
 
     fun getPaypalConfigData() = paypalConfig.liveData()
 
-    fun getPaypalConfig() {
+    private fun getPaypalConfig() {
         viewModelScope.launch(Dispatchers.Main) {
             paypalConfig.setData(Resource.loading(data = null))
             withContext(Dispatchers.IO) {
