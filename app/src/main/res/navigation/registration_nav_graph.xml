@@ -8,4 +8,16 @@
         android:id="@+id/registrationFragment"
         android:name="es.us.managemyteam.ui.fragment.RegistrationFragment" />
 
+    <fragment
+        android:id="@+id/termsAndConditionsFragment"
+        android:name="es.us.managemyteam.ui.fragment.TermsAndConditionsFragment" />
+
+    <action
+        android:id="@+id/action_registration_to_terms_and_conditions"
+        app:destination="@id/termsAndConditionsFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
 </navigation>
