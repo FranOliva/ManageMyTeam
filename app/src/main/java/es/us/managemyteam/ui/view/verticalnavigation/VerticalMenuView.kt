@@ -96,7 +96,7 @@ class VerticalMenuView @JvmOverloads constructor(
 
     private fun setupAdministrationClick() {
         (getBaseActivity() as MainActivity).getNavGraph()
-            .navigate(R.id.action_menu_to_accept_players)
+            .navigate(R.id.action_menu_to_admin_menu)
     }
 
     private fun setupMyTeamClick() {

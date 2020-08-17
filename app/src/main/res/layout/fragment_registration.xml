@@ -118,6 +118,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/registration__edit_text_confirm_password" />
 
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/registration_checkbox"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_twentyfour"
+            android:layout_marginStart="@dimen/size_fourteen"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/registration__edit_text_phonenumber"/>
+
+        <TextView
+            android:id="@+id/registration_checkbox_link"
+            style="@style/Medium.Eighteen.Black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/terms_and_conditions_checkbox_text"
+            android:layout_marginTop="@dimen/size_thirty"
+            android:layout_marginStart="@dimen/size_fiftysix"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/registration__edit_text_phonenumber"/>
+
         <es.us.managemyteam.ui.view.loading_button.LoadingButtonView
             android:id="@+id/registration__btn__send_request"
             android:layout_width="0dp"
@@ -129,7 +151,7 @@
             app:btn_text_color="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/registration__edit_text_phonenumber" />
+            app:layout_constraintTop_toBottomOf="@id/registration_checkbox" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
