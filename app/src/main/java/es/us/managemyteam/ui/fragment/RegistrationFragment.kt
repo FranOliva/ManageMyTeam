@@ -25,6 +25,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
         super.onViewCreated(view, savedInstanceState)
         setupCreateUserObserver()
         setupClickListeners()
+        toTerms()
     }
 
     private fun setupCreateUserObserver() {
@@ -57,6 +58,10 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
         viewBinding.registrationBtnSendRequest.setOnClickListener {
             clickOnAcceptRegister()
         }
+    }
+
+    private fun toTerms() {
+
         viewBinding.registrationCheckboxLink.setOnClickListener {
             findNavController().navigate(R.id.action_registration_to_terms_and_conditions)
         }
