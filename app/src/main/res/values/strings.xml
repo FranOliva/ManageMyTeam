@@ -113,6 +113,9 @@
     <string name="administration_create_coach">Crear entrenador</string>
     <string name="default_notification_channel_id" translatable="false">manage_my_team</string>
     <string name="administration_menu">Menú del administrador</string>
+    <string name="create_coach_success">Entrenador creado con éxito</string>
+    <string name="create_coach_title">Crear entrenador</string>
+    <string name="create_coach_information">El email introducido lo usará el entrenador para su acceso. Deberá proporcionarle la contraseña introducida y en su primer inicio de sesión la cambiará por una propia.</string>
 
     <!-- Terms and Conditions -->
     <string name="terms_and_conditions_title">Términos y condiciones de uso</string>
