@@ -63,9 +63,9 @@ class MessageAdapter :
         override fun setup(viewBinding: ViewBinding, item: MessageBo) {
             (viewBinding as RowChatIncomingBinding).apply {
                 rowChatIncomingLabelMessage.text = item.message
-                rowChatIncomingLabelDate.text = DateUtil.format(item.date)
+                rowChatIncomingLabelDate.text = item.fromName
                     .plus(" - ")
-                    .plus(item.fromName)
+                    .plus(DateUtil.format(item.date))
             }
         }
 
