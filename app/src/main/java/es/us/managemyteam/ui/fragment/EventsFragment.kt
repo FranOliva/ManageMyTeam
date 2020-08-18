@@ -6,6 +6,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
@@ -26,15 +27,27 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(), BaseAdapterClickLi
 
     private var eventsAdapter: EventsAdapter? = null
     private val eventsViewModel: EventsViewModel by viewModel()
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            activity?.finish()
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setupBackPressed()
         setupList()
         setupClickListeners()
         setupEventsObserver()
         setupUserObserver()
 
+    }
+
+    private fun setupBackPressed() {
+        activity?.onBackPressedDispatcher?.addCallback(
+            viewLifecycleOwner,
+            onBackPressedCallback
+        )
     }
 
     private fun setupUserObserver() {
