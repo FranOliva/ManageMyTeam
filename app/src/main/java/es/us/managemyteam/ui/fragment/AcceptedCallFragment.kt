@@ -15,7 +15,7 @@ import es.us.managemyteam.extension.*
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.ResourceObserver
 import es.us.managemyteam.ui.adapter.MyCallAdapter
-import es.us.managemyteam.ui.viewmodel.CallViewModel
+import es.us.managemyteam.ui.viewmodel.AcceptedCallViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class AcceptedCallFragment : BaseFragment<FragmentAcceptedCallsBinding>(), AcceptListener {
@@ -25,7 +25,7 @@ class AcceptedCallFragment : BaseFragment<FragmentAcceptedCallsBinding>(), Accep
     }
 
     private val callAdapter = MyCallAdapter(this)
-    private val callViewModel: CallViewModel by viewModel()
+    private val acceptedCallViewModel: AcceptedCallViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,11 +40,13 @@ class AcceptedCallFragment : BaseFragment<FragmentAcceptedCallsBinding>(), Accep
 
     private fun setupRejectPlayerObserver() {
         activity?.let {
-            callViewModel.getRejectCallData()
+            acceptedCallViewModel.getRejectCallData()
                 .observe(it, object : ResourceObserver<Boolean>() {
                     override fun onSuccess(response: Boolean?) {
                         response?.let {
-                            showInformationDialog("Tu respuesta se envió con éxito")
+                            if (userVisibleHint) {
+                                showInformationDialog("Tu respuesta se envió con éxito")
+                            }
                         }
                     }
 
@@ -54,40 +56,40 @@ class AcceptedCallFragment : BaseFragment<FragmentAcceptedCallsBinding>(), Accep
 
                     override fun onError(error: Error) {
                         super.onError(error)
-                        showErrorDialog(getString(error.errorMessageId))
+                        if (userVisibleHint) {
+                            showErrorDialog(getString(error.errorMessageId))
+                        }
                     }
                 })
         }
     }
 
     private fun setupCallsObserver() {
-        val data = callViewModel.getAcceptedCallsData()
+        val data = acceptedCallViewModel.getAcceptedCallsData()
 
-        viewLifecycleOwner.let {
-            data.removeObservers(it)
-            data.observe(it, object :
-                ResourceObserver<List<EventBo>>() {
-                override fun onSuccess(response: List<EventBo>?) {
-                    response?.let { list ->
-                        callAdapter.setData(list)
-                        callAdapter.notifyDataSetChanged()
-                    }
+        data.removeObservers(viewLifecycleOwner)
+        data.observe(viewLifecycleOwner, object :
+            ResourceObserver<List<EventBo>>() {
+            override fun onSuccess(response: List<EventBo>?) {
+                response?.let { list ->
+                    callAdapter.setData(list)
+                    callAdapter.notifyDataSetChanged()
                 }
+            }
 
-                override fun onLoading(loading: Boolean) {
-                    showLoader(loading)
-                }
+            override fun onLoading(loading: Boolean) {
+                showLoader(loading)
+            }
 
-                override fun onError(error: Error) {
-                    super.onError(error)
-                    showErrorDialog(error.serverErrorMessage ?: "",
-                        DialogInterface.OnClickListener { _, _ ->
-                            popBack()
-                        })
-                }
-            })
-        }
-        callViewModel.getAcceptedCalls()
+            override fun onError(error: Error) {
+                super.onError(error)
+                showErrorDialog(error.serverErrorMessage ?: "",
+                    DialogInterface.OnClickListener { _, _ ->
+                        popBack()
+                    })
+            }
+        })
+        acceptedCallViewModel.getAcceptedCalls()
     }
 
 //region BaseFragment
@@ -120,7 +122,7 @@ class AcceptedCallFragment : BaseFragment<FragmentAcceptedCallsBinding>(), Accep
     }
 
     override fun onRefused(uuid: String) {
-        callViewModel.rejectCall(uuid, "No quiero ir que no vamos a ganar joder")
+        acceptedCallViewModel.rejectCall(uuid, "No quiero ir que no vamos a ganar joder")
     }
 
 //endregion

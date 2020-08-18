@@ -5,7 +5,11 @@ import es.us.managemyteam.repository.CallRepository
 
 class GetCallsByUserIdUC(private val callRepository: CallRepository) {
 
-    suspend operator fun invoke(userUuid: String, status: CallStatus) =
-        callRepository.getCallsByUserId(userUuid, status)
+    suspend operator fun invoke(userUuid: String, status: CallStatus) = when (status) {
+        CallStatus.PENDING -> callRepository.getPendingCallsByUserId(userUuid)
+        CallStatus.ACCEPTED -> callRepository.getAcceptedCallsByUserId(userUuid)
+        else -> callRepository.getRejectedCallsByUserId(userUuid)
+    }
+
 
 }

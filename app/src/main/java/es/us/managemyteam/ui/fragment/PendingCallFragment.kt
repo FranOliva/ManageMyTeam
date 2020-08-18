@@ -15,7 +15,7 @@ import es.us.managemyteam.extension.*
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.ResourceObserver
 import es.us.managemyteam.ui.adapter.MyCallAdapter
-import es.us.managemyteam.ui.viewmodel.CallViewModel
+import es.us.managemyteam.ui.viewmodel.PendingCallViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class PendingCallFragment : BaseFragment<FragmentPendingCallsBinding>(), AcceptListener {
@@ -26,7 +26,7 @@ class PendingCallFragment : BaseFragment<FragmentPendingCallsBinding>(), AcceptL
     }
 
     private val callAdapter = MyCallAdapter(this)
-    private val callViewModel: CallViewModel by viewModel()
+    private val pendingCallViewModel: PendingCallViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,8 +43,8 @@ class PendingCallFragment : BaseFragment<FragmentPendingCallsBinding>(), AcceptL
 
     private fun setupRejectPlayerObserver() {
         activity?.let {
-            callViewModel.getRejectCallData()
-                .observe(it, object : ResourceObserver<Boolean>() {
+            pendingCallViewModel.getRejectCallData()
+                .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
                     override fun onSuccess(response: Boolean?) {
                         response?.let {
                             showInformationDialog("Tu respuesta se envió con éxito")
@@ -65,24 +65,28 @@ class PendingCallFragment : BaseFragment<FragmentPendingCallsBinding>(), AcceptL
 
     private fun setupAcceptPlayerObserver() {
         activity?.let {
-            callViewModel.getAcceptCallData()
-                .observe(it, object : ResourceObserver<Boolean>() {
+            pendingCallViewModel.getAcceptCallData()
+                .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
                     override fun onSuccess(response: Boolean?) {
                         response?.let {
-                            showInformationDialog("Tu respuesta se envió con éxito")
+                            if (userVisibleHint) {
+                                showInformationDialog("Tu respuesta se envió con éxito")
+                            }
                         }
                     }
 
                     override fun onError(error: Error) {
                         super.onError(error)
-                        showErrorDialog(getString(error.errorMessageId))
+                        if (userVisibleHint) {
+                            showErrorDialog(getString(error.errorMessageId))
+                        }
                     }
                 })
         }
     }
 
     private fun setupCallsObserver() {
-        val data = callViewModel.getPendingCallsData()
+        val data = pendingCallViewModel.getPendingCallsData()
         viewLifecycleOwner.let {
             data.removeObservers(it)
             data.observe(it, object :
@@ -107,7 +111,7 @@ class PendingCallFragment : BaseFragment<FragmentPendingCallsBinding>(), AcceptL
                 }
             })
         }
-        callViewModel.getPendingCalls()
+        pendingCallViewModel.getPendingCalls()
     }
 
 //region BaseFragment
@@ -136,11 +140,11 @@ class PendingCallFragment : BaseFragment<FragmentPendingCallsBinding>(), AcceptL
 //region AcceptListener
 
     override fun onAccepted(uuid: String) {
-        callViewModel.acceptCall(uuid)
+        pendingCallViewModel.acceptCall(uuid)
     }
 
     override fun onRefused(uuid: String) {
-        callViewModel.rejectCall(uuid, "No quiero ir que no vamos a ganar joder")
+        pendingCallViewModel.rejectCall(uuid, "No quiero ir que no vamos a ganar joder")
     }
 
 //endregion

@@ -5,6 +5,7 @@ import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.viewpager.widget.PagerAdapter
 import es.us.managemyteam.R
 import es.us.managemyteam.data.model.CallStatus
 import es.us.managemyteam.ui.fragment.AcceptedCallFragment
@@ -53,4 +54,7 @@ class CallPagerAdapter(
         }
     }
 
+    override fun getItemPosition(`object`: Any): Int {
+        return PagerAdapter.POSITION_NONE
+    }
 }

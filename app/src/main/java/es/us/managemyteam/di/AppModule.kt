@@ -186,7 +186,15 @@ val appModule = module {
     }
 
     viewModel {
-        CallViewModel(get(), get(), get(), get())
+        PendingCallViewModel(get(), get(), get())
+    }
+
+    viewModel {
+        AcceptedCallViewModel(get(), get())
+    }
+
+    viewModel {
+        RejectedCallViewModel(get(), get())
     }
 
 }
