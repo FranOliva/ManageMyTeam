@@ -9,7 +9,8 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
 import es.us.managemyteam.databinding.FragmentAdministrationBinding
-import es.us.managemyteam.extension.*
+import es.us.managemyteam.extension.hide
+import es.us.managemyteam.extension.popBack
 
 class AdministrationFragment : BaseFragment<FragmentAdministrationBinding>() {
 
@@ -28,12 +29,16 @@ class AdministrationFragment : BaseFragment<FragmentAdministrationBinding>() {
             findNavController().navigate(R.id.action_administration_to_accept_player)
         }
 
-        viewBinding.administratorContainerEditClub?.setOnClickListener {
+        viewBinding.administratorContainerEditClub.setOnClickListener {
             findNavController().navigate(R.id.action_administration_to_edit_club)
         }
 
-        viewBinding.administrationMenuImgBack?.setOnClickListener {
-           popBack()
+        viewBinding.administratorContainerPaypalConfig.setOnClickListener {
+            findNavController().navigate(R.id.action_administration_to_paypal_config)
+        }
+
+        viewBinding.administrationMenuImgBack.setOnClickListener {
+            popBack()
         }
     }
 

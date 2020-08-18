@@ -76,6 +76,7 @@ class VerticalMenuView @JvmOverloads constructor(
             VerticalMenuId.MY_CLUB_ID -> setupClubClick()
             VerticalMenuId.ADMINISTRATION_ID -> setupAdministrationClick()
             VerticalMenuId.MY_TEAM_ID -> setupMyTeamClick()
+            VerticalMenuId.PAYMENTS_ID -> setupPaymentsClick()
         }
         needClosingDrawerListener?.onNeedClosingDrawer()
     }
@@ -102,6 +103,11 @@ class VerticalMenuView @JvmOverloads constructor(
     private fun setupMyTeamClick() {
         (getBaseActivity() as MainActivity).getNavGraph()
             .navigate(R.id.action_menu_to_my_team)
+    }
+
+    private fun setupPaymentsClick() {
+        (getBaseActivity() as MainActivity).getNavGraph()
+            .navigate(R.id.action_menu_to_payment)
     }
 
 }

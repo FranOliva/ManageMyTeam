@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                 when (it.itemId) {
                     R.id.action_events -> getNavGraph().navigate(R.id.action_menu_to_events)
                     R.id.action_chat -> getNavGraph().navigate((R.id.action_menu_to_chat))
-                    R.id.action_perfil -> getNavGraph().navigate(R.id.action_menu_to_profile)
+                    R.id.action_profile -> getNavGraph().navigate(R.id.action_menu_to_profile)
                     R.id.action_menu -> viewBinding.dashboardDrawerMain.openDrawer(
                         GravityCompat.END
                     )

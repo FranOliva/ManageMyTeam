@@ -68,6 +68,7 @@ class EditableTextView @JvmOverloads constructor(
             CommonInputType.EMAIL -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
             CommonInputType.MULTI_LINE -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE
             CommonInputType.PHONE -> InputType.TYPE_CLASS_PHONE
+            CommonInputType.NUMBER -> InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
             else -> InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
         }
 

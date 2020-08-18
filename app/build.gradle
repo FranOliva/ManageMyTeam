@@ -77,5 +77,6 @@ dependencies {
 
     // External
     implementation 'com.bitvale:switcher:1.1.0'
+    implementation "com.paypal.sdk:paypal-android-sdk:$paypal_version"
     compile 'com.github.mmoamenn:ProgressImage_Android:0.0.2'
 }
