@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import es.us.managemyteam.R
 import es.us.managemyteam.databinding.FragmentEditPasswordBinding
 import es.us.managemyteam.extension.*
@@ -19,10 +21,15 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class EditPasswordFragment : BaseFragment<FragmentEditPasswordBinding>() {
 
     private val editPasswordViewModel: UpdatePasswordViewModel by viewModel()
+    private var isStaffFirstTime = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupObserver()
+        isStaffFirstTime = arguments?.getBoolean(
+            getString(R.string.argument__edit_password__is_staff_first_time),
+            false
+        ) ?: false
+        setupObservers()
         setupClickListener()
     }
 
@@ -40,7 +47,7 @@ class EditPasswordFragment : BaseFragment<FragmentEditPasswordBinding>() {
         editPasswordViewModel.getUpdatePassword(currentPassword, newPassword, confirmPassword)
     }
 
-    private fun setupObserver() {
+    private fun setupObservers() {
         editPasswordViewModel.getUpdatePasswordData()
             .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
                 override fun onSuccess(response: Boolean?) {
@@ -50,7 +57,13 @@ class EditPasswordFragment : BaseFragment<FragmentEditPasswordBinding>() {
                             getString(R.string.update_user_success),
                             Toast.LENGTH_LONG
                         ).show()
-                        popBack()
+                        if (!isStaffFirstTime) {
+                            popBack()
+                        } else {
+                            editPasswordViewModel.enableUser(
+                                FirebaseAuth.getInstance().currentUser?.uid ?: ""
+                            )
+                        }
                     }
                 }
 
@@ -61,7 +74,30 @@ class EditPasswordFragment : BaseFragment<FragmentEditPasswordBinding>() {
 
                 override fun onLoading(loading: Boolean) {
                     super.onLoading(loading)
-                    viewBinding.editPasswordBtnSendRequest.showLoading(loading)
+                    viewBinding.editPasswordBtnSendRequest.showLoading(true)
+                }
+            })
+
+        editPasswordViewModel.getEnableUserData()
+            .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
+                override fun onSuccess(response: Boolean?) {
+                    response?.let {
+                        if (it) {
+                            findNavController().navigate(R.id.action_edit_password_to_events)
+                        }
+                    }
+                }
+
+                override fun onError(error: Error) {
+                    super.onError(error)
+                    showErrorDialog(getString(error.errorMessageId))
+                }
+
+                override fun onLoading(loading: Boolean) {
+                    super.onLoading(loading)
+                    if (!loading) {
+                        viewBinding.editPasswordBtnSendRequest.showLoading(false)
+                    }
                 }
             })
     }
@@ -76,8 +112,12 @@ class EditPasswordFragment : BaseFragment<FragmentEditPasswordBinding>() {
     override fun setupToolbar(toolbar: Toolbar) {
         toolbar.apply {
             setToolbarTitle(getString(R.string.edit_user_password))
-            setNavIcon(ContextCompat.getDrawable(context, R.drawable.ic_back))
-            setNavAction { popBack() }
+            if (!isStaffFirstTime) {
+                setNavIcon(ContextCompat.getDrawable(context, R.drawable.ic_back))
+                setNavAction { popBack() }
+            } else {
+                setNavIcon(null)
+            }
             show()
         }
     }

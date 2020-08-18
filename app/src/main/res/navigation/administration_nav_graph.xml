@@ -20,6 +20,10 @@
         android:id="@+id/fragmentAdminPaypalConfig"
         android:name="es.us.managemyteam.ui.fragment.AdminPaypalConfigFragment" />
 
+    <fragment
+        android:id="@+id/fragmentCreateCoach"
+        android:name="es.us.managemyteam.ui.fragment.CreateCoachFragment" />
+
     <action
         android:id="@+id/action_administration_to_accept_player"
         app:destination="@+id/fragmentAcceptPlayers"
@@ -45,6 +49,15 @@
         app:exitAnim="@anim/nav_default_exit_anim"
         app:launchSingleTop="true"
         app:popUpTo="@id/fragmentAdminPaypalConfig"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_administration_to_create_coach"
+        app:destination="@+id/fragmentCreateCoach"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:launchSingleTop="true"
+        app:popUpTo="@id/fragmentCreateCoach"
         app:popUpToInclusive="true" />
 
 </navigation>

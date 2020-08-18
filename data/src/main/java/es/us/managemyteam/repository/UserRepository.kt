@@ -254,7 +254,9 @@ class UserRepositoryImpl : UserRepository {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 user = snapshot.getValue(UserBo::class.java)
-                if (user?.enable == true) {
+                val userEnabled = user?.enable == true
+                val userStaffFirstTime = user?.isStaff() == true && user?.enable == false
+                if (userEnabled || userStaffFirstTime) {
                     userData.value = Resource.success(user)
                 } else {
                     userData.value =

@@ -180,7 +180,7 @@ val appModule = module {
     }
 
     viewModel {
-        UpdatePasswordViewModel(get(), get())
+        UpdatePasswordViewModel(get(), get(), get())
     }
 
     // Chat
@@ -205,5 +205,9 @@ val appModule = module {
 
     viewModel {
         AcceptPlayersViewModel(get(), get(), get())
+    }
+
+    viewModel {
+        CreateCoachViewModel(get())
     }
 }

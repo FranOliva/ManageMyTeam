@@ -21,9 +21,9 @@ class AdministrationFragment : BaseFragment<FragmentAdministrationBinding>() {
     }
 
     private fun setupClickListeners() {
-        //viewBinding.administratorContainerCreateCoach.setOnClickListener {
-        //    findNavController().navigate(R.id.)
-        //}
+        viewBinding.administratorContainerCreateCoach.setOnClickListener {
+            findNavController().navigate(R.id.action_administration_to_create_coach)
+        }
 
         viewBinding.administratorContainerAcceptsPlayer.setOnClickListener {
             findNavController().navigate(R.id.action_administration_to_accept_player)
