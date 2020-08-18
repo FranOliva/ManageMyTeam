@@ -6,6 +6,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
@@ -25,7 +26,11 @@ class UserProfileFragment : BaseFragment<FragmentUserProfileBinding>() {
     private val userProfileViewModel: UserProfileViewModel by viewModel()
     private var userIsLogged = false
     private var userIsPlayer = false
-
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            activity?.finish()
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,9 +40,17 @@ class UserProfileFragment : BaseFragment<FragmentUserProfileBinding>() {
             viewBinding.userContainerEdit.visibility = VISIBLE
         }
 
+        setupBackPressed()
         setupUserObserver(userId)
         setupClickListeners()
 
+    }
+
+    private fun setupBackPressed() {
+        activity?.onBackPressedDispatcher?.addCallback(
+            viewLifecycleOwner,
+            onBackPressedCallback
+        )
     }
 
     private fun setupUserObserver(userId: String?) {
