@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false">
@@ -75,8 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone"
-            tools:visibility="visible">
+            android:visibility="gone">
 
             <es.us.managemyteam.ui.view.common_map.MapView
                 android:id="@+id/create_event__view__map"
@@ -92,12 +90,15 @@
 
         </LinearLayout>
 
-        <Button
+        <es.us.managemyteam.ui.view.loading_button.LoadingButtonView
             android:id="@+id/create_event__btn__select_players"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/primaryDark"
-            android:text="Seleccionar jugadores" />
+            android:layout_marginTop="@dimen/size_thirty"
+            app:btn_background_drawable="@drawable/button_borders_background"
+            app:btn_has_radius="true"
+            app:btn_text="@string/create_event_select_call"
+            app:btn_text_color="@color/primaryDark" />
 
         <es.us.managemyteam.ui.view.loading_button.LoadingButtonView
             android:id="@+id/create_event__btn__save"

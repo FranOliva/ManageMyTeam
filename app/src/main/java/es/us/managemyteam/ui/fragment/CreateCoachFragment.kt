@@ -6,33 +6,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
 import es.us.managemyteam.data.model.Role
-import es.us.managemyteam.databinding.FragmentRegistrationBinding
+import es.us.managemyteam.databinding.FragmentCreateCoachBinding
 import es.us.managemyteam.extension.*
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.ResourceObserver
-import es.us.managemyteam.ui.viewmodel.RegistrationViewModel
+import es.us.managemyteam.ui.viewmodel.CreateCoachViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
+class CreateCoachFragment : BaseFragment<FragmentCreateCoachBinding>() {
 
-    private val registrationViewModel: RegistrationViewModel by viewModel()
+    private val createCoachViewModel: CreateCoachViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupCreateUserObserver()
         setupClickListeners()
-        toTerms()
+        setupCreateCoachObserver()
     }
 
-    private fun setupCreateUserObserver() {
-        registrationViewModel.getCreateUserData()
+    private fun setupCreateCoachObserver() {
+        createCoachViewModel.getCreateCoachData()
             .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
                 override fun onSuccess(response: Boolean?) {
-                    showInformationDialog(getString(R.string.user_created_successfully))
+                    showInformationDialog(getString(R.string.create_coach_success))
                     popBack()
                 }
 
@@ -46,54 +44,47 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
 
                 override fun onLoading(loading: Boolean) {
                     super.onLoading(loading)
-                    viewBinding.registrationBtnSendRequest.showLoading(loading)
+                    viewBinding.createCoachBtnSendRequest.showLoading(loading)
                 }
             })
 
     }
 
     private fun setupClickListeners() {
-        viewBinding.registrationImgBack.setOnClickListener {
+        viewBinding.createCoachImgBack.setOnClickListener {
             popBack()
         }
-        viewBinding.registrationBtnSendRequest.setOnClickListener {
+        viewBinding.createCoachBtnSendRequest.setOnClickListener {
             clickOnAcceptRegister()
         }
     }
 
-    private fun toTerms() {
-
-        viewBinding.registrationCheckboxLink.setOnClickListener {
-            findNavController().navigate(R.id.action_registration_to_terms_and_conditions)
-        }
-    }
-
     private fun clickOnAcceptRegister() {
-        val email = viewBinding.registrationEditTextEmail.text.trim()
-        val password = viewBinding.registrationEditTextPassword.text.trim()
-        val confirmPassword = viewBinding.registrationEditTextConfirmPassword.text.trim()
-        val name = viewBinding.registrationEditTextName.text.trim()
-        val surname = viewBinding.registrationEditTextSurname.text.trim()
-        val phoneNumber = viewBinding.registrationEditTextPhonenumber.text.trim()
+        val email = viewBinding.createCoachEditTextEmail.text.trim()
+        val password = viewBinding.createCoachEditTextPassword.text.trim()
+        val confirmPassword = viewBinding.createCoachEditTextConfirmPassword.text.trim()
+        val name = viewBinding.createCoachEditTextName.text.trim()
+        val surname = viewBinding.createCoachEditTextSurname.text.trim()
+        val phoneNumber = viewBinding.createCoachEditTextPhonenumber.text.trim()
 
         getFocusedView().hideKeyboard()
 
-        registrationViewModel.createUser(
+        createCoachViewModel.createCoach(
             email,
             password,
             confirmPassword,
             name,
             surname,
             phoneNumber,
-            Role.PLAYER
+            Role.STAFF
         )
     }
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentRegistrationBinding {
-        return FragmentRegistrationBinding.inflate(inflater, container, false)
+    ): FragmentCreateCoachBinding {
+        return FragmentCreateCoachBinding.inflate(inflater, container, false)
     }
 
     override fun setupToolbar(toolbar: Toolbar) {

@@ -29,4 +29,20 @@
 
     <include app:graph="@navigation/events_nav_graph" />
 
+    <include app:graph="@navigation/update_password_nav_graph" />
+
+    <action
+        android:id="@+id/action_login_to_update_password"
+        app:destination="@+id/update_password_nav_graph"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:launchSingleTop="true"
+        app:popUpTo="@id/loginFragment">
+
+        <argument
+            android:name="@string/argument__edit_password__is_staff_first_time"
+            app:argType="boolean" />
+
+    </action>
+
 </navigation>
