@@ -115,7 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Ver localización"
+                    android:text="@string/event_detail_location"
                     android:textAllCaps="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -152,7 +152,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/size_eighteen"
-                android:text="Convocatoria" />
+                android:text="@string/event_detail_announcement" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/event_detail__list__called"

@@ -9,6 +9,7 @@
     <string name="date_time_format">dd/MM/yyyy HH:mm</string>
     <string name="empty_results">No se han encontrado resultados</string>
     <string name="select_location">Seleccione una localización</string>
+    <string name="login_enter">Entrar</string>
 
     <!-- Navigation -->
     <string name="navigation_event__uuid__argument">event_uuid_argument</string>
@@ -39,7 +40,8 @@
     <string name="create_event_success">Evento creado correctamente</string>
     <string name="create_event_select_location_error">Debe seleccionar una localización</string>
     <string name="create_event_select_call">Modifique la convocatoria</string>
-
+    <string name="event_detail_announcement">Convocatoria</string>
+    <string name="event_detail_location">Ver localización</string>
 
     <!-- User -->
     <string name="user">Usuario</string>
@@ -111,11 +113,16 @@
     <!-- Others -->
     <string name="administration_accept_players">Solicitudes de jugadores</string>
     <string name="administration_create_coach">Crear entrenador</string>
+    <string name="administration_playpal_config">Configuración de PayPal</string>
+    <string name="create_payment_send">Enviar</string>
+    <string name="payment_empty">Aún no has realizado ningún pago</string>
+    <string name="request_empty">¡Genial! No te quedan más solicitudes que atender</string>
     <string name="default_notification_channel_id" translatable="false">manage_my_team</string>
     <string name="administration_menu">Menú del administrador</string>
     <string name="create_coach_success">Entrenador creado con éxito</string>
     <string name="create_coach_title">Crear entrenador</string>
     <string name="create_coach_information">El email introducido lo usará el entrenador para su acceso. Deberá proporcionarle la contraseña introducida y en su primer inicio de sesión la cambiará por una propia.</string>
+    <string name="activity_main_event">Eventos</string>
 
     <!-- Terms and Conditions -->
     <string name="terms_and_conditions_title">Términos y condiciones de uso</string>

@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    tools:text="Eventos" />
+                    tools:text="@string/activity_main_event" />
 
             </androidx.appcompat.widget.Toolbar>
 
