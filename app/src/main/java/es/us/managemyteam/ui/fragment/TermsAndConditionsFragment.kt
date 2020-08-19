@@ -1,11 +1,13 @@
 package es.us.managemyteam.ui.fragment
 
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import es.us.managemyteam.R
 import es.us.managemyteam.databinding.FragmentTermsAndConditionsBinding
 import es.us.managemyteam.extension.hide
 import es.us.managemyteam.extension.popBack
@@ -14,6 +16,10 @@ class TermsAndConditionsFragment : BaseFragment<FragmentTermsAndConditionsBindin
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val htmlAsString = getString(R.string.terms_and_conditions_description);
+
+        viewBinding.description.text = Html.fromHtml(htmlAsString);
 
         setupClickListeners()
     }

@@ -40,6 +40,12 @@ data class VerticalMenuVO(val id: VerticalMenuId, val title: String, val icon: I
                 R.drawable.ic_euro
             )
 
+            val termsAndConditions = VerticalMenuVO(
+                VerticalMenuId.TERMS_CONDITIONS_ID,
+                "Términos y condiciones",
+                R.drawable.ic_terms
+            )
+
             verticalMenuList.add(club)
             if (isAdmin) {
                 verticalMenuList.add(administration)
@@ -52,6 +58,9 @@ data class VerticalMenuVO(val id: VerticalMenuId, val title: String, val icon: I
             if (!isAdmin) {
                 verticalMenuList.add(myPayments)
             }
+
+            verticalMenuList.add(termsAndConditions)
+
             verticalMenuList.add(logout)
 
 

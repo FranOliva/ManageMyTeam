@@ -37,6 +37,7 @@
         tools:layout_editor_absoluteX="16dp">
 
         <TextView
+            android:id="@+id/description"
             style="@style/Medium.Eighteen.Black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

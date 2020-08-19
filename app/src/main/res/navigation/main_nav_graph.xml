@@ -44,6 +44,15 @@
         app:popUpToInclusive="true" />
 
     <action
+        android:id="@+id/action_menu_to_terms"
+        app:destination="@+id/terms_conditions_nav_graph"
+        app:enterAnim="@anim/nav_enter_from_bottom"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_exit_to_bottom"
+        app:popUpToInclusive="true" />
+
+    <action
         android:id="@+id/action_menu_to_admin_menu"
         app:destination="@+id/administration_nav_graph"
         app:enterAnim="@anim/nav_enter_from_bottom"
@@ -105,5 +114,6 @@
     <include app:graph="@navigation/administration_nav_graph" />
     <include app:graph="@navigation/my_team_nav_graph" />
     <include app:graph="@navigation/payment_nav_graph" />
+    <include app:graph="@navigation/terms_conditions_nav_graph" />
 
 </navigation>
