@@ -29,6 +29,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
         setupCreateUserObserver()
         setupClickListeners()
         setupCurrentUserObserver()
+        setupGetCurrentNewUserObserver()
         toTerms()
     }
 
@@ -63,6 +64,8 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
         viewBinding.registrationBtnSendRequest.setOnClickListener {
             clickOnAcceptRegister()
         }
+
+        setCurrentUser()
     }
 
     private fun toTerms() {
@@ -111,6 +114,50 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
                 }
 
             })
+    }
+
+    private fun setupGetCurrentNewUserObserver() {
+        registrationViewModel.getCurrentNewUserData()
+            .observe(viewLifecycleOwner, object : ResourceObserver<UserBo>() {
+                override fun onSuccess(response: UserBo?) {
+                    response?.let {
+                        currentNewUser = it
+                        setupCurrentUser(it)
+                    }
+                }
+
+                override fun onError(error: Error) {
+                    super.onError(error)
+                    showErrorDialog(
+                        getString(error.errorMessageId),
+                        getDefaultDialogErrorListener()
+                    )
+                }
+            })
+        registrationViewModel.getCurrentNewUser()
+    }
+
+    private fun setupCurrentUser(user: UserBo) {
+        viewBinding.registrationEditTextName.setText(user.name)
+        viewBinding.registrationEditTextSurname.setText(user.surname)
+        viewBinding.registrationEditTextEmail.setText(user.email)
+        viewBinding.registrationEditTextPhonenumber.setText(user.phoneNumber)
+    }
+
+    private fun setCurrentUser() {
+        val name = viewBinding.registrationEditTextName.text.trim()
+        val surname = viewBinding.registrationEditTextSurname.text.trim()
+        val email = viewBinding.registrationEditTextEmail.text.trim()
+        val phoneNumber = viewBinding.registrationEditTextPhonenumber.text.trim()
+
+        currentNewUser.apply {
+            this.name = name
+            this.surname = surname
+            this.email = email
+            this.phoneNumber = phoneNumber
+        }
+
+        registrationViewModel.setCurrentNewUser(currentNewUser)
     }
 
     override fun inflateViewBinding(

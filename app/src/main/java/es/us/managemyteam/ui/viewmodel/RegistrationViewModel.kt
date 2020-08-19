@@ -10,15 +10,20 @@ import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.extension.isEmail
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.Resource
+import es.us.managemyteam.usecase.GetCurrentNewUserUc
 import es.us.managemyteam.usecase.PostRegistrationUc
+import es.us.managemyteam.usecase.SetCurrentNewUserUc
 import es.us.managemyteam.util.CustomMediatorLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class RegistrationViewModel(
-    private val postRegistrationUc: PostRegistrationUc
-) : ViewModel() {
+    private val postRegistrationUc: PostRegistrationUc,
+    private val getCurrentNewUserUc: GetCurrentNewUserUc,
+    private val setCurrentNewUserUc: SetCurrentNewUserUc
+
+    ) : ViewModel() {
 
     private val createUser = CustomMediatorLiveData<Resource<Boolean>>()
     private val currentNewUser = CustomMediatorLiveData<Resource<UserBo>>()
@@ -103,6 +108,21 @@ class RegistrationViewModel(
         }
     }
 
+    fun getCurrentNewUser() =
+        viewModelScope.launch(Dispatchers.Main) {
+            currentNewUser.setData(Resource.loading())
+            withContext(Dispatchers.IO) {
+                currentNewUser.changeSource(Dispatchers.Main, getCurrentNewUserUc())
+            }
+        }
+
     fun getCurrentNewUserData() = currentNewUser.liveData()
+
+    fun setCurrentNewUser(user: UserBo) =
+        viewModelScope.launch(Dispatchers.Main) {
+            withContext(Dispatchers.IO) {
+                setCurrentNewUserUc(user)
+            }
+        }
 
 }

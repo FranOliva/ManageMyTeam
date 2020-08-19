@@ -30,6 +30,10 @@ interface UserRepository {
         role: Role
     ): LiveData<Resource<Boolean>>
 
+    suspend fun getCurrentNewUser(): UserBo?
+
+    suspend fun setCurrentNewUser(user: UserBo?)
+
     suspend fun getUserByUid(uid: String): LiveData<Resource<UserBo>>
 
     suspend fun login(
@@ -70,6 +74,8 @@ class UserRepositoryImpl : UserRepository {
     private val updateUserData = MutableLiveData<Resource<Boolean>>()
     private val updateEmailData = MutableLiveData<Resource<Boolean>>()
     private val updatePasswordData = MutableLiveData<Resource<Boolean>>()
+    private var currentUser: UserBo? = UserBo()
+
 
     override suspend fun createUser(
         email: String,
@@ -113,6 +119,14 @@ class UserRepositoryImpl : UserRepository {
 
     override suspend fun logout() {
         auth.signOut()
+    }
+
+    override suspend fun getCurrentNewUser(): UserBo? {
+        return currentUser
+    }
+
+    override suspend fun setCurrentNewUser(user: UserBo?) {
+        currentUser = user
     }
 
     override suspend fun removeUser(uuid: String): LiveData<Resource<Boolean>> {

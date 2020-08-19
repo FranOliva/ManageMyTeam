@@ -160,7 +160,7 @@ val appModule = module {
     }
 
     viewModel {
-        RegistrationViewModel(get())
+        RegistrationViewModel(get(), get(), get())
     }
 
     viewModel {

@@ -5,10 +5,10 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class UserBo(
-    val name: String? = null,
-    val surname: String? = null,
-    val email: String? = null,
-    val phoneNumber: String? = null,
+    var name: String? = null,
+    var surname: String? = null,
+    var email: String? = null,
+    var phoneNumber: String? = null,
     val age: Int? = null,
     val role: Role? = null,
     val dorsal: Long? = null,
