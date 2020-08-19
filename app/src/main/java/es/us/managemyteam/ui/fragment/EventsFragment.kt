@@ -6,7 +6,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
@@ -109,23 +108,6 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(), BaseAdapterClickLi
                     showLoader(loading)
                 }
             })
-
-        eventsViewModel.getRecoverPasswordData()
-            .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
-                override fun onSuccess(response: Boolean?) {
-                    response?.let {
-                        if (it) {
-                            Toast.makeText(context, "Correo enviado", Toast.LENGTH_LONG).show()
-                        }
-                    }
-                }
-
-                override fun onError(error: Error) {
-                    super.onError(error)
-                    showErrorDialog(error.serverErrorMessage ?: getString(error.errorMessageId))
-                }
-            })
-        eventsViewModel.recoverPassword()
 
     }
 
