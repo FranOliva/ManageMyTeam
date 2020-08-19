@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
 import es.us.managemyteam.data.model.Role
+import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.databinding.FragmentRegistrationBinding
 import es.us.managemyteam.extension.*
 import es.us.managemyteam.repository.util.Error
@@ -20,11 +21,14 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
 
     private val registrationViewModel: RegistrationViewModel by viewModel()
+    private var currentNewUser: UserBo = UserBo()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupCreateUserObserver()
         setupClickListeners()
+        setupCurrentUserObserver()
         toTerms()
     }
 
@@ -78,15 +82,35 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
 
         getFocusedView().hideKeyboard()
 
-        registrationViewModel.createUser(
-            email,
-            password,
-            confirmPassword,
-            name,
-            surname,
-            phoneNumber,
-            Role.PLAYER
-        )
+
+        if (viewBinding.registrationCheckbox.isChecked){
+            registrationViewModel.createUser(
+                email,
+                password,
+                confirmPassword,
+                name,
+                surname,
+                phoneNumber,
+                Role.PLAYER
+            )
+        }else{
+            showInformationDialog(getString(R.string.checkbox_error))
+        }
+    }
+
+    private fun setupCurrentUserObserver() {
+        registrationViewModel.getCurrentNewUserData()
+            .observe(viewLifecycleOwner, object : ResourceObserver<UserBo>() {
+                override fun onSuccess(response: UserBo?) {
+                    currentNewUser = response ?: UserBo()
+                }
+
+                override fun onError(error: Error) {
+                    super.onError(error)
+                    currentNewUser = UserBo()
+                }
+
+            })
     }
 
     override fun inflateViewBinding(

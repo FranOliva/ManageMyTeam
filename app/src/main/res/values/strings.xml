@@ -62,6 +62,7 @@
     <string name="edit_user_user_dorsal">Dorsal</string>
     <string name="edit_user_title">Editar datos del usuario</string>
     <string name="user_created_successfully">Solicitud de registro enviada con éxito</string>
+    <string name="checkbox_error">Debes aceptar los términos y condiciones</string>
     <string name="login_email">Correo electrónico</string>
     <string name="login_password">Contraseña</string>
     <string name="login_message_registration">¿Aún no has solicitado acceso?</string>
