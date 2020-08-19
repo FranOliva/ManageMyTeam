@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import es.us.managemyteam.R
 
 fun Fragment.popBack() {
+    getFocusedView().hideKeyboard()
     findNavController().navigateUp()
 }
 
@@ -51,7 +52,7 @@ fun Fragment.showInformationDialog(
 }
 
 fun Fragment.getDefaultDialogErrorListener(): DialogInterface.OnClickListener {
-    return DialogInterface.OnClickListener { dialog , _ ->
+    return DialogInterface.OnClickListener { dialog, _ ->
         popBack()
     }
 }

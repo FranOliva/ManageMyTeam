@@ -56,6 +56,8 @@ interface UserRepository {
         password: String
     ): LiveData<Resource<Boolean>>
 
+    suspend fun recoverPassword(): LiveData<Resource<Boolean>>
+
 }
 
 class UserRepositoryImpl : UserRepository {
@@ -70,6 +72,7 @@ class UserRepositoryImpl : UserRepository {
     private val updateUserData = MutableLiveData<Resource<Boolean>>()
     private val updateEmailData = MutableLiveData<Resource<Boolean>>()
     private val updatePasswordData = MutableLiveData<Resource<Boolean>>()
+    private val recoverPasswordData = MutableLiveData<Resource<Boolean>>()
 
     override suspend fun createUser(
         email: String,
@@ -227,6 +230,21 @@ class UserRepositoryImpl : UserRepository {
             showGenericError(updatePasswordData)
         }
         return updatePasswordData
+    }
+
+    override suspend fun recoverPassword(): LiveData<Resource<Boolean>> {
+        recoverPasswordData.postValue(null)
+        val email = auth.currentUser?.email ?: ""
+        auth.sendPasswordResetEmail("luciadelcarmenfuentes@gmail.com").addOnCompleteListener {
+            if (it.isSuccessful) {
+                recoverPasswordData.value = Resource.success(true)
+            } else {
+                val exception = it.exception
+                recoverPasswordData.value =
+                    Resource.error(Error(serverErrorMessage = "No se ha podido enviar el correo de restablecimiento de contraseña"))
+            }
+        }
+        return recoverPasswordData
     }
 
     private fun updatePassword(currentUser: FirebaseUser, hashedPassword: String) {

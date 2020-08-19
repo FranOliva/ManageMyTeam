@@ -6,6 +6,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
@@ -16,7 +17,10 @@ import es.us.managemyteam.contract.BaseAdapterClickListener
 import es.us.managemyteam.data.model.EventBo
 import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.databinding.FragmentEventsBinding
-import es.us.managemyteam.extension.*
+import es.us.managemyteam.extension.setNavIcon
+import es.us.managemyteam.extension.setToolbarTitle
+import es.us.managemyteam.extension.show
+import es.us.managemyteam.extension.showErrorDialog
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.ResourceObserver
 import es.us.managemyteam.ui.adapter.EventsAdapter
@@ -55,6 +59,7 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(), BaseAdapterClickLi
             .observe(viewLifecycleOwner, object : ResourceObserver<UserBo>() {
                 override fun onSuccess(response: UserBo?) {
                     response?.let {
+                        eventsViewModel.getEvents()
                         setupButtonCreateEventVisibility(!it.isPlayer())
                     }
                 }
@@ -95,8 +100,7 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(), BaseAdapterClickLi
                 override fun onError(error: Error) {
                     super.onError(error)
                     showErrorDialog(
-                        getString(error.errorMessageId),
-                        getDefaultDialogErrorListener()
+                        getString(error.errorMessageId)
                     )
                 }
 
@@ -105,6 +109,23 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(), BaseAdapterClickLi
                     showLoader(loading)
                 }
             })
+
+        eventsViewModel.getRecoverPasswordData()
+            .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
+                override fun onSuccess(response: Boolean?) {
+                    response?.let {
+                        if (it) {
+                            Toast.makeText(context, "Correo enviado", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+
+                override fun onError(error: Error) {
+                    super.onError(error)
+                    showErrorDialog(error.serverErrorMessage ?: getString(error.errorMessageId))
+                }
+            })
+        eventsViewModel.recoverPassword()
 
     }
 
