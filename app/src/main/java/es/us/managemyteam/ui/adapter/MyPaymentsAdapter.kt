@@ -8,6 +8,8 @@ import es.us.managemyteam.data.model.PaymentBo
 import es.us.managemyteam.databinding.RowPaymentBinding
 import es.us.managemyteam.util.DateUtil
 
+const val DEFAULT_DATE_TIME_FORMAT = "dd/MM/yyyy HH:mm"
+
 class MyPaymentsAdapter :
     BaseAdapter<PaymentBo, RowPaymentBinding, MyPaymentsAdapter.MyPaymentsViewHolder>() {
 
@@ -34,7 +36,7 @@ class MyPaymentsAdapter :
             viewBinding.rowPaymentLabelDate.apply {
                 if (item.moment != null) {
                     this.visibility = VISIBLE
-                    this.text = DateUtil.format(item.moment!!)
+                    this.text = DateUtil.format(item.moment!!, DEFAULT_DATE_TIME_FORMAT)
                 } else {
                     this.visibility = GONE
                 }
