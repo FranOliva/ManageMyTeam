@@ -15,7 +15,6 @@ import es.us.managemyteam.data.database.DatabaseTables
 import es.us.managemyteam.data.model.Role
 import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.repository.util.Error
-import es.us.managemyteam.repository.util.PasswordUtil
 import es.us.managemyteam.repository.util.RepositoryUtil
 import es.us.managemyteam.repository.util.Resource
 
@@ -60,6 +59,8 @@ interface UserRepository {
         password: String
     ): LiveData<Resource<Boolean>>
 
+    suspend fun recoverPassword(email: String): LiveData<Resource<Boolean>>
+
 }
 
 class UserRepositoryImpl : UserRepository {
@@ -74,6 +75,7 @@ class UserRepositoryImpl : UserRepository {
     private val updateUserData = MutableLiveData<Resource<Boolean>>()
     private val updateEmailData = MutableLiveData<Resource<Boolean>>()
     private val updatePasswordData = MutableLiveData<Resource<Boolean>>()
+    private val recoverPasswordData = MutableLiveData<Resource<Boolean>>()
     private var currentUser: UserBo? = UserBo()
 
 
@@ -85,9 +87,8 @@ class UserRepositoryImpl : UserRepository {
         phoneNumber: String,
         role: Role
     ): LiveData<Resource<Boolean>> {
-        val hashedPassword = PasswordUtil.hashPassword(password)
 
-        auth.createUserWithEmailAndPassword(email, hashedPassword).addOnCompleteListener {
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
                 createUserFirebaseDatabase(name, surname, email, phoneNumber, role)
             } else {
@@ -102,9 +103,8 @@ class UserRepositoryImpl : UserRepository {
 
     override suspend fun login(email: String, password: String): LiveData<Resource<String>> {
         loginData.postValue(null)
-        val hashedPassword = PasswordUtil.hashPassword(password)
 
-        auth.signInWithEmailAndPassword(email, hashedPassword).addOnCompleteListener {
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
                 loginData.value = Resource.success(auth.currentUser?.uid)
             } else {
@@ -177,7 +177,7 @@ class UserRepositoryImpl : UserRepository {
         if (currentUser != null) {
             val credentials = EmailAuthProvider.getCredential(
                 currentUser.email!!,
-                PasswordUtil.hashPassword(currentPassword)
+                currentPassword
             )
             currentUser.reauthenticate(credentials).addOnCompleteListener {
                 if (it.isSuccessful) {
@@ -226,12 +226,11 @@ class UserRepositoryImpl : UserRepository {
         if (currentUser != null) {
             val credentials = EmailAuthProvider.getCredential(
                 currentUser.email!!,
-                PasswordUtil.hashPassword(currentPassword)
+                currentPassword
             )
             currentUser.reauthenticate(credentials).addOnCompleteListener {
                 if (it.isSuccessful) {
-                    val hashedPassword = PasswordUtil.hashPassword(password)
-                    updatePassword(currentUser, hashedPassword)
+                    updatePassword(currentUser, currentPassword)
                 } else {
                     updatePasswordData.value =
                         Resource.error(Error(errorMessageId = R.string.login_error_wrong_password))
@@ -241,6 +240,25 @@ class UserRepositoryImpl : UserRepository {
             showGenericError(updatePasswordData)
         }
         return updatePasswordData
+    }
+
+    override suspend fun recoverPassword(email: String): LiveData<Resource<Boolean>> {
+        recoverPasswordData.postValue(null)
+        auth.sendPasswordResetEmail(email).addOnCompleteListener {
+            if (it.isSuccessful) {
+                recoverPasswordData.value = Resource.success(true)
+            } else {
+                val errorMessage =
+                    if ((it.exception as FirebaseAuthException).errorCode == "ERROR_USER_NOT_FOUND") {
+                        "No existe ningún usuario que corresponda con el correo electrónico introducido. Es posible que haya solicitado acceso y este haya sido rechazado"
+                    } else {
+                        "No se ha podido enviar el correo de restablecimiento de contraseña"
+                    }
+                recoverPasswordData.value =
+                    Resource.error(Error(serverErrorMessage = errorMessage))
+            }
+        }
+        return recoverPasswordData
     }
 
     private fun updatePassword(currentUser: FirebaseUser, hashedPassword: String) {
