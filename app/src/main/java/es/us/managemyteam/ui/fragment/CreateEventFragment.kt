@@ -23,6 +23,7 @@ import es.us.managemyteam.databinding.FragmentCreateEventBinding
 import es.us.managemyteam.extension.*
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.ResourceObserver
+import es.us.managemyteam.ui.adapter.PlayerAdapter
 import es.us.managemyteam.ui.view.common_map.MapListener
 import es.us.managemyteam.ui.view.common_map.MarkerItemVo
 import es.us.managemyteam.ui.viewmodel.CreateEventViewModel
@@ -31,6 +32,8 @@ import es.us.managemyteam.util.EventUtil
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.Calendar.HOUR_OF_DAY
+import java.util.Calendar.MINUTE
 
 class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListener {
 
@@ -39,6 +42,7 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
     private val createEventViewModel: CreateEventViewModel by viewModel()
     private var locationSelected: LocationBo? = null
     private var currentNewEvent: EventBo = EventBo()
+    private val playersAdapter = PlayerAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -209,12 +213,21 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
     }
 
     private fun setupCurrentEvent(event: EventBo) {
+        val called = event.call?.called ?: arrayListOf()
         viewBinding.createEventEditTextTitle.setText(event.title)
         event.date?.let {
             viewBinding.createEventEditTextDate.setText(DateUtil.format(it))
         }
         viewBinding.createEventEditTextDescription.setText(event.description)
         viewBinding.createEventEditTextEventType.setText(event.eventType)
+        viewBinding.createEventListPlayers.adapter = playersAdapter
+        playersAdapter.setData(called)
+        playersAdapter.notifyDataSetChanged()
+        viewBinding.createEventListPlayers.visibility = if (called.isNotEmpty()) {
+            VISIBLE
+        } else {
+            GONE
+        }
     }
 
     private fun setCurrentEvent() {
@@ -372,7 +385,9 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
                             minute
                         )
                     )
-                }, 0, 0, true
+                }, Calendar.getInstance().get(HOUR_OF_DAY),
+                Calendar.getInstance().get(MINUTE),
+                true
             ).apply {
                 setCancelable(false)
                 show()

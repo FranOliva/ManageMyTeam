@@ -42,6 +42,8 @@
     <string name="create_event_select_call">Modifique la convocatoria</string>
     <string name="event_detail_announcement">Convocatoria</string>
     <string name="event_detail_location">Ver localización</string>
+    <string name="create_event_create_call">Crear convocatoria</string>
+
 
     <!-- User -->
     <string name="user">Usuario</string>
