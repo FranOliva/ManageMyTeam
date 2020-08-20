@@ -39,6 +39,7 @@
     <string name="create_event_success">Evento creado correctamente</string>
     <string name="create_event_select_location_error">Debe seleccionar una localización</string>
     <string name="create_event_select_call">Modifique la convocatoria</string>
+    <string name="create_event_create_call">Crear convocatoria</string>
 
 
     <!-- User -->
