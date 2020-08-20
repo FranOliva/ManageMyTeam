@@ -4,11 +4,15 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
 import es.us.managemyteam.contract.AcceptListener
+import es.us.managemyteam.data.model.CallStatus
 import es.us.managemyteam.data.model.EventBo
 import es.us.managemyteam.databinding.FragmentAcceptedCallsBinding
 import es.us.managemyteam.extension.*
@@ -24,7 +28,7 @@ class AcceptedCallFragment : BaseFragment<FragmentAcceptedCallsBinding>(), Accep
         fun newInstance() = AcceptedCallFragment()
     }
 
-    private val callAdapter = MyCallAdapter(this)
+    private val callAdapter = MyCallAdapter(this, CallStatus.ACCEPTED)
     private val acceptedCallViewModel: AcceptedCallViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,6 +39,12 @@ class AcceptedCallFragment : BaseFragment<FragmentAcceptedCallsBinding>(), Accep
     }
 
     private fun setupList() {
+        viewBinding.acceptedCallsListCalls.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
         viewBinding.acceptedCallsListCalls.adapter = callAdapter
     }
 
@@ -44,9 +54,7 @@ class AcceptedCallFragment : BaseFragment<FragmentAcceptedCallsBinding>(), Accep
                 .observe(it, object : ResourceObserver<Boolean>() {
                     override fun onSuccess(response: Boolean?) {
                         response?.let {
-                            if (userVisibleHint) {
-                                showInformationDialog("Tu respuesta se envió con éxito")
-                            }
+                            showInformationDialog("Tu respuesta se envió con éxito")
                         }
                     }
 
@@ -56,9 +64,7 @@ class AcceptedCallFragment : BaseFragment<FragmentAcceptedCallsBinding>(), Accep
 
                     override fun onError(error: Error) {
                         super.onError(error)
-                        if (userVisibleHint) {
-                            showErrorDialog(getString(error.errorMessageId))
-                        }
+                        showErrorDialog(getString(error.errorMessageId))
                     }
                 })
         }
@@ -74,6 +80,11 @@ class AcceptedCallFragment : BaseFragment<FragmentAcceptedCallsBinding>(), Accep
                 response?.let { list ->
                     callAdapter.setData(list)
                     callAdapter.notifyDataSetChanged()
+                    viewBinding.acceptedCallsEmptyResults.root.visibility = if (list.isEmpty()) {
+                        VISIBLE
+                    } else {
+                        GONE
+                    }
                 }
             }
 

@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
 import es.us.managemyteam.contract.AcceptListener
+import es.us.managemyteam.data.model.CallStatus
 import es.us.managemyteam.data.model.EventBo
 import es.us.managemyteam.databinding.FragmentRejectedCallsBinding
 import es.us.managemyteam.extension.*
@@ -24,7 +26,7 @@ class RejectCallFragment : BaseFragment<FragmentRejectedCallsBinding>(), AcceptL
         fun newInstance() = RejectCallFragment()
     }
 
-    private val callAdapter = MyCallAdapter(this)
+    private val callAdapter = MyCallAdapter(this, CallStatus.DENIED)
     private val rejectedCallViewModel: RejectedCallViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,6 +37,12 @@ class RejectCallFragment : BaseFragment<FragmentRejectedCallsBinding>(), AcceptL
     }
 
     private fun setupList() {
+        viewBinding.rejectedCallsListCalls.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
         viewBinding.rejectedCallsListCalls.adapter = callAdapter
     }
 
@@ -44,9 +52,7 @@ class RejectCallFragment : BaseFragment<FragmentRejectedCallsBinding>(), AcceptL
                 .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
                     override fun onSuccess(response: Boolean?) {
                         response?.let {
-                            if (userVisibleHint) {
-                                showInformationDialog("Tu respuesta se envió con éxito")
-                            }
+                            showInformationDialog("Tu respuesta se envió con éxito")
                         }
                     }
 
@@ -56,9 +62,7 @@ class RejectCallFragment : BaseFragment<FragmentRejectedCallsBinding>(), AcceptL
 
                     override fun onError(error: Error) {
                         super.onError(error)
-                        if (userVisibleHint) {
-                            showErrorDialog(getString(error.errorMessageId))
-                        }
+                        showErrorDialog(getString(error.errorMessageId))
                     }
                 })
         }
@@ -75,6 +79,12 @@ class RejectCallFragment : BaseFragment<FragmentRejectedCallsBinding>(), AcceptL
                     response?.let { list ->
                         callAdapter.setData(list)
                         callAdapter.notifyDataSetChanged()
+                        viewBinding.rejectedCallsEmptyResults.root.visibility =
+                            if (list.isEmpty()) {
+                                View.VISIBLE
+                            } else {
+                                View.GONE
+                            }
                     }
                 }
 

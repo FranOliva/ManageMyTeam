@@ -23,6 +23,7 @@
         android:id="@+id/constraintLayout"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:orientation="horizontal"
         android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +33,7 @@
             android:id="@+id/row_call__btn__refuse"
             android:layout_width="@dimen/size_fourty"
             android:layout_height="@dimen/size_fourty"
-            android:layout_marginEnd="@dimen/size_sixteen"
+            android:layout_gravity="end|center_vertical"
             android:background="@drawable/button_circle_bg"
             android:foreground="?attr/selectableItemBackgroundBorderless"
             android:padding="@dimen/size_ten">
@@ -58,6 +59,8 @@
             android:id="@+id/row_call__btn__accept"
             android:layout_width="@dimen/size_fourty"
             android:layout_height="@dimen/size_fourty"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginStart="@dimen/size_sixteen"
             android:background="@drawable/button_circle_bg"
             android:foreground="?attr/selectableItemBackgroundBorderless"
             android:padding="@dimen/size_ten">

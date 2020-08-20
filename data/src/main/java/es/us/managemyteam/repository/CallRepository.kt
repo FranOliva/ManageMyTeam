@@ -164,6 +164,7 @@ class CallRepositoryImpl : CallRepository {
                 )
 
                 callAcceptedPendingData.value = Resource.success(true)
+                callRef.removeEventListener(this)
 
             }
         })
@@ -201,6 +202,7 @@ class CallRepositoryImpl : CallRepository {
                 )
 
                 callRejectedPendingData.value = Resource.success(true)
+                callRef.removeEventListener(this)
 
             }
         })
@@ -235,7 +237,7 @@ class CallRepositoryImpl : CallRepository {
                 )
 
                 callAcceptedRejectData.value = Resource.success(true)
-
+                callRef.removeEventListener(this)
             }
         })
 
@@ -272,6 +274,7 @@ class CallRepositoryImpl : CallRepository {
                 )
 
                 callRejectedAcceptData.value = Resource.success(true)
+                callRef.removeEventListener(this)
 
             }
         })

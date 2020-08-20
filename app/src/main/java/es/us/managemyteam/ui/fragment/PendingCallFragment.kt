@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
 import es.us.managemyteam.contract.AcceptListener
+import es.us.managemyteam.data.model.CallStatus
 import es.us.managemyteam.data.model.EventBo
 import es.us.managemyteam.databinding.FragmentPendingCallsBinding
 import es.us.managemyteam.extension.*
@@ -25,7 +27,7 @@ class PendingCallFragment : BaseFragment<FragmentPendingCallsBinding>(), AcceptL
         fun newInstance() = PendingCallFragment()
     }
 
-    private val callAdapter = MyCallAdapter(this)
+    private val callAdapter = MyCallAdapter(this, CallStatus.PENDING)
     private val pendingCallViewModel: PendingCallViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,6 +40,12 @@ class PendingCallFragment : BaseFragment<FragmentPendingCallsBinding>(), AcceptL
 
 
     private fun setupList() {
+        viewBinding.pendingCallsListCalls.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
         viewBinding.pendingCallsListCalls.adapter = callAdapter
     }
 
@@ -69,17 +77,13 @@ class PendingCallFragment : BaseFragment<FragmentPendingCallsBinding>(), AcceptL
                 .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
                     override fun onSuccess(response: Boolean?) {
                         response?.let {
-                            if (userVisibleHint) {
-                                showInformationDialog("Tu respuesta se envió con éxito")
-                            }
+                            showInformationDialog("Tu respuesta se envió con éxito")
                         }
                     }
 
                     override fun onError(error: Error) {
                         super.onError(error)
-                        if (userVisibleHint) {
-                            showErrorDialog(getString(error.errorMessageId))
-                        }
+                        showErrorDialog(getString(error.errorMessageId))
                     }
                 })
         }
@@ -95,6 +99,11 @@ class PendingCallFragment : BaseFragment<FragmentPendingCallsBinding>(), AcceptL
                     response?.let { list ->
                         callAdapter.setData(list)
                         callAdapter.notifyDataSetChanged()
+                        viewBinding.pendingCallsEmptyResults.root.visibility = if (list.isEmpty()) {
+                            View.VISIBLE
+                        } else {
+                            View.GONE
+                        }
                     }
                 }
 
