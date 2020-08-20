@@ -10,6 +10,10 @@ import kotlinx.coroutines.withContext
 class MenuViewModel(getUserUc: GetUserUc, private val logoutUc: LogoutUc) :
     BaseLoggedViewModel(getUserUc) {
 
+    init {
+        getUser()
+    }
+
     fun logout() {
         viewModelScope.launch(Dispatchers.Main) {
             withContext(Dispatchers.IO) {

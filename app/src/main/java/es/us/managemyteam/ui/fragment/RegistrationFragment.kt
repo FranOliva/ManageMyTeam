@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
 import es.us.managemyteam.data.model.Role
@@ -31,6 +32,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
             .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
                 override fun onSuccess(response: Boolean?) {
                     showInformationDialog(getString(R.string.user_created_successfully))
+                    popBack()
                 }
 
                 override fun onError(error: Error) {
@@ -55,6 +57,9 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
         }
         viewBinding.registrationBtnSendRequest.setOnClickListener {
             clickOnAcceptRegister()
+        }
+        viewBinding.registrationCheckboxLink.setOnClickListener {
+            findNavController().navigate(R.id.action_registration_to_terms_and_conditions)
         }
     }
 

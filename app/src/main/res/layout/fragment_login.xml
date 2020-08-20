@@ -45,9 +45,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/size_twenty"
-        android:layout_marginTop="@dimen/size_fourty"
         android:layout_marginEnd="@dimen/size_twenty"
-        android:layout_marginBottom="@dimen/size_twenty"
         android:background="@drawable/background_rounded_white"
         android:padding="@dimen/size_fourty"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -93,6 +91,27 @@
             app:layout_constraintTop_toBottomOf="@id/login__edit_text__password" />
 
         <TextView
+            android:id="@+id/login__label__go_to_recover_password"
+            style="@style/Regular.Fourteen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_thirty"
+            android:gravity="center_horizontal"
+            android:text="He olvidado mi contraseña"
+            android:textColor="@color/dark_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login__btn__enter" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_one"
+            android:background="@color/dark_gray"
+            app:layout_constraintEnd_toEndOf="@id/login__label__go_to_recover_password"
+            app:layout_constraintStart_toStartOf="@id/login__label__go_to_recover_password"
+            app:layout_constraintTop_toBottomOf="@id/login__label__go_to_recover_password" />
+
+        <TextView
             android:id="@+id/login__label__go_to_registration"
             style="@style/Regular.Sixteen"
             android:layout_width="wrap_content"
@@ -103,7 +122,7 @@
             android:textColor="@color/dark_gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/login__btn__enter" />
+            app:layout_constraintTop_toBottomOf="@id/login__label__go_to_recover_password" />
 
         <TextView
             android:id="@+id/login__label__go_to_registration_here"

@@ -1,7 +1,6 @@
 package es.us.managemyteam.ui.viewmodel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import es.us.managemyteam.data.model.EventBo
 import es.us.managemyteam.repository.util.Resource
@@ -18,10 +17,6 @@ class EventsViewModel(
 ) : BaseLoggedViewModel(getUserUc) {
 
     private val events: CustomMediatorLiveData<Resource<List<EventBo>>> = CustomMediatorLiveData()
-
-    init {
-        getEvents()
-    }
 
     fun getEvents() {
         viewModelScope.launch(Dispatchers.Main) {

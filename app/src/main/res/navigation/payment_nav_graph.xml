@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/payment_nav_graph"
+    app:startDestination="@id/myPaymentsFragment">
+
+    <fragment
+        android:id="@+id/myPaymentsFragment"
+        android:name="es.us.managemyteam.ui.fragment.MyPaymentsFragment" />
+
+    <fragment
+        android:id="@+id/createPaymentFragment"
+        android:name="es.us.managemyteam.ui.fragment.CreatePaymentFragment" />
+
+    <action
+        android:id="@+id/action_my_payments_to_create_payment"
+        app:destination="@id/createPaymentFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+</navigation>

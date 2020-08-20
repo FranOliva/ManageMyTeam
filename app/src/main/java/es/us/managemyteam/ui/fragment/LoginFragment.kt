@@ -6,12 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
 import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.databinding.FragmentLoginBinding
+import es.us.managemyteam.extension.getFocusedView
 import es.us.managemyteam.extension.hide
+import es.us.managemyteam.extension.hideKeyboard
 import es.us.managemyteam.extension.showErrorDialog
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.ResourceObserver
@@ -40,6 +43,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     private fun setupViews() {
         viewBinding.loginLabelGoToRegistrationHere.setOnClickListener {
             findNavController().navigate(R.id.action_login_to_registration)
+        }
+
+        viewBinding.loginLabelGoToRecoverPassword.setOnClickListener {
+            findNavController().navigate(R.id.action_login_to_recover_password)
         }
     }
 
@@ -75,7 +82,18 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             .observe(viewLifecycleOwner, object : ResourceObserver<UserBo>() {
                 override fun onSuccess(response: UserBo?) {
                     response?.let {
-                        findNavController().navigate(R.id.action_login_to_events)
+                        if (it.isStaff() && it.enable == false) {
+                            findNavController().navigate(
+                                R.id.action_login_to_update_password, bundleOf(
+                                    Pair(
+                                        getString(R.string.argument__edit_password__is_staff_first_time),
+                                        true
+                                    )
+                                )
+                            )
+                        } else {
+                            findNavController().navigate(R.id.action_login_to_events)
+                        }
                     }
                 }
 
@@ -91,6 +109,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         viewBinding.loginBtnEnter.setOnClickListener {
             val email = viewBinding.loginEditTextEmail.text.trim()
             val password = viewBinding.loginEditTextPassword.text.trim()
+
+            getFocusedView().hideKeyboard()
 
             loginViewModel.login(email, password)
         }

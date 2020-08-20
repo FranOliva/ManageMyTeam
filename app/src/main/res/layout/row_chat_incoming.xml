@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/rowChatIncomingImg"
         app:cardBackgroundColor="@color/primary"
-        app:cardCornerRadius="0dp"
+        app:cardCornerRadius="@dimen/size_four"
         app:contentPadding="@dimen/size_sixteen">
 
         <RelativeLayout

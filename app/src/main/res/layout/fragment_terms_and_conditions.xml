@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pale_grey"
+    android:padding="@dimen/size_sixteen">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/terms_and_conditions__img__back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_twenty"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_back" />
+
+    <TextView
+        style="@style/Bold.Twenty.Black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_twenty"
+        android:text="@string/terms_and_conditions_title"
+        app:layout_constraintBottom_toBottomOf="@id/terms_and_conditions__img__back"
+        app:layout_constraintStart_toEndOf="@id/terms_and_conditions__img__back"
+        app:layout_constraintTop_toTopOf="@id/terms_and_conditions__img__back" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:padding="@dimen/size_ten"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@+id/terms_and_conditions__img__back"
+        tools:layout_editor_absoluteX="16dp">
+
+        <TextView
+            style="@style/Medium.Eighteen.Black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/terms_and_conditions_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/terms_and_conditions__img__back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

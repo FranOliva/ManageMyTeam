@@ -24,6 +24,10 @@ buildscript {
         google_playservices_version = '17.0.0'
 
         koin_version = '2.1.5'
+
+        progress_image_version = '0.0.2'
+
+        paypal_version = '2.16.0'
     }
     repositories {
         google()
