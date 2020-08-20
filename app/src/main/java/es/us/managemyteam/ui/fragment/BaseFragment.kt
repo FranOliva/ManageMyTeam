@@ -58,7 +58,12 @@ abstract class BaseFragment<Any : ViewBinding> : Fragment() {
 
     private fun setupMenuViews() {
         if (activity is MainActivity) {
-            activity?.findViewById<View>(R.id.main__view__toolbar_shadow)?.visibility = View.VISIBLE
+            activity?.findViewById<View>(R.id.main__view__toolbar_shadow)?.visibility =
+                if (this is LoginFragment) {
+                    View.GONE
+                } else {
+                    View.VISIBLE
+                }
             setupToolbar((activity as MainActivity).getToolbar().apply { setNavAction { } })
             setupBottomBar((activity as MainActivity).getBottomBar())
         }

@@ -3,6 +3,8 @@ package es.us.managemyteam.ui.fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -11,6 +13,7 @@ import es.us.managemyteam.data.model.EventBo
 import es.us.managemyteam.databinding.FragmentEventDetailBinding
 import es.us.managemyteam.extension.*
 import es.us.managemyteam.repository.util.ResourceObserver
+import es.us.managemyteam.ui.adapter.PlayerAdapter
 import es.us.managemyteam.ui.viewmodel.EventDetailViewModel
 import es.us.managemyteam.util.DateUtil
 import es.us.managemyteam.util.PermissionUtil
@@ -21,14 +24,16 @@ private val PERMISSIONS = arrayOf(android.Manifest.permission.WRITE_CALENDAR)
 class EventDetailFragment : BaseFragment<FragmentEventDetailBinding>() {
 
     private val eventDetailViewModel: EventDetailViewModel by viewModel()
+    private val playersAdapter = PlayerAdapter()
     private var currentEvent: EventBo? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupList()
+        setupClickListeners()
         arguments?.getString(getString(R.string.navigation_event__uuid__argument))?.let {
             setupEventDetailObserver(it)
         }
-        setupClickListeners()
     }
 
     override fun onRequestPermissionsResult(
@@ -40,6 +45,10 @@ class EventDetailFragment : BaseFragment<FragmentEventDetailBinding>() {
         if (PermissionUtil.isPermissionGranted(requestCode, grantResults)) {
             saveEvent()
         }
+    }
+
+    private fun setupList() {
+        viewBinding.eventDetailListCalled.adapter = playersAdapter
     }
 
     private fun setupClickListeners() {
@@ -92,12 +101,25 @@ class EventDetailFragment : BaseFragment<FragmentEventDetailBinding>() {
 
     private fun setupView(event: EventBo) {
         viewBinding.apply {
+            val called = event.call?.called ?: arrayListOf()
             eventDetailLabelTitle.text = event.title
             event.date?.let {
                 eventDetailLabelDate.text = DateUtil.format(it)
             }
             eventDetailLabelType.text = event.eventType
             eventDetailLabelBody.text = event.description
+            playersAdapter.setData(called)
+            playersAdapter.notifyDataSetChanged()
+            if (called.isNotEmpty()) {
+                viewBinding.eventDetailListCalled.visibility = VISIBLE
+                viewBinding.eventDetailLabelCalled.visibility = VISIBLE
+            } else {
+                viewBinding.eventDetailListCalled.visibility = GONE
+                viewBinding.eventDetailLabelCalled.visibility = GONE
+            }
+            if (event.location == null) {
+                viewBinding.eventDetailBtnGoToLocation.visibility = GONE
+            }
         }
     }
 

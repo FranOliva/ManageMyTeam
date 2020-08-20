@@ -16,7 +16,6 @@ import es.us.managemyteam.data.model.RegistrationBo
 import es.us.managemyteam.data.model.Role
 import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.repository.util.Error
-import es.us.managemyteam.repository.util.PasswordUtil
 import es.us.managemyteam.repository.util.RepositoryUtil
 import es.us.managemyteam.repository.util.Resource
 
@@ -61,9 +60,8 @@ interface UserRepository {
         password: String
     ): LiveData<Resource<Boolean>>
 
-    suspend fun areTermsChecked(): Boolean
+    suspend fun recoverPassword(email: String): LiveData<Resource<Boolean>>
 
-    suspend fun setTermsChecked(checked: Boolean)
 }
 
 class UserRepositoryImpl : UserRepository {
@@ -81,6 +79,7 @@ class UserRepositoryImpl : UserRepository {
     private var currentUser: RegistrationBo? = RegistrationBo()
     private var termsChecked = false
 
+    private val recoverPasswordData = MutableLiveData<Resource<Boolean>>()
 
     override suspend fun createUser(
         email: String,
@@ -90,9 +89,8 @@ class UserRepositoryImpl : UserRepository {
         phoneNumber: String,
         role: Role
     ): LiveData<Resource<Boolean>> {
-        val hashedPassword = PasswordUtil.hashPassword(password)
 
-        auth.createUserWithEmailAndPassword(email, hashedPassword).addOnCompleteListener {
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
                 createUserFirebaseDatabase(name, surname, email, phoneNumber, role)
             } else {
@@ -107,9 +105,8 @@ class UserRepositoryImpl : UserRepository {
 
     override suspend fun login(email: String, password: String): LiveData<Resource<String>> {
         loginData.postValue(null)
-        val hashedPassword = PasswordUtil.hashPassword(password)
 
-        auth.signInWithEmailAndPassword(email, hashedPassword).addOnCompleteListener {
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
                 loginData.value = Resource.success(auth.currentUser?.uid)
             } else {
@@ -182,7 +179,7 @@ class UserRepositoryImpl : UserRepository {
         if (currentUser != null) {
             val credentials = EmailAuthProvider.getCredential(
                 currentUser.email!!,
-                PasswordUtil.hashPassword(currentPassword)
+                currentPassword
             )
             currentUser.reauthenticate(credentials).addOnCompleteListener {
                 if (it.isSuccessful) {
@@ -231,12 +228,11 @@ class UserRepositoryImpl : UserRepository {
         if (currentUser != null) {
             val credentials = EmailAuthProvider.getCredential(
                 currentUser.email!!,
-                PasswordUtil.hashPassword(currentPassword)
+                currentPassword
             )
             currentUser.reauthenticate(credentials).addOnCompleteListener {
                 if (it.isSuccessful) {
-                    val hashedPassword = PasswordUtil.hashPassword(password)
-                    updatePassword(currentUser, hashedPassword)
+                    updatePassword(currentUser, currentPassword)
                 } else {
                     updatePasswordData.value =
                         Resource.error(Error(errorMessageId = R.string.login_error_wrong_password))
@@ -248,17 +244,49 @@ class UserRepositoryImpl : UserRepository {
         return updatePasswordData
     }
 
-    override suspend fun areTermsChecked(): Boolean {
-        return termsChecked
+    override suspend fun recoverPassword(email: String): LiveData<Resource<Boolean>> {
+        recoverPasswordData.postValue(null)
+        userTable.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                recoverPasswordData.value =
+                    Resource.error(Error(R.string.unknown_error))
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userEmails =
+                    snapshot.children.mapNotNull { it.getValue(UserBo::class.java) }
+                        .filter { it.enable == false }.map { email }
+                if (userEmails.contains(email)) {
+                    recoverPasswordData.value =
+                        Resource.error(Error(R.string.login_error_user_not_activated))
+                } else {
+                    resetPassword(email)
+                }
+            }
+        })
+        return recoverPasswordData
     }
 
-    override suspend fun setTermsChecked(checked: Boolean) {
-        termsChecked = checked
+    private fun resetPassword(email: String) {
+        auth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                recoverPasswordData.value = Resource.success(true)
+            } else {
+                val errorMessage =
+                    if ((task.exception as FirebaseAuthException).errorCode == "ERROR_USER_NOT_FOUND") {
+                        "No existe ningún usuario que corresponda con el correo electrónico introducido. Es posible que haya solicitado acceso y este haya sido rechazado"
+                    } else {
+                        "No se ha podido enviar el correo de restablecimiento de contraseña"
+                    }
+                recoverPasswordData.value =
+                    Resource.error(Error(serverErrorMessage = errorMessage))
+            }
+        }
     }
 
-    private fun updatePassword(currentUser: FirebaseUser, hashedPassword: String) {
+    private fun updatePassword(currentUser: FirebaseUser, password: String) {
         updatePasswordData.postValue(null)
-        currentUser.updatePassword(hashedPassword)
+        currentUser.updatePassword(password)
             .addOnCompleteListener { passwordTask ->
                 if (passwordTask.isSuccessful) {
                     updatePasswordData.value = Resource.success(true)

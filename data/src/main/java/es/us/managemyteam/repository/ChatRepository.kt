@@ -55,7 +55,8 @@ class ChatRepositoryImpl : ChatRepository {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 chat.value =
-                    Resource.success(dataSnapshot.children.mapNotNull { it.getValue(MessageBo::class.java) })
+                    Resource.success(dataSnapshot.children.mapNotNull { it.getValue(MessageBo::class.java) }
+                        .sortedBy { it.date.time })
             }
 
         })

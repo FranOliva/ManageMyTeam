@@ -28,30 +28,31 @@ class VerticalMenuView @JvmOverloads constructor(
     private val menuViewModel: MenuViewModel by (context as AppCompatActivity).viewModel()
     private var userIsAdmin = false
 
-    override fun onFinishInflate() {
-        super.onFinishInflate()
-        setupUserIsAdminObserver()
+    fun initialize(activity: MainActivity) {
+        setupUserIsAdminObserver(activity)
     }
 
-    private fun setupUserIsAdminObserver() {
-        getBaseActivity()?.let {
-            menuViewModel.getUserData().observe(it,
-                object : ResourceObserver<UserBo>() {
-                    override fun onSuccess(response: UserBo?) {
-                        response?.let { user ->
-                            userIsAdmin = user.isAdmin()
-                            setupMenuList(userIsAdmin, user.isStaff())
-                        }
-                    }
+    fun refresh() {
+        menuViewModel.getUser()
+    }
 
-                    override fun onError(error: es.us.managemyteam.repository.util.Error) {
-                        super.onError(error)
-                        userIsAdmin = false
-                        setupMenuList(userIsAdmin, false)
+    private fun setupUserIsAdminObserver(activity: MainActivity) {
+        menuViewModel.getUserData().observe(activity,
+            object : ResourceObserver<UserBo>() {
+                override fun onSuccess(response: UserBo?) {
+                    response?.let { user ->
+                        userIsAdmin = user.isAdmin()
+                        setupMenuList(userIsAdmin, user.isStaff())
                     }
-                })
-            menuViewModel.getUser()
-        }
+                }
+
+                override fun onError(error: es.us.managemyteam.repository.util.Error) {
+                    super.onError(error)
+                    userIsAdmin = false
+                    setupMenuList(userIsAdmin, false)
+                }
+            })
+        menuViewModel.getUser()
 
     }
 
@@ -59,7 +60,13 @@ class VerticalMenuView @JvmOverloads constructor(
         viewBinding.verticalMenuListOption.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         viewBinding.verticalMenuListOption.adapter =
-            VerticalMenuAdapter(VerticalMenuVO.getDefaultMenu(context, userIsAdmin, userIsStaff)).apply {
+            VerticalMenuAdapter(
+                VerticalMenuVO.getDefaultMenu(
+                    context,
+                    userIsAdmin,
+                    userIsStaff
+                )
+            ).apply {
                 setItemClickListener(this@VerticalMenuView)
             }
     }

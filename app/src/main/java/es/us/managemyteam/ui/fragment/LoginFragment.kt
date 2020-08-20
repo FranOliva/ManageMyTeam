@@ -12,10 +12,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
 import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.databinding.FragmentLoginBinding
+import es.us.managemyteam.extension.getFocusedView
 import es.us.managemyteam.extension.hide
+import es.us.managemyteam.extension.hideKeyboard
 import es.us.managemyteam.extension.showErrorDialog
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.ResourceObserver
+import es.us.managemyteam.ui.activity.MainActivity
 import es.us.managemyteam.ui.viewmodel.LoginViewModel
 import es.us.managemyteam.util.FirebaseAuthUtil
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -42,6 +45,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         viewBinding.loginLabelGoToRegistrationHere.setOnClickListener {
             findNavController().navigate(R.id.action_login_to_registration)
         }
+
+        viewBinding.loginLabelGoToRecoverPassword.setOnClickListener {
+            findNavController().navigate(R.id.action_login_to_recover_password)
+        }
     }
 
     private fun setupBackPressed() {
@@ -56,6 +63,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             .observe(viewLifecycleOwner, object : ResourceObserver<String>() {
                 override fun onSuccess(response: String?) {
                     response?.let {
+                        (activity as MainActivity).refresh()
                         loginViewModel.getUser(it)
                     }
                 }
@@ -103,6 +111,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         viewBinding.loginBtnEnter.setOnClickListener {
             val email = viewBinding.loginEditTextEmail.text.trim()
             val password = viewBinding.loginEditTextPassword.text.trim()
+
+            getFocusedView().hideKeyboard()
 
             loginViewModel.login(email, password)
         }

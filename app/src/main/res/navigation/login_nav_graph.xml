@@ -8,6 +8,10 @@
         android:id="@+id/loginFragment"
         android:name="es.us.managemyteam.ui.fragment.LoginFragment" />
 
+    <fragment
+        android:id="@+id/recoverPasswordFragment"
+        android:name="es.us.managemyteam.ui.fragment.RecoverPasswordFragment" />
+
     <action
         android:id="@+id/action_login_to_events"
         app:destination="@+id/events_nav_graph"
@@ -20,6 +24,14 @@
     <action
         android:id="@+id/action_login_to_registration"
         app:destination="@+id/registration_nav_graph"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:launchSingleTop="true"
+        app:popUpTo="@id/loginFragment" />
+
+    <action
+        android:id="@+id/action_login_to_recover_password"
+        app:destination="@+id/recoverPasswordFragment"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim"
         app:launchSingleTop="true"

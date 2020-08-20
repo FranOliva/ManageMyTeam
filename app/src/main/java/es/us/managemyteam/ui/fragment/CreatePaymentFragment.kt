@@ -43,7 +43,7 @@ class CreatePaymentFragment : BaseFragment<FragmentCreatePaymentBinding>() {
 
                 override fun onError(error: Error) {
                     super.onError(error)
-                    showErrorDialog(getString(error.errorMessageId))
+                    showErrorDialog(error.serverErrorMessage ?: getString(error.errorMessageId))
                 }
 
             })

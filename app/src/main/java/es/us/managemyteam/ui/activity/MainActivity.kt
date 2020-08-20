@@ -2,7 +2,6 @@ package es.us.managemyteam.ui.activity
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -13,6 +12,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import es.us.managemyteam.R
 import es.us.managemyteam.databinding.ActivityMainBinding
+import es.us.managemyteam.extension.onNavigationItemSelected
 import es.us.managemyteam.ui.view.verticalnavigation.NeedCloseDrawerListener
 
 class MainActivity : AppCompatActivity() {
@@ -34,6 +34,10 @@ class MainActivity : AppCompatActivity() {
         setupSliderNavigationMenu()
     }
 
+    fun refresh() {
+        viewBinding.mainNavigationMenu.getVerticalMenuView().refresh()
+    }
+
     private fun setupToolbar() {
         setSupportActionBar(getToolbar())
         supportActionBar?.apply {
@@ -47,13 +51,12 @@ class MainActivity : AppCompatActivity() {
         getBottomBar().apply {
             setOnNavigationItemSelectedListener {
                 when (it.itemId) {
-                    R.id.action_events -> getNavGraph().navigate(R.id.action_menu_to_events)
-                    R.id.action_chat -> getNavGraph().navigate((R.id.action_menu_to_chat))
-                    R.id.action_profile -> getNavGraph().navigate(R.id.action_menu_to_profile)
-                    R.id.action_menu -> viewBinding.dashboardDrawerMain.openDrawer(
-                        GravityCompat.END
-                    )
-                    else -> Log.d("", "No action found for this id")
+                    R.id.action_menu -> {
+                        viewBinding.dashboardDrawerMain.openDrawer(
+                            GravityCompat.END
+                        )
+                    }
+                    else -> this.onNavigationItemSelected(it.itemId)
                 }
                 true
             }
@@ -61,6 +64,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupSliderNavigationMenu() {
+        viewBinding.mainNavigationMenu.getVerticalMenuView().initialize(this)
         viewBinding.dashboardDrawerMain.setScrimColor(Color.TRANSPARENT)
         viewBinding.dashboardDrawerMain.drawerElevation = 0f
         viewBinding.dashboardDrawerMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
