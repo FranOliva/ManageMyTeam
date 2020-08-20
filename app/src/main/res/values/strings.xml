@@ -145,4 +145,11 @@
 
     <string name="my_team_title">Plantilla</string>
 
+    <!-- Calls -->
+
+    <string name="calls">Mis convocatorias</string>
+    <string name="my_calls_pending">Pendientes</string>
+    <string name="my_calls_accepted">Aceptadas</string>
+    <string name="my_calls_rejected">Rechazadas</string>
+
 </resources>

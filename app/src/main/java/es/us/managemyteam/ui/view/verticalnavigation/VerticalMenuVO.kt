@@ -28,6 +28,11 @@ data class VerticalMenuVO(val id: VerticalMenuId, val title: String, val icon: I
                 context.resources.getString(R.string.my_team_title),
                 R.drawable.ic_team
             )
+            val call = VerticalMenuVO(
+                VerticalMenuId.MY_CALLS_ID,
+                context.resources.getString(R.string.calls),
+                R.drawable.ic_call
+            )
             val logout = VerticalMenuVO(
                 VerticalMenuId.LOGOUT_ID,
                 "Cerrar sesión",
@@ -47,6 +52,10 @@ data class VerticalMenuVO(val id: VerticalMenuId, val title: String, val icon: I
 
             if (isAdmin || isStaff) {
                 verticalMenuList.add(team)
+            }
+
+            if (!isStaff) {
+                verticalMenuList.add(call)
             }
 
             if (!isAdmin) {
