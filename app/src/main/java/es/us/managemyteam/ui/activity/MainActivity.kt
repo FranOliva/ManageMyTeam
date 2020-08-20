@@ -12,6 +12,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import es.us.managemyteam.R
 import es.us.managemyteam.databinding.ActivityMainBinding
+import es.us.managemyteam.extension.onNavigationItemSelected
 import es.us.managemyteam.ui.view.verticalnavigation.NeedCloseDrawerListener
 
 class MainActivity : AppCompatActivity() {
@@ -46,27 +47,14 @@ class MainActivity : AppCompatActivity() {
         getBottomBar().apply {
             setOnNavigationItemSelectedListener {
                 when (it.itemId) {
-                    selectedItemId -> false
-                    R.id.action_events -> {
-                        getNavGraph().navigate(R.id.action_menu_to_events)
-                        true
-                    }
-                    R.id.action_chat -> {
-                        getNavGraph().navigate((R.id.action_menu_to_chat))
-                        true
-                    }
-                    R.id.action_profile -> {
-                        getNavGraph().navigate(R.id.action_menu_to_profile)
-                        true
-                    }
                     R.id.action_menu -> {
                         viewBinding.dashboardDrawerMain.openDrawer(
                             GravityCompat.END
                         )
-                        true
                     }
-                    else -> false
+                    else -> this.onNavigationItemSelected(it.itemId)
                 }
+                true
             }
         }
     }
