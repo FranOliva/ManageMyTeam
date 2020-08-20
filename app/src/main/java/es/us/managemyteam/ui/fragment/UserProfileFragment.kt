@@ -26,6 +26,7 @@ class UserProfileFragment : BaseFragment<FragmentUserProfileBinding>() {
     private val userProfileViewModel: UserProfileViewModel by viewModel()
     private var userIsLogged = false
     private var userIsPlayer = false
+    private var userId: String? = null
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             activity?.finish()
@@ -34,7 +35,7 @@ class UserProfileFragment : BaseFragment<FragmentUserProfileBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val userId = arguments?.getString(getString(R.string.argument__user_uuid))
+        userId = arguments?.getString(getString(R.string.argument__user_uuid))
 
         if (userId == null) {
             viewBinding.userContainerEdit.visibility = VISIBLE
@@ -121,9 +122,13 @@ class UserProfileFragment : BaseFragment<FragmentUserProfileBinding>() {
     override fun setupToolbar(toolbar: Toolbar) {
         toolbar.apply {
             setToolbarTitle(getString(R.string.user_profile))
-            setNavIcon(ContextCompat.getDrawable(context, R.drawable.ic_back))
-            setNavAction {
-                popBack()
+            if (userId == null) {
+                setNavIcon(null)
+            } else {
+                setNavIcon(ContextCompat.getDrawable(context, R.drawable.ic_back))
+                setNavAction {
+                    popBack()
+                }
             }
             show()
         }
