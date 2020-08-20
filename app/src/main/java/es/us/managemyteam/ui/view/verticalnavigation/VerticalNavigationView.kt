@@ -18,6 +18,8 @@ class VerticalNavigationView @JvmOverloads constructor(
         viewBinding.verticalNavigationContainerMenu.setNeedCloseDrawerListener(needListener)
     }
 
+    fun getVerticalMenuView() = viewBinding.verticalNavigationContainerMenu
+
     fun notifyUserChanged() {
         //viewBinding.verticalNavigationContainerMenu.notifyUserChanged()
     }

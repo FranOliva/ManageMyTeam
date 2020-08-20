@@ -34,6 +34,10 @@ class MainActivity : AppCompatActivity() {
         setupSliderNavigationMenu()
     }
 
+    fun refresh() {
+        viewBinding.mainNavigationMenu.getVerticalMenuView().refresh()
+    }
+
     private fun setupToolbar() {
         setSupportActionBar(getToolbar())
         supportActionBar?.apply {
@@ -60,6 +64,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupSliderNavigationMenu() {
+        viewBinding.mainNavigationMenu.getVerticalMenuView().initialize(this)
         viewBinding.dashboardDrawerMain.setScrimColor(Color.TRANSPARENT)
         viewBinding.dashboardDrawerMain.drawerElevation = 0f
         viewBinding.dashboardDrawerMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)

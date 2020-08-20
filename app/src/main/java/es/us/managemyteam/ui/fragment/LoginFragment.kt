@@ -18,6 +18,7 @@ import es.us.managemyteam.extension.hideKeyboard
 import es.us.managemyteam.extension.showErrorDialog
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.ResourceObserver
+import es.us.managemyteam.ui.activity.MainActivity
 import es.us.managemyteam.ui.viewmodel.LoginViewModel
 import es.us.managemyteam.util.FirebaseAuthUtil
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -62,6 +63,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             .observe(viewLifecycleOwner, object : ResourceObserver<String>() {
                 override fun onSuccess(response: String?) {
                     response?.let {
+                        (activity as MainActivity).refresh()
                         loginViewModel.getUser(it)
                     }
                 }
