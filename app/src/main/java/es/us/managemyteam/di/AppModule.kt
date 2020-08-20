@@ -163,6 +163,14 @@ val appModule = module {
         RecoverPasswordUc(get())
     }
 
+    factory {
+        SetCurrentNewUserUc(get())
+    }
+
+    factory {
+        GetCurrentNewUserUc(get())
+    }
+
     viewModel {
         RegistrationViewModel(get(), get(), get())
     }
