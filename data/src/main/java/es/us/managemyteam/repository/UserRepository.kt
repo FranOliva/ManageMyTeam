@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import es.us.managemyteam.data.R
 import es.us.managemyteam.data.database.DatabaseTables
+import es.us.managemyteam.data.model.RegistrationBo
 import es.us.managemyteam.data.model.Role
 import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.repository.util.Error
@@ -30,9 +31,9 @@ interface UserRepository {
         role: Role
     ): LiveData<Resource<Boolean>>
 
-    suspend fun getCurrentNewUser(): UserBo?
+    suspend fun getCurrentRegistration(): RegistrationBo?
 
-    suspend fun setCurrentNewUser(user: UserBo?)
+    suspend fun setCurrentRegistration(registration: RegistrationBo?)
 
     suspend fun getUserByUid(uid: String): LiveData<Resource<UserBo>>
 
@@ -60,6 +61,9 @@ interface UserRepository {
         password: String
     ): LiveData<Resource<Boolean>>
 
+    suspend fun areTermsChecked(): Boolean
+
+    suspend fun setTermsChecked(checked: Boolean)
 }
 
 class UserRepositoryImpl : UserRepository {
@@ -74,7 +78,8 @@ class UserRepositoryImpl : UserRepository {
     private val updateUserData = MutableLiveData<Resource<Boolean>>()
     private val updateEmailData = MutableLiveData<Resource<Boolean>>()
     private val updatePasswordData = MutableLiveData<Resource<Boolean>>()
-    private var currentUser: UserBo? = UserBo()
+    private var currentUser: RegistrationBo? = RegistrationBo()
+    private var termsChecked = false
 
 
     override suspend fun createUser(
@@ -121,11 +126,11 @@ class UserRepositoryImpl : UserRepository {
         auth.signOut()
     }
 
-    override suspend fun getCurrentNewUser(): UserBo? {
+    override suspend fun getCurrentRegistration(): RegistrationBo? {
         return currentUser
     }
 
-    override suspend fun setCurrentNewUser(user: UserBo?) {
+    override suspend fun setCurrentRegistration(user: RegistrationBo?) {
         currentUser = user
     }
 
@@ -241,6 +246,14 @@ class UserRepositoryImpl : UserRepository {
             showGenericError(updatePasswordData)
         }
         return updatePasswordData
+    }
+
+    override suspend fun areTermsChecked(): Boolean {
+        return termsChecked
+    }
+
+    override suspend fun setTermsChecked(checked: Boolean) {
+        termsChecked = checked
     }
 
     private fun updatePassword(currentUser: FirebaseUser, hashedPassword: String) {
