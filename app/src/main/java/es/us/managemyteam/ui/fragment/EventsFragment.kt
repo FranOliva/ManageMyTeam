@@ -16,7 +16,10 @@ import es.us.managemyteam.contract.BaseAdapterClickListener
 import es.us.managemyteam.data.model.EventBo
 import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.databinding.FragmentEventsBinding
-import es.us.managemyteam.extension.*
+import es.us.managemyteam.extension.setNavIcon
+import es.us.managemyteam.extension.setToolbarTitle
+import es.us.managemyteam.extension.show
+import es.us.managemyteam.extension.showErrorDialog
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.ResourceObserver
 import es.us.managemyteam.ui.adapter.EventsAdapter
@@ -55,6 +58,7 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(), BaseAdapterClickLi
             .observe(viewLifecycleOwner, object : ResourceObserver<UserBo>() {
                 override fun onSuccess(response: UserBo?) {
                     response?.let {
+                        eventsViewModel.getEvents()
                         setupButtonCreateEventVisibility(!it.isPlayer())
                     }
                 }
@@ -95,8 +99,7 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(), BaseAdapterClickLi
                 override fun onError(error: Error) {
                     super.onError(error)
                     showErrorDialog(
-                        getString(error.errorMessageId),
-                        getDefaultDialogErrorListener()
+                        getString(error.errorMessageId)
                     )
                 }
 

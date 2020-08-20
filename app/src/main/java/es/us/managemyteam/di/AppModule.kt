@@ -159,6 +159,10 @@ val appModule = module {
         UpdatePasswordUc(get())
     }
 
+    factory {
+        RecoverPasswordUc(get())
+    }
+
     viewModel {
         RegistrationViewModel(get())
     }
@@ -181,6 +185,10 @@ val appModule = module {
 
     viewModel {
         UpdatePasswordViewModel(get(), get(), get())
+    }
+
+    viewModel {
+        RecoverPasswordViewModel(get())
     }
 
     // Chat
