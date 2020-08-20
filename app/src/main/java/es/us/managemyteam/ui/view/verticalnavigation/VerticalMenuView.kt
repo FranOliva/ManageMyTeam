@@ -28,6 +28,7 @@ class VerticalMenuView @JvmOverloads constructor(
     private val menuViewModel: MenuViewModel by (context as AppCompatActivity).viewModel()
     private var userIsAdmin = false
 
+
     override fun onFinishInflate() {
         super.onFinishInflate()
         setupUserIsAdminObserver()
@@ -50,7 +51,6 @@ class VerticalMenuView @JvmOverloads constructor(
                         setupMenuList(userIsAdmin, false)
                     }
                 })
-            menuViewModel.getUser()
         }
 
     }

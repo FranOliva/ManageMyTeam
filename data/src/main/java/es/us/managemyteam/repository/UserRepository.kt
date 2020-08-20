@@ -15,7 +15,6 @@ import es.us.managemyteam.data.database.DatabaseTables
 import es.us.managemyteam.data.model.Role
 import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.repository.util.Error
-import es.us.managemyteam.repository.util.PasswordUtil
 import es.us.managemyteam.repository.util.RepositoryUtil
 import es.us.managemyteam.repository.util.Resource
 
@@ -82,9 +81,8 @@ class UserRepositoryImpl : UserRepository {
         phoneNumber: String,
         role: Role
     ): LiveData<Resource<Boolean>> {
-        val hashedPassword = PasswordUtil.hashPassword(password)
 
-        auth.createUserWithEmailAndPassword(email, hashedPassword).addOnCompleteListener {
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
                 createUserFirebaseDatabase(name, surname, email, phoneNumber, role)
             } else {
@@ -99,9 +97,8 @@ class UserRepositoryImpl : UserRepository {
 
     override suspend fun login(email: String, password: String): LiveData<Resource<String>> {
         loginData.postValue(null)
-        val hashedPassword = PasswordUtil.hashPassword(password)
 
-        auth.signInWithEmailAndPassword(email, hashedPassword).addOnCompleteListener {
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
                 loginData.value = Resource.success(auth.currentUser?.uid)
             } else {
@@ -166,7 +163,7 @@ class UserRepositoryImpl : UserRepository {
         if (currentUser != null) {
             val credentials = EmailAuthProvider.getCredential(
                 currentUser.email!!,
-                PasswordUtil.hashPassword(currentPassword)
+                currentPassword
             )
             currentUser.reauthenticate(credentials).addOnCompleteListener {
                 if (it.isSuccessful) {
@@ -215,12 +212,11 @@ class UserRepositoryImpl : UserRepository {
         if (currentUser != null) {
             val credentials = EmailAuthProvider.getCredential(
                 currentUser.email!!,
-                PasswordUtil.hashPassword(currentPassword)
+                currentPassword
             )
             currentUser.reauthenticate(credentials).addOnCompleteListener {
                 if (it.isSuccessful) {
-                    val hashedPassword = PasswordUtil.hashPassword(password)
-                    updatePassword(currentUser, hashedPassword)
+                    updatePassword(currentUser, currentPassword)
                 } else {
                     updatePasswordData.value =
                         Resource.error(Error(errorMessageId = R.string.login_error_wrong_password))
@@ -235,7 +231,7 @@ class UserRepositoryImpl : UserRepository {
     override suspend fun recoverPassword(): LiveData<Resource<Boolean>> {
         recoverPasswordData.postValue(null)
         val email = auth.currentUser?.email ?: ""
-        auth.sendPasswordResetEmail("luciadelcarmenfuentes@gmail.com").addOnCompleteListener {
+        auth.sendPasswordResetEmail(email).addOnCompleteListener {
             if (it.isSuccessful) {
                 recoverPasswordData.value = Resource.success(true)
             } else {
