@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
@@ -75,7 +76,18 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             .observe(viewLifecycleOwner, object : ResourceObserver<UserBo>() {
                 override fun onSuccess(response: UserBo?) {
                     response?.let {
-                        findNavController().navigate(R.id.action_login_to_events)
+                        if (it.isStaff() && it.enable == false) {
+                            findNavController().navigate(
+                                R.id.action_login_to_update_password, bundleOf(
+                                    Pair(
+                                        getString(R.string.argument__edit_password__is_staff_first_time),
+                                        true
+                                    )
+                                )
+                            )
+                        } else {
+                            findNavController().navigate(R.id.action_login_to_events)
+                        }
                     }
                 }
 

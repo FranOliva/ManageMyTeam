@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_eighty">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="@dimen/size_sixteen"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/row_payment__container__concept_date"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/row_payment__label__concept"
+                style="@style/Medium.Sixteen.Black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Pago de la ficha" />
+
+            <TextView
+                android:id="@+id/row_payment__label__date"
+                style="@style/Medium.Fourteen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_six"
+                android:textColor="@color/dark_gray"
+                tools:text="12/07/2020 14:47" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/row_payment__label__quantity"
+            style="@style/Medium.Sixteen.Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="12.57 EUR" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_two"
+            android:layout_marginTop="@dimen/size_two"
+            android:background="@color/primary"
+            app:layout_constraintEnd_toEndOf="@id/row_payment__label__quantity"
+            app:layout_constraintStart_toStartOf="@id/row_payment__label__quantity"
+            app:layout_constraintTop_toBottomOf="@id/row_payment__label__quantity" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="@dimen/size_one"
+        android:background="@color/pale_grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+

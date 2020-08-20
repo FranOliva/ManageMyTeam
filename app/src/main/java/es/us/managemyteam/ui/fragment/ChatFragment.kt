@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
@@ -21,14 +22,27 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
 
     private var messageAdapter: MessageAdapter = MessageAdapter()
     private val chatViewModel: ChatViewModel by viewModel()
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            activity?.finish()
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupBackPressed()
         setupUserObserver()
         setupWatcher()
         viewBinding.chatBtnSend.setOnClickListener {
             clickOnSend()
         }
+    }
+
+    private fun setupBackPressed() {
+        activity?.onBackPressedDispatcher?.addCallback(
+            viewLifecycleOwner,
+            onBackPressedCallback
+        )
     }
 
     private fun setupUserObserver() {
@@ -95,7 +109,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
 
     override fun setupToolbar(toolbar: Toolbar) {
         toolbar.apply {
-            setToolbarTitle(getString(R.string.events))
+            setToolbarTitle("Chat")
             setNavIcon(null)
             show()
         }

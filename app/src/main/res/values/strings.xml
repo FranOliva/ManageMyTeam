@@ -113,6 +113,31 @@
     <string name="administration_accept_players">Solicitudes de jugadores</string>
     <string name="administration_create_coach">Crear entrenador</string>
     <string name="default_notification_channel_id" translatable="false">manage_my_team</string>
+    <string name="administration_menu">Menú del administrador</string>
+    <string name="create_coach_success">Entrenador creado con éxito</string>
+    <string name="create_coach_title">Crear entrenador</string>
+    <string name="create_coach_information">El email introducido lo usará el entrenador para su acceso. Deberá proporcionarle la contraseña introducida y en su primer inicio de sesión la cambiará por una propia.</string>
+
+    <!-- Terms and Conditions -->
+    <string name="terms_and_conditions_title">Términos y condiciones de uso</string>
+    <string name="terms_and_conditions_description">
+        Esta aplicación es propiedad y está operada por el equipo Manage My Team. Estos Términos establecen los términos y condiciones bajo los cuales puede usar nuestra aplicación y servicios ofrecidos por nosotros. Esta aplicación ofrece a los visitantes un servicio de gestión de clubes de fútbol. Al acceder o usar la aplicación de nuestro servicio, usted aprueba que haya leído, entendido y aceptado estar sujeto a estos Términos:
+
+•	Para usar nuestra aplicación debes poseer la autoridad legal, el derecho y la libertad para participar en estos Términos como un acuerdo vinculante. No tienes permitido utilizar esta aplicación si hacerlo está prohibido en tu país o en virtud de cualquier ley o regulación aplicable a tu caso.
+
+•   Podemos, sin aviso previo, cambiar los servicios; dejar de proporcionar los servicios o cualquier característica de los servicios que ofrecemos; o crear límites para los servicios. Podemos suspender de manera permanente o temporal el acceso a los servicios sin previo aviso ni responsabilidad por cualquier motivo, o sin ningún motivo.
+
+•	Podemos terminar o suspender de manera permanente o temporal tu acceso al servicio sin previo aviso y responsabilidad por cualquier razón, incluso si a nuestra sola determinación tu violas alguna disposición de estos Términos o cualquier ley o regulación aplicable. Puedes descontinuar el uso y solicitar cancelar tu cuenta y / o cualquier servicio en cualquier momento. Sin perjuicio de lo contrario en lo que antecede, con respecto a las suscripciones renovadas automáticamente a los servicios pagados, dichas suscripciones se suspenderán solo al vencimiento del período correspondiente por el que ya has realizado el pago.
+
+•	En la máxima medida permitida por la ley aplicable, en ningún caso el equipo de Manage My Team será responsable por daños indirectos, punitivos, incidentales, especiales, consecuentes o ejemplares, incluidos, entre otros, daños por pérdida de beneficios, buena voluntad, uso, datos. u otras pérdidas intangibles, que surjan de o estén relacionadas con el uso o la imposibilidad de utilizar el servicio.
+
+•	En la máxima medida permitida por la ley aplicable, Manage My Team no asume responsabilidad alguna por (i) errores, errores o inexactitudes de contenido; (ii) lesiones personales o daños a la propiedad, de cualquier naturaleza que sean, como resultado de tu acceso o uso de nuestro servicio; y (iii) cualquier acceso no autorizado o uso de nuestros servidores seguros y / o toda la información personal almacenada en los mismos.
+
+•	Nos reservamos el derecho de modificar estos términos de vez en cuando a nuestra entera discreción. Por lo tanto, debes revisar estas páginas periódicamente. Cuando cambiemos los Términos de una manera material, te notificaremos que se han realizado cambios importantes en los Términos. El uso continuado de la aplicación o nuestro servicio después de dicho cambio constituye tu aceptación de los nuevos Términos. Si no aceptas alguno de estos términos o cualquier versión futura de los Términos, no uses o  accedas (o continúes accediendo) a la aplicación o al servicio.
+
+    </string>
+
+    <string name="terms_and_conditions_checkbox_text">Aceptar términos y condiciones</string>
 
     <!--My Team -->
 

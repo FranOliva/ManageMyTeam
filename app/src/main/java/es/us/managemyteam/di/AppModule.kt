@@ -1,5 +1,7 @@
 package es.us.managemyteam.di
 
+import es.us.managemyteam.contract.PaypalInterface
+import es.us.managemyteam.manager.PaypalManager
 import es.us.managemyteam.ui.viewmodel.*
 import es.us.managemyteam.usecase.*
 import org.koin.android.viewmodel.dsl.viewModel
@@ -8,6 +10,10 @@ import org.koin.dsl.module
 val appModule = module {
 
     // General
+
+    single<PaypalInterface> {
+        PaypalManager().apply { initialize(get()) }
+    }
 
     viewModel {
         MenuViewModel(get(), get())
@@ -89,6 +95,36 @@ val appModule = module {
         EditClubViewModel(get(), get(), get())
     }
 
+    //Payment
+
+    factory {
+        CreatePaymentUc(get())
+    }
+
+    factory {
+        GetMyPaymentsUc(get())
+    }
+
+    factory {
+        GetPaypalConfigUc(get())
+    }
+
+    factory {
+        CreatePaypalConfigUc(get())
+    }
+
+    viewModel {
+        AdminPaypalViewModel(get(), get())
+    }
+
+    viewModel {
+        MyPaymentsViewModel(get())
+    }
+
+    viewModel {
+        CreatePaymentViewModel(get(), get())
+    }
+
     // User
 
     factory {
@@ -144,7 +180,7 @@ val appModule = module {
     }
 
     viewModel {
-        UpdatePasswordViewModel(get(), get())
+        UpdatePasswordViewModel(get(), get(), get())
     }
 
     // Chat
@@ -169,5 +205,9 @@ val appModule = module {
 
     viewModel {
         AcceptPlayersViewModel(get(), get(), get())
+    }
+
+    viewModel {
+        CreateCoachViewModel(get())
     }
 }

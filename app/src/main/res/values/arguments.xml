@@ -2,5 +2,6 @@
 <resources>
 
     <string name="argument__user_uuid">user_uuid</string>
+    <string name="argument__edit_password__is_staff_first_time">is_staff_first_time</string>
 
 </resources>

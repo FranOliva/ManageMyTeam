@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:padding="@dimen/size_sixteen">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <es.us.managemyteam.ui.view.input.EditableTextView
+            android:id="@+id/paypal_config__edit_text_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_sixteen"
+            app:input_header="Nombre completo del receptor"
+            app:input_ime="next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <es.us.managemyteam.ui.view.input.EditableTextView
+            android:id="@+id/paypal_config__edit_text_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_sixteen"
+            app:input_header="Dirección"
+            app:input_ime="next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/paypal_config__edit_text_name" />
+
+        <es.us.managemyteam.ui.view.input.EditableTextView
+            android:id="@+id/paypal_config__edit_text_city"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_sixteen"
+            app:input_header="Ciudad"
+            app:input_ime="next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/paypal_config__edit_text_address" />
+
+        <es.us.managemyteam.ui.view.input.EditableTextView
+            android:id="@+id/paypal_config__edit_text_province"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_sixteen"
+            app:input_header="Provincia"
+            app:input_ime="next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/paypal_config__edit_text_city" />
+
+        <es.us.managemyteam.ui.view.input.EditableTextView
+            android:id="@+id/paypal_config__edit_text_postal_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_sixteen"
+            app:input_header="Código postal"
+            app:input_ime="next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/paypal_config__edit_text_province" />
+
+        <es.us.managemyteam.ui.view.loading_button.LoadingButtonView
+            android:id="@+id/paypal_config__btn__accept"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_fourty"
+            app:btn_background_color="@color/primaryDark"
+            app:btn_text="@string/accept"
+            app:btn_text_color="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/paypal_config__edit_text_postal_code" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
