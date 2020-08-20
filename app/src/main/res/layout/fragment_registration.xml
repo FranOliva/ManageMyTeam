@@ -132,9 +132,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/terms_and_conditions_checkbox_text"
-            app:layout_constraintTop_toTopOf="@id/registration_checkbox"
+            app:layout_constraintBottom_toBottomOf="@id/registration_checkbox"
             app:layout_constraintStart_toEndOf="@id/registration_checkbox"
-            app:layout_constraintBottom_toBottomOf="@id/registration_checkbox" />
+            app:layout_constraintTop_toTopOf="@id/registration_checkbox" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_one"
+            android:background="@color/primaryDark"
+            app:layout_constraintEnd_toEndOf="@id/registration_checkbox_link"
+            app:layout_constraintStart_toStartOf="@id/registration_checkbox_link"
+            app:layout_constraintTop_toBottomOf="@id/registration_checkbox_link" />
 
         <es.us.managemyteam.ui.view.loading_button.LoadingButtonView
             android:id="@+id/registration__btn__send_request"
