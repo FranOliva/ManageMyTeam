@@ -187,6 +187,10 @@ val appModule = module {
         UpdatePasswordViewModel(get(), get(), get())
     }
 
+    viewModel {
+        RecoverPasswordViewModel(get())
+    }
+
     // Chat
 
     factory {

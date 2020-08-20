@@ -1,6 +1,7 @@
 package es.us.managemyteam.ui.view.verticalnavigation
 
 import android.content.Context
+import android.os.Handler
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
@@ -31,7 +32,9 @@ class VerticalMenuView @JvmOverloads constructor(
 
     override fun onFinishInflate() {
         super.onFinishInflate()
-        setupUserIsAdminObserver()
+        Handler().postDelayed({
+            setupUserIsAdminObserver()
+        }, 3000)
     }
 
     private fun setupUserIsAdminObserver() {
@@ -59,7 +62,13 @@ class VerticalMenuView @JvmOverloads constructor(
         viewBinding.verticalMenuListOption.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         viewBinding.verticalMenuListOption.adapter =
-            VerticalMenuAdapter(VerticalMenuVO.getDefaultMenu(context, userIsAdmin, userIsStaff)).apply {
+            VerticalMenuAdapter(
+                VerticalMenuVO.getDefaultMenu(
+                    context,
+                    userIsAdmin,
+                    userIsStaff
+                )
+            ).apply {
                 setItemClickListener(this@VerticalMenuView)
             }
     }

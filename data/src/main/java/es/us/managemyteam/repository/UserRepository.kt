@@ -55,7 +55,7 @@ interface UserRepository {
         password: String
     ): LiveData<Resource<Boolean>>
 
-    suspend fun recoverPassword(): LiveData<Resource<Boolean>>
+    suspend fun recoverPassword(email: String): LiveData<Resource<Boolean>>
 
 }
 
@@ -228,16 +228,20 @@ class UserRepositoryImpl : UserRepository {
         return updatePasswordData
     }
 
-    override suspend fun recoverPassword(): LiveData<Resource<Boolean>> {
+    override suspend fun recoverPassword(email: String): LiveData<Resource<Boolean>> {
         recoverPasswordData.postValue(null)
-        val email = auth.currentUser?.email ?: ""
         auth.sendPasswordResetEmail(email).addOnCompleteListener {
             if (it.isSuccessful) {
                 recoverPasswordData.value = Resource.success(true)
             } else {
-                val exception = it.exception
+                val errorMessage =
+                    if ((it.exception as FirebaseAuthException).errorCode == "ERROR_USER_NOT_FOUND") {
+                        "No existe ningún usuario que corresponda con el correo electrónico introducido. Es posible que haya solicitado acceso y este haya sido rechazado"
+                    } else {
+                        "No se ha podido enviar el correo de restablecimiento de contraseña"
+                    }
                 recoverPasswordData.value =
-                    Resource.error(Error(serverErrorMessage = "No se ha podido enviar el correo de restablecimiento de contraseña"))
+                    Resource.error(Error(serverErrorMessage = errorMessage))
             }
         }
         return recoverPasswordData

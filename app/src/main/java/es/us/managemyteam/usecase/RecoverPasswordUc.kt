@@ -4,5 +4,5 @@ import es.us.managemyteam.repository.UserRepository
 
 class RecoverPasswordUc(private val userRepository: UserRepository) {
 
-    suspend operator fun invoke() = userRepository.recoverPassword()
+    suspend operator fun invoke(email: String) = userRepository.recoverPassword(email)
 }
