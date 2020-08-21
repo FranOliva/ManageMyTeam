@@ -1,5 +1,7 @@
 package es.us.managemyteam.ui.fragment
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -92,7 +94,9 @@ class UserProfileFragment : BaseFragment<FragmentUserProfileBinding>() {
         }
 
         viewBinding.userFabDelete.setOnClickListener {
-            findNavController().navigate(R.id.action_menu_to_login)
+
+            showDialog()
+
         }
     }
 
@@ -115,6 +119,44 @@ class UserProfileFragment : BaseFragment<FragmentUserProfileBinding>() {
             viewBinding.userLabelDorsalValue.text = ""
         }
     }
+
+    private fun showDialog(){
+        // Late initialize an alert dialog object
+        lateinit var dialog:AlertDialog
+
+
+        // Initialize a new instance of alert dialog builder object
+        val builder = AlertDialog.Builder(this.context)
+
+        // Set a title for alert dialog
+        builder.setTitle("Está a punto de eliminar su cuenta de usuario.")
+
+        // Set a message for alert dialog
+        builder.setMessage("¿Seguro que desea eliminarla?")
+
+
+        // On click listener for dialog buttons
+        val dialogClickListener = DialogInterface.OnClickListener{ _, which ->
+            when(which){
+                DialogInterface.BUTTON_POSITIVE -> findNavController().navigate(R.id.action_menu_to_login)
+                DialogInterface.BUTTON_NEGATIVE -> dialog.cancel()
+            }
+        }
+
+
+        // Set the alert dialog positive/yes button
+        builder.setPositiveButton("Sí",dialogClickListener)
+
+        // Set the alert dialog negative/no button
+        builder.setNegativeButton("No",dialogClickListener)
+
+        // Initialize the AlertDialog using builder object
+        dialog = builder.create()
+
+        // Finally, display the alert dialog
+        dialog.show()
+    }
+
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,
