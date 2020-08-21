@@ -89,6 +89,10 @@ class UserProfileFragment : BaseFragment<FragmentUserProfileBinding>() {
         viewBinding.userFabEdit.setOnClickListener {
             findNavController().navigate(R.id.action_user_to_edit_user)
         }
+
+        viewBinding.userFabDelete.setOnClickListener {
+            findNavController().navigate(R.id.action_menu_to_login)
+        }
     }
 
     private fun setupView(user: UserBo) {

@@ -129,6 +129,7 @@
     <string name="create_coach_information">El email introducido lo usará el entrenador para su acceso. Deberá proporcionarle la contraseña introducida y en su primer inicio de sesión la cambiará por una propia.</string>
     <string name="activity_main_event">Eventos</string>
 
+
     <!-- Terms and Conditions -->
     <string name="terms_and_conditions_title">Términos y condiciones de uso</string>
     <string name="terms_and_conditions_description">

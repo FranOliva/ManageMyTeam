@@ -7,4 +7,6 @@
     <string name="login_error_user_not_found">El correo electrónico introducido no pertenece a ninguno de los usuarios registrados. Si formas parte del equipo y aún no tienes acceso, por favor, haz la solicitud de registro.</string>
     <string name="login_error_wrong_password">Contraseña incorrecta</string>
     <string name="login_error_user_not_activated">Su solicitud de registro aún no ha sido aceptada por el administrador del club.</string>
+    <string name="user_not_found">No existe ningún usuario que corresponda con el correo electrónico introducido. Es posible que haya solicitado acceso y este haya sido rechazado</string>
+    <string name="mail_not_found">No se ha podido enviar el correo de restablecimiento de contraseña</string>
 </resources>
