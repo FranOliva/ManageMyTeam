@@ -6,5 +6,6 @@ enum class VerticalMenuId {
     LOGOUT_ID,
     PAYMENTS_ID,
     MY_TEAM_ID,
+    MY_CALLS_ID,
     TERMS_CONDITIONS_ID
 }

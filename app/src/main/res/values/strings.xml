@@ -147,10 +147,17 @@
         ]]>
     </string>
 
-    <string name="terms_and_conditions_checkbox_text">Aceptar términos y condiciones *</string>
+    <string name="terms_and_conditions_checkbox_text">Términos y condiciones *</string>
 
     <!--My Team -->
 
     <string name="my_team_title">Plantilla</string>
+
+    <!-- Calls -->
+
+    <string name="calls">Mis convocatorias</string>
+    <string name="my_calls_pending">Pendientes</string>
+    <string name="my_calls_accepted">Aceptadas</string>
+    <string name="my_calls_rejected">Rechazadas</string>
 
 </resources>

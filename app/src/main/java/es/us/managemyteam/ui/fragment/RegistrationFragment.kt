@@ -9,8 +9,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
+import es.us.managemyteam.data.model.RegistrationBo
 import es.us.managemyteam.data.model.Role
-import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.databinding.FragmentRegistrationBinding
 import es.us.managemyteam.extension.*
 import es.us.managemyteam.repository.util.Error
@@ -21,8 +21,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
 
     private val registrationViewModel: RegistrationViewModel by viewModel()
-    private var currentNewUser: UserBo = UserBo()
-
+    private var currentRegistration: RegistrationBo = RegistrationBo()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,7 +29,6 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
         setupClickListeners()
         setupCurrentUserObserver()
         setupGetCurrentNewUserObserver()
-        toTerms()
     }
 
     private fun setupCreateUserObserver() {
@@ -64,16 +62,12 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
         viewBinding.registrationBtnSendRequest.setOnClickListener {
             clickOnAcceptRegister()
         }
-
-        setCurrentUser()
-    }
-
-    private fun toTerms() {
-
         viewBinding.registrationCheckboxLink.setOnClickListener {
+            setCurrentRegistration()
             findNavController().navigate(R.id.action_registration_to_terms_and_conditions)
         }
     }
+
 
     private fun clickOnAcceptRegister() {
         val email = viewBinding.registrationEditTextEmail.text.trim()
@@ -86,7 +80,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
         getFocusedView().hideKeyboard()
 
 
-        if (viewBinding.registrationCheckbox.isChecked){
+        if (viewBinding.registrationCheckbox.isChecked) {
             registrationViewModel.createUser(
                 email,
                 password,
@@ -96,32 +90,32 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
                 phoneNumber,
                 Role.PLAYER
             )
-        }else{
+        } else {
             showInformationDialog(getString(R.string.checkbox_error))
         }
     }
 
     private fun setupCurrentUserObserver() {
-        registrationViewModel.getCurrentNewUserData()
-            .observe(viewLifecycleOwner, object : ResourceObserver<UserBo>() {
-                override fun onSuccess(response: UserBo?) {
-                    currentNewUser = response ?: UserBo()
+        registrationViewModel.getCurrentRegistrationData()
+            .observe(viewLifecycleOwner, object : ResourceObserver<RegistrationBo>() {
+                override fun onSuccess(response: RegistrationBo?) {
+                    currentRegistration = response ?: RegistrationBo()
                 }
 
                 override fun onError(error: Error) {
                     super.onError(error)
-                    currentNewUser = UserBo()
+                    currentRegistration = RegistrationBo()
                 }
 
             })
     }
 
     private fun setupGetCurrentNewUserObserver() {
-        registrationViewModel.getCurrentNewUserData()
-            .observe(viewLifecycleOwner, object : ResourceObserver<UserBo>() {
-                override fun onSuccess(response: UserBo?) {
+        registrationViewModel.getCurrentRegistrationData()
+            .observe(viewLifecycleOwner, object : ResourceObserver<RegistrationBo>() {
+                override fun onSuccess(response: RegistrationBo?) {
                     response?.let {
-                        currentNewUser = it
+                        currentRegistration = it
                         setupCurrentUser(it)
                     }
                 }
@@ -134,30 +128,33 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
                     )
                 }
             })
-        registrationViewModel.getCurrentNewUser()
+        registrationViewModel.getCurrentRegistration()
     }
 
-    private fun setupCurrentUser(user: UserBo) {
-        viewBinding.registrationEditTextName.setText(user.name)
-        viewBinding.registrationEditTextSurname.setText(user.surname)
-        viewBinding.registrationEditTextEmail.setText(user.email)
-        viewBinding.registrationEditTextPhonenumber.setText(user.phoneNumber)
+    private fun setupCurrentUser(registration: RegistrationBo) {
+        viewBinding.registrationEditTextName.setText(registration.user.name)
+        viewBinding.registrationEditTextSurname.setText(registration.user.surname)
+        viewBinding.registrationEditTextEmail.setText(registration.user.email)
+        viewBinding.registrationEditTextPhonenumber.setText(registration.user.phoneNumber)
+        viewBinding.registrationCheckbox.isChecked = registration.termsChecked
     }
 
-    private fun setCurrentUser() {
+    private fun setCurrentRegistration() {
         val name = viewBinding.registrationEditTextName.text.trim()
         val surname = viewBinding.registrationEditTextSurname.text.trim()
         val email = viewBinding.registrationEditTextEmail.text.trim()
         val phoneNumber = viewBinding.registrationEditTextPhonenumber.text.trim()
+        val termsChecked = viewBinding.registrationCheckbox.isChecked
 
-        currentNewUser.apply {
-            this.name = name
-            this.surname = surname
-            this.email = email
-            this.phoneNumber = phoneNumber
+        currentRegistration.apply {
+            this.user.name = name
+            this.user.surname = surname
+            this.user.email = email
+            this.user.phoneNumber = phoneNumber
+            this.termsChecked = termsChecked
         }
 
-        registrationViewModel.setCurrentNewUser(currentNewUser)
+        registrationViewModel.setCurrentRegistration(currentRegistration)
     }
 
     override fun inflateViewBinding(

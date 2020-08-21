@@ -1,7 +1,6 @@
 package es.us.managemyteam.ui.view.verticalnavigation
 
 import android.content.Context
-import android.os.Handler
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
@@ -29,32 +28,31 @@ class VerticalMenuView @JvmOverloads constructor(
     private val menuViewModel: MenuViewModel by (context as AppCompatActivity).viewModel()
     private var userIsAdmin = false
 
-
-    override fun onFinishInflate() {
-        super.onFinishInflate()
-        Handler().postDelayed({
-            setupUserIsAdminObserver()
-        }, 3000)
+    fun initialize(activity: MainActivity) {
+        setupUserIsAdminObserver(activity)
     }
 
-    private fun setupUserIsAdminObserver() {
-        getBaseActivity()?.let {
-            menuViewModel.getUserData().observe(it,
-                object : ResourceObserver<UserBo>() {
-                    override fun onSuccess(response: UserBo?) {
-                        response?.let { user ->
-                            userIsAdmin = user.isAdmin()
-                            setupMenuList(userIsAdmin, user.isStaff())
-                        }
-                    }
+    fun refresh() {
+        menuViewModel.getUser()
+    }
 
-                    override fun onError(error: es.us.managemyteam.repository.util.Error) {
-                        super.onError(error)
-                        userIsAdmin = false
-                        setupMenuList(userIsAdmin, false)
+    private fun setupUserIsAdminObserver(activity: MainActivity) {
+        menuViewModel.getUserData().observe(activity,
+            object : ResourceObserver<UserBo>() {
+                override fun onSuccess(response: UserBo?) {
+                    response?.let { user ->
+                        userIsAdmin = user.isAdmin()
+                        setupMenuList(userIsAdmin, user.isStaff())
                     }
-                })
-        }
+                }
+
+                override fun onError(error: es.us.managemyteam.repository.util.Error) {
+                    super.onError(error)
+                    userIsAdmin = false
+                    setupMenuList(userIsAdmin, false)
+                }
+            })
+        menuViewModel.getUser()
 
     }
 
@@ -85,6 +83,7 @@ class VerticalMenuView @JvmOverloads constructor(
             VerticalMenuId.MY_CLUB_ID -> setupClubClick()
             VerticalMenuId.ADMINISTRATION_ID -> setupAdministrationClick()
             VerticalMenuId.MY_TEAM_ID -> setupMyTeamClick()
+            VerticalMenuId.MY_CALLS_ID -> setupMyCallsClick()
             VerticalMenuId.PAYMENTS_ID -> setupPaymentsClick()
             VerticalMenuId.TERMS_CONDITIONS_ID -> setupTermsClick()
         }
@@ -122,6 +121,11 @@ class VerticalMenuView @JvmOverloads constructor(
     private fun setupPaymentsClick() {
         (getBaseActivity() as MainActivity).getNavGraph()
             .navigate(R.id.action_menu_to_payment)
+    }
+
+    private fun setupMyCallsClick() {
+        (getBaseActivity() as MainActivity).getNavGraph()
+            .navigate(R.id.action_menu_to_call)
     }
 
 }

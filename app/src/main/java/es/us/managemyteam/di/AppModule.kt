@@ -163,6 +163,14 @@ val appModule = module {
         RecoverPasswordUc(get())
     }
 
+    factory {
+        SetCurrentNewUserUc(get())
+    }
+
+    factory {
+        GetCurrentNewUserUc(get())
+    }
+
     viewModel {
         RegistrationViewModel(get(), get(), get())
     }
@@ -218,4 +226,31 @@ val appModule = module {
     viewModel {
         CreateCoachViewModel(get())
     }
+
+    // Call
+
+    factory {
+        GetCallsByUserIdUC(get())
+    }
+
+    factory {
+        AcceptCallUc(get())
+    }
+
+    factory {
+        RejectCallUc(get())
+    }
+
+    viewModel {
+        PendingCallViewModel(get(), get(), get())
+    }
+
+    viewModel {
+        AcceptedCallViewModel(get(), get())
+    }
+
+    viewModel {
+        RejectedCallViewModel(get(), get())
+    }
+
 }

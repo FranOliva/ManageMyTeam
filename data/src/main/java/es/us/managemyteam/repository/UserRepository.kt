@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import es.us.managemyteam.data.R
 import es.us.managemyteam.data.database.DatabaseTables
+import es.us.managemyteam.data.model.RegistrationBo
 import es.us.managemyteam.data.model.Role
 import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.repository.util.Error
@@ -29,9 +30,9 @@ interface UserRepository {
         role: Role
     ): LiveData<Resource<Boolean>>
 
-    suspend fun getCurrentNewUser(): UserBo?
+    suspend fun getCurrentRegistration(): RegistrationBo?
 
-    suspend fun setCurrentNewUser(user: UserBo?)
+    suspend fun setCurrentRegistration(registration: RegistrationBo?)
 
     suspend fun getUserByUid(uid: String): LiveData<Resource<UserBo>>
 
@@ -75,9 +76,10 @@ class UserRepositoryImpl : UserRepository {
     private val updateUserData = MutableLiveData<Resource<Boolean>>()
     private val updateEmailData = MutableLiveData<Resource<Boolean>>()
     private val updatePasswordData = MutableLiveData<Resource<Boolean>>()
-    private val recoverPasswordData = MutableLiveData<Resource<Boolean>>()
-    private var currentUser: UserBo? = UserBo()
+    private var currentUser: RegistrationBo? = RegistrationBo()
+    private var termsChecked = false
 
+    private val recoverPasswordData = MutableLiveData<Resource<Boolean>>()
 
     override suspend fun createUser(
         email: String,
@@ -121,11 +123,11 @@ class UserRepositoryImpl : UserRepository {
         auth.signOut()
     }
 
-    override suspend fun getCurrentNewUser(): UserBo? {
+    override suspend fun getCurrentRegistration(): RegistrationBo? {
         return currentUser
     }
 
-    override suspend fun setCurrentNewUser(user: UserBo?) {
+    override suspend fun setCurrentRegistration(user: RegistrationBo?) {
         currentUser = user
     }
 
@@ -244,12 +246,34 @@ class UserRepositoryImpl : UserRepository {
 
     override suspend fun recoverPassword(email: String): LiveData<Resource<Boolean>> {
         recoverPasswordData.postValue(null)
-        auth.sendPasswordResetEmail(email).addOnCompleteListener {
-            if (it.isSuccessful) {
+        userTable.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                recoverPasswordData.value =
+                    Resource.error(Error(R.string.unknown_error))
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userEmails =
+                    snapshot.children.mapNotNull { it.getValue(UserBo::class.java) }
+                        .filter { it.enable == false }.map { email }
+                if (userEmails.contains(email)) {
+                    recoverPasswordData.value =
+                        Resource.error(Error(R.string.login_error_user_not_activated))
+                } else {
+                    resetPassword(email)
+                }
+            }
+        })
+        return recoverPasswordData
+    }
+
+    private fun resetPassword(email: String) {
+        auth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
                 recoverPasswordData.value = Resource.success(true)
             } else {
                 val errorMessage =
-                    if ((it.exception as FirebaseAuthException).errorCode == "ERROR_USER_NOT_FOUND") {
+                    if ((task.exception as FirebaseAuthException).errorCode == "ERROR_USER_NOT_FOUND") {
                         "No existe ningún usuario que corresponda con el correo electrónico introducido. Es posible que haya solicitado acceso y este haya sido rechazado"
                     } else {
                         "No se ha podido enviar el correo de restablecimiento de contraseña"
@@ -258,12 +282,11 @@ class UserRepositoryImpl : UserRepository {
                     Resource.error(Error(serverErrorMessage = errorMessage))
             }
         }
-        return recoverPasswordData
     }
 
-    private fun updatePassword(currentUser: FirebaseUser, hashedPassword: String) {
+    private fun updatePassword(currentUser: FirebaseUser, password: String) {
         updatePasswordData.postValue(null)
-        currentUser.updatePassword(hashedPassword)
+        currentUser.updatePassword(password)
             .addOnCompleteListener { passwordTask ->
                 if (passwordTask.isSuccessful) {
                     updatePasswordData.value = Resource.success(true)

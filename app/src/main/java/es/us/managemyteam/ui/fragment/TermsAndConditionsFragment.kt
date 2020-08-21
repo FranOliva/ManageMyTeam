@@ -1,7 +1,6 @@
 package es.us.managemyteam.ui.fragment
 
 import android.os.Bundle
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +10,7 @@ import es.us.managemyteam.R
 import es.us.managemyteam.databinding.FragmentTermsAndConditionsBinding
 import es.us.managemyteam.extension.hide
 import es.us.managemyteam.extension.popBack
+import es.us.managemyteam.util.HtmlUtil
 
 class TermsAndConditionsFragment : BaseFragment<FragmentTermsAndConditionsBinding>() {
 
@@ -19,7 +19,7 @@ class TermsAndConditionsFragment : BaseFragment<FragmentTermsAndConditionsBindin
 
         val htmlAsString = getString(R.string.terms_and_conditions_description);
 
-        viewBinding.description.text = Html.fromHtml(htmlAsString);
+        viewBinding.termsAndConditionsLabelDescription.text = HtmlUtil.fromHtml(htmlAsString);
 
         setupClickListeners()
     }

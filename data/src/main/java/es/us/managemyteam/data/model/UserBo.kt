@@ -25,6 +25,12 @@ data class UserBo(
 
 }
 
+@Parcelize
+data class RegistrationBo(
+    var user: UserBo = UserBo(),
+    var termsChecked: Boolean = false
+) : Parcelable
+
 enum class Role {
     ADMIN,
     STAFF,

@@ -17,4 +17,6 @@ val dataModule = module {
 
     single<PaymentRepository> { PaymentRepositoryImpl() }
 
+    single<CallRepository> { CallRepositoryImpl() }
+
 }
