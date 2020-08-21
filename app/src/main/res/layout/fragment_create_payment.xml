@@ -38,7 +38,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:btn_background_color="@color/primaryDark"
-        app:btn_text="Enviar"
+        app:btn_text="@string/create_payment_send"
         app:btn_text_color="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

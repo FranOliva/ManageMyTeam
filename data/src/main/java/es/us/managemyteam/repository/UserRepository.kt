@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import es.us.managemyteam.data.R
 import es.us.managemyteam.data.database.DatabaseTables
+import es.us.managemyteam.data.model.RegistrationBo
 import es.us.managemyteam.data.model.Role
 import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.repository.util.Error
@@ -28,6 +29,10 @@ interface UserRepository {
         phoneNumber: String,
         role: Role
     ): LiveData<Resource<Boolean>>
+
+    suspend fun getCurrentRegistration(): RegistrationBo?
+
+    suspend fun setCurrentRegistration(registration: RegistrationBo?)
 
     suspend fun getUserByUid(uid: String): LiveData<Resource<UserBo>>
 
@@ -71,6 +76,9 @@ class UserRepositoryImpl : UserRepository {
     private val updateUserData = MutableLiveData<Resource<Boolean>>()
     private val updateEmailData = MutableLiveData<Resource<Boolean>>()
     private val updatePasswordData = MutableLiveData<Resource<Boolean>>()
+    private var currentUser: RegistrationBo? = RegistrationBo()
+    private var termsChecked = false
+
     private val recoverPasswordData = MutableLiveData<Resource<Boolean>>()
 
     override suspend fun createUser(
@@ -113,6 +121,14 @@ class UserRepositoryImpl : UserRepository {
 
     override suspend fun logout() {
         auth.signOut()
+    }
+
+    override suspend fun getCurrentRegistration(): RegistrationBo? {
+        return currentUser
+    }
+
+    override suspend fun setCurrentRegistration(user: RegistrationBo?) {
+        currentUser = user
     }
 
     override suspend fun removeUser(uuid: String): LiveData<Resource<Boolean>> {

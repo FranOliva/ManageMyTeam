@@ -83,7 +83,7 @@
             android:layout_marginTop="@dimen/size_twentyeight"
             app:btn_background_color="@color/primaryDark"
             app:btn_has_radius="true"
-            app:btn_text="Entrar"
+            app:btn_text="@string/login_enter"
             app:btn_text_color="@color/white"
             app:btn_text_style="@style/Bold.Eighteen.White"
             app:layout_constraintEnd_toEndOf="parent"
