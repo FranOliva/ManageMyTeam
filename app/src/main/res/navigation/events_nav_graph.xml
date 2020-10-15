@@ -14,7 +14,7 @@
 
     <fragment
         android:id="@+id/eventsDetailFragment"
-        android:name="es.us.managemyteam.ui.fragment.EventDetailFragment" >
+        android:name="es.us.managemyteam.ui.fragment.EventDetailFragment">
 
         <argument
             android:name="@string/navigation_event__uuid__argument"
@@ -29,6 +29,10 @@
     <fragment
         android:id="@+id/selectPlayersFragment"
         android:name="es.us.managemyteam.ui.fragment.SelectPlayersFragment" />
+
+    <fragment
+        android:id="@+id/pastEventsFragment"
+        android:name="es.us.managemyteam.ui.fragment.PastEventsFragment" />
 
     <action
         android:id="@+id/action_events_to_create_event"
@@ -49,6 +53,14 @@
     <action
         android:id="@+id/action_events_to_detail"
         app:destination="@id/eventsDetailFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    <action
+        android:id="@+id/action_events_to_past_events"
+        app:destination="@id/pastEventsFragment"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"

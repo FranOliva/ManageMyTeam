@@ -43,6 +43,7 @@
     <string name="event_detail_announcement">Convocatoria</string>
     <string name="event_detail_location">Ver localización</string>
     <string name="create_event_create_call">Crear convocatoria</string>
+    <string name="past_events">Eventos pasados</string>
 
 
     <!-- User -->
