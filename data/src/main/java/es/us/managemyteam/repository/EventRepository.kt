@@ -16,7 +16,7 @@ import java.util.*
 
 interface EventRepository {
 
-    suspend fun getEvents(): LiveData<Resource<List<EventBo>>>
+    suspend fun getEvents(pastEvents: Boolean): LiveData<Resource<List<EventBo>>>
 
     suspend fun getEventLocation(): LocationBo?
 
@@ -54,10 +54,6 @@ class EventRepositoryImpl : EventRepository {
     private var currentCall: CallBo? = CallBo()
     private val eventCreateData = MutableLiveData<Resource<Boolean>>()
     private val eventDetail = MutableLiveData<Resource<EventBo>>()
-
-    init {
-        initializeEventsListener()
-    }
 
     override suspend fun getEventLocation(): LocationBo? {
         return eventLocation
@@ -140,21 +136,24 @@ class EventRepositoryImpl : EventRepository {
                })
        }*/
 
-    override suspend fun getEvents(): LiveData<Resource<List<EventBo>>> {
-        return events
-    }
-
-    private fun initializeEventsListener() {
+    override suspend fun getEvents(pastEvents: Boolean): LiveData<Resource<List<EventBo>>> {
         eventsRef.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(databaseError: DatabaseError) {
                 events.value = Resource.error(Error(serverErrorMessage = databaseError.message))
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                events.value =
-                    Resource.success(dataSnapshot.children.mapNotNull { it.getValue(EventBo::class.java) })
+                val allEvents =
+                    dataSnapshot.children.mapNotNull { it.getValue(EventBo::class.java) }
+                events.value = if (pastEvents) {
+                    Resource.success(allEvents.filter { it.date != null && it.date!!.before(Date()) })
+                } else {
+                    Resource.success(allEvents.filter { it.date != null && it.date!!.after(Date()) })
+                }
             }
 
         })
+        return events
     }
+
 }

@@ -11,24 +11,29 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class EventsViewModel(
+class PastEventsViewModel(
     private val getEventsUc: GetEventsUc,
     getUserUc: GetUserUc
 ) : BaseLoggedViewModel(getUserUc) {
 
-    private val events: CustomMediatorLiveData<Resource<List<EventBo>>> = CustomMediatorLiveData()
+    private val pastEvents: CustomMediatorLiveData<Resource<List<EventBo>>> =
+        CustomMediatorLiveData()
 
-    fun getEvents() {
+    init {
+        getPastEvents()
+    }
+
+    fun getPastEvents() {
         viewModelScope.launch(Dispatchers.Main) {
-            events.setData(Resource.loading())
+            pastEvents.setData(Resource.loading())
             withContext(Dispatchers.IO) {
-                events.changeSource(Dispatchers.Main, getEventsUc(false))
+                pastEvents.changeSource(Dispatchers.Main, getEventsUc(true))
             }
         }
     }
 
-    fun getEventsData(): LiveData<Resource<List<EventBo>>> {
-        return events.liveData()
+    fun getPastEventsData(): LiveData<Resource<List<EventBo>>> {
+        return pastEvents.liveData()
     }
 
 

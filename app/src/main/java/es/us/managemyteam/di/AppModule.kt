@@ -77,6 +77,10 @@ val appModule = module {
         EventDetailViewModel(get())
     }
 
+    viewModel {
+        PastEventsViewModel(get(), get())
+    }
+
     // Club
 
     factory {
