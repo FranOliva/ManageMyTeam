@@ -5,6 +5,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import es.us.managemyteam.contract.AcceptListener
+import es.us.managemyteam.contract.BaseAdapterClickListener
 import es.us.managemyteam.data.model.CallStatus
 import es.us.managemyteam.data.model.EventBo
 import es.us.managemyteam.databinding.RowAcceptPlayerBinding
@@ -12,7 +13,8 @@ import java.util.*
 
 class MyCallAdapter(
     private val acceptListener: AcceptListener,
-    private val status: CallStatus
+    private val status: CallStatus,
+    private val itemListener: BaseAdapterClickListener<EventBo>
 ) :
     BaseAdapter<EventBo, RowAcceptPlayerBinding, MyCallAdapter.AcceptCallViewHolder>() {
 
@@ -24,7 +26,8 @@ class MyCallAdapter(
         return AcceptCallViewHolder(
             RowAcceptPlayerBinding.inflate(inflater, parent, false),
             acceptListener,
-            status
+            status,
+            itemListener
         )
     }
 
@@ -35,7 +38,8 @@ class MyCallAdapter(
     class AcceptCallViewHolder(
         viewBinding: RowAcceptPlayerBinding,
         private val acceptListener: AcceptListener,
-        private val status: CallStatus
+        private val status: CallStatus,
+        private val itemListener: BaseAdapterClickListener<EventBo>
     ) :
         BaseAdapter.BaseViewHolder<EventBo, RowAcceptPlayerBinding>(viewBinding) {
         override fun setup(viewBinding: RowAcceptPlayerBinding, item: EventBo) {
@@ -55,6 +59,10 @@ class MyCallAdapter(
                 }
             } ?: run {
                 setButtonsVisibility(viewBinding)
+            }
+
+            viewBinding.root.setOnClickListener {
+                itemListener.onAdapterItemClicked(item, adapterPosition)
             }
         }
 

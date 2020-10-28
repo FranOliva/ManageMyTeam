@@ -13,16 +13,6 @@
         android:name="es.us.managemyteam.ui.fragment.CreateEventFragment" />
 
     <fragment
-        android:id="@+id/eventsDetailFragment"
-        android:name="es.us.managemyteam.ui.fragment.EventDetailFragment">
-
-        <argument
-            android:name="@string/navigation_event__uuid__argument"
-            app:argType="string" />
-
-    </fragment>
-
-    <fragment
         android:id="@+id/selectLocationFragment"
         android:name="es.us.managemyteam.ui.fragment.SelectLocationFragment" />
 
@@ -52,7 +42,7 @@
 
     <action
         android:id="@+id/action_events_to_detail"
-        app:destination="@id/eventsDetailFragment"
+        app:destination="@+id/event_detail_nav_graph"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -73,5 +63,7 @@
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
         app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    <include app:graph="@navigation/event_detail_nav_graph" />
 
 </navigation>

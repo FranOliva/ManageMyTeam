@@ -6,10 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
 import es.us.managemyteam.contract.AcceptListener
+import es.us.managemyteam.contract.BaseAdapterClickListener
 import es.us.managemyteam.data.model.CallStatus
 import es.us.managemyteam.data.model.EventBo
 import es.us.managemyteam.databinding.FragmentRejectedCallsBinding
@@ -20,13 +23,14 @@ import es.us.managemyteam.ui.adapter.MyCallAdapter
 import es.us.managemyteam.ui.viewmodel.RejectedCallViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class RejectCallFragment : BaseFragment<FragmentRejectedCallsBinding>(), AcceptListener {
+class RejectCallFragment : BaseFragment<FragmentRejectedCallsBinding>(), AcceptListener,
+    BaseAdapterClickListener<EventBo> {
 
     companion object {
         fun newInstance() = RejectCallFragment()
     }
 
-    private val callAdapter = MyCallAdapter(this, CallStatus.DENIED)
+    private val callAdapter = MyCallAdapter(this, CallStatus.DENIED, this@RejectCallFragment)
     private val rejectedCallViewModel: RejectedCallViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -138,5 +142,13 @@ class RejectCallFragment : BaseFragment<FragmentRejectedCallsBinding>(), AcceptL
     }
 
 //endregion
+
+    override fun onAdapterItemClicked(item: EventBo, position: Int) {
+        findNavController().navigate(
+            R.id.action_calls_to_event_detail, bundleOf(
+                Pair(getString(R.string.navigation_event__uuid__argument), item.uuid)
+            )
+        )
+    }
 
 }
