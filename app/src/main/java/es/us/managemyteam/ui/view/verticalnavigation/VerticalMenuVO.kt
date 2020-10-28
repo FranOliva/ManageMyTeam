@@ -60,7 +60,7 @@ data class VerticalMenuVO(val id: VerticalMenuId, val title: String, val icon: I
                 verticalMenuList.add(team)
             }
 
-            if (!isStaff) {
+            if (!isAdmin && !isStaff) {
                 verticalMenuList.add(call)
             }
 
