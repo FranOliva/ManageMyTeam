@@ -8,6 +8,7 @@ import es.us.managemyteam.contract.AcceptListener
 import es.us.managemyteam.data.model.CallStatus
 import es.us.managemyteam.data.model.EventBo
 import es.us.managemyteam.databinding.RowAcceptPlayerBinding
+import java.util.*
 
 class MyCallAdapter(
     private val acceptListener: AcceptListener,
@@ -45,7 +46,20 @@ class MyCallAdapter(
             viewBinding.rowAcceptPlayerBtnRefuse.setOnClickListener {
                 acceptListener.onRefused(item.uuid ?: "")
             }
-            when(status) {
+            item.date?.let {
+                if (it.before(Date())) {
+                    viewBinding.rowAcceptPlayerBtnAccept.visibility = GONE
+                    viewBinding.rowAcceptPlayerBtnRefuse.visibility = GONE
+                } else {
+                    setButtonsVisibility(viewBinding)
+                }
+            } ?: run {
+                setButtonsVisibility(viewBinding)
+            }
+        }
+
+        private fun setButtonsVisibility(viewBinding: RowAcceptPlayerBinding) {
+            when (status) {
                 CallStatus.PENDING -> {
                     viewBinding.rowAcceptPlayerBtnAccept.visibility = VISIBLE
                     viewBinding.rowAcceptPlayerBtnRefuse.visibility = VISIBLE
@@ -60,7 +74,6 @@ class MyCallAdapter(
                 }
             }
         }
-
     }
 
 }
