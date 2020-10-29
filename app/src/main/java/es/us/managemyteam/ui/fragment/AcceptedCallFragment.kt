@@ -8,10 +8,13 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
 import es.us.managemyteam.contract.AcceptListener
+import es.us.managemyteam.contract.BaseAdapterClickListener
 import es.us.managemyteam.data.model.CallStatus
 import es.us.managemyteam.data.model.EventBo
 import es.us.managemyteam.databinding.FragmentAcceptedCallsBinding
@@ -22,13 +25,14 @@ import es.us.managemyteam.ui.adapter.MyCallAdapter
 import es.us.managemyteam.ui.viewmodel.AcceptedCallViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class AcceptedCallFragment : BaseFragment<FragmentAcceptedCallsBinding>(), AcceptListener {
+class AcceptedCallFragment : BaseFragment<FragmentAcceptedCallsBinding>(), AcceptListener,
+    BaseAdapterClickListener<EventBo> {
 
     companion object {
         fun newInstance() = AcceptedCallFragment()
     }
 
-    private val callAdapter = MyCallAdapter(this, CallStatus.ACCEPTED)
+    private val callAdapter = MyCallAdapter(this, CallStatus.ACCEPTED, this@AcceptedCallFragment)
     private val acceptedCallViewModel: AcceptedCallViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -134,6 +138,14 @@ class AcceptedCallFragment : BaseFragment<FragmentAcceptedCallsBinding>(), Accep
 
     override fun onRefused(uuid: String) {
         acceptedCallViewModel.rejectCall(uuid, "No quiero ir que no vamos a ganar joder")
+    }
+
+    override fun onAdapterItemClicked(item: EventBo, position: Int) {
+        findNavController().navigate(
+            R.id.action_calls_to_event_detail, bundleOf(
+                Pair(getString(R.string.navigation_event__uuid__argument), item.uuid)
+            )
+        )
     }
 
 //endregion
