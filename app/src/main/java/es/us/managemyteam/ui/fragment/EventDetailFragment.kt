@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
 import es.us.managemyteam.data.model.EventBo
+import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.databinding.FragmentEventDetailBinding
 import es.us.managemyteam.extension.*
 import es.us.managemyteam.repository.util.ResourceObserver
@@ -24,6 +25,7 @@ private val PERMISSIONS = arrayOf(android.Manifest.permission.WRITE_CALENDAR)
 class EventDetailFragment : BaseFragment<FragmentEventDetailBinding>() {
 
     private val eventDetailViewModel: EventDetailViewModel by viewModel()
+    private var userIsPlayer = false
     private val playersAdapter = PlayerAdapter()
     private var currentEvent: EventBo? = null
 
@@ -97,6 +99,20 @@ class EventDetailFragment : BaseFragment<FragmentEventDetailBinding>() {
             })
         eventDetailViewModel.getEventDetail(uuid)
 
+    }
+
+    private fun setupUserObserver() {
+        eventDetailViewModel.getUserData()
+            .observe(viewLifecycleOwner, object : ResourceObserver<UserBo>() {
+                override fun onSuccess(response: UserBo?) {
+                    response?.let {
+                        userIsPlayer = it.isPlayer()
+                        eventsViewModel.getEvents()
+                        setupButtonCreateEventVisibility(!userIsPlayer)
+                    }
+                }
+            })
+        eventsViewModel.getUser()
     }
 
     private fun setupView(event: EventBo) {

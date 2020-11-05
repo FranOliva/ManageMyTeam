@@ -9,7 +9,7 @@ data class UserCalledBo(
     val userName: String = "",
     var called: Boolean = false,
     var enable: Int = CallStatus.PENDING.ordinal,
-    val observation: String = ""
+    var observation: String = ""
 ) : BaseBo(), Parcelable
 
 enum class CallStatus {
