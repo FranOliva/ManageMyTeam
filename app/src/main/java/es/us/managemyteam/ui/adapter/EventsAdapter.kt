@@ -3,6 +3,8 @@ package es.us.managemyteam.ui.adapter
 import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import es.us.managemyteam.R
 import es.us.managemyteam.contract.BaseAdapterClickListener
 import es.us.managemyteam.data.model.EventBo
 import es.us.managemyteam.databinding.RowEventBinding
@@ -41,10 +43,28 @@ class EventsAdapter(private val itemListener: BaseAdapterClickListener<EventBo>)
                     rowEventContainerDate.visibility = GONE
                     rowEventLabelTime.visibility = GONE
                 }
+                setupEventType(item)
                 root.setOnClickListener {
                     itemClickListener.onAdapterItemClicked(item, adapterPosition)
                 }
             }
+        }
+
+        private fun setupEventType(event: EventBo) {
+            val context = getViewBinding().root.context
+            val color = when (event.eventType) {
+                context.getString(R.string.event_type_match) -> R.color.red
+                context.getString(R.string.event_type_training) -> R.color.primary
+                else -> R.color.black
+            }
+
+            getViewBinding().rowEventLabelEventType.setTextColor(
+                ContextCompat.getColor(
+                    context,
+                    color
+                )
+            )
+
         }
 
     }
