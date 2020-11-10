@@ -42,7 +42,7 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
     private val createEventViewModel: CreateEventViewModel by viewModel()
     private var locationSelected: LocationBo? = null
     private var currentNewEvent: EventBo = EventBo()
-    private val playersAdapter = PlayerAdapter()
+    private val playersAdapter = PlayerAdapter(false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

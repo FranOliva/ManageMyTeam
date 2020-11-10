@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
-            setDisplayShowTitleEnabled(false);
+            setDisplayShowTitleEnabled(false)
         }
     }
 

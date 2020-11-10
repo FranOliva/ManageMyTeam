@@ -18,6 +18,10 @@ class EventDetailViewModel(
 
     private val eventDetail: CustomMediatorLiveData<Resource<EventBo>> = CustomMediatorLiveData()
 
+    init {
+        getUser()
+    }
+
     fun getEventDetail(uuid: String) {
         viewModelScope.launch(Dispatchers.Main) {
             eventDetail.setData(Resource.loading(data = null))

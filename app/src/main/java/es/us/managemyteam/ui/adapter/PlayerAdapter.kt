@@ -18,7 +18,7 @@ class PlayerAdapter(private val userIsPlayer: Boolean) :
         parent: ViewGroup,
         viewType: Int
     ): PlayerViewHolder {
-        return PlayerViewHolder(RowPlayerBinding.inflate(inflater, parent, false))
+        return PlayerViewHolder(userIsPlayer, RowPlayerBinding.inflate(inflater, parent, false))
     }
 
     override fun onBind(item: UserCalledBo, position: Int, holder: PlayerViewHolder) {
@@ -26,24 +26,30 @@ class PlayerAdapter(private val userIsPlayer: Boolean) :
     }
 
     class PlayerViewHolder(
+        private val userIsPlayer: Boolean,
         binding: RowPlayerBinding
     ) :
         BaseAdapter.BaseViewHolder<UserCalledBo, RowPlayerBinding>(binding) {
         override fun setup(viewBinding: RowPlayerBinding, item: UserCalledBo) {
             val number = adapterPosition + 1
             viewBinding.rowPlayerLabelName.text = ("$number.").plus(" " + item.userName)
-            setupCallStatus(item.enable)
-            if (item.enable == CallStatus.DENIED.ordinal) {
-                viewBinding.root.setOnClickListener {
-                    viewBinding.rowPlayerLabelRejectReason.text = item.observation
-                    val actualVisibility = viewBinding.rowPlayerContainerRejectReason.visibility
-                    viewBinding.rowPlayerContainerRejectReason.visibility =
-                        if (actualVisibility == VISIBLE) {
-                            GONE
-                        } else {
-                            VISIBLE
-                        }
+            if (!userIsPlayer) {
+                setupCallStatus(item.enable)
+                if (item.enable == CallStatus.DENIED.ordinal) {
+                    viewBinding.root.setOnClickListener {
+                        viewBinding.rowPlayerLabelRejectReason.text = item.observation
+                        val actualVisibility = viewBinding.rowPlayerContainerRejectReason.visibility
+                        viewBinding.rowPlayerContainerRejectReason.visibility =
+                            if (actualVisibility == VISIBLE) {
+                                GONE
+                            } else {
+                                VISIBLE
+                            }
+                    }
                 }
+            } else {
+                viewBinding.rowPlayerImgCallStatus.visibility = GONE
+                viewBinding.rowPlayerContainerRejectReason.visibility = GONE
             }
         }
 

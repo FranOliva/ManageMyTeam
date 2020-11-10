@@ -26,15 +26,17 @@ class EventDetailFragment : BaseFragment<FragmentEventDetailBinding>() {
 
     private val eventDetailViewModel: EventDetailViewModel by viewModel()
     private var userIsPlayer = false
-    private val playersAdapter = PlayerAdapter()
+    private var playersAdapter: PlayerAdapter? = null
+    private var eventId = ""
     private var currentEvent: EventBo? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupList()
         setupClickListeners()
+        setupUserObserver()
+        setupEventDetailObserver()
         arguments?.getString(getString(R.string.navigation_event__uuid__argument))?.let {
-            setupEventDetailObserver(it)
+            eventId = it
         }
     }
 
@@ -50,8 +52,17 @@ class EventDetailFragment : BaseFragment<FragmentEventDetailBinding>() {
     }
 
     private fun setupList() {
+        viewBinding.eventDetailListCalled.apply {
+            if (playersAdapter == null) {
+                playersAdapter = PlayerAdapter(userIsPlayer)
+            }
+            playersAdapter?.let {
+                adapter = it
+            }
+        }
         viewBinding.eventDetailListCalled.adapter = playersAdapter
     }
+
 
     private fun setupClickListeners() {
         viewBinding.eventDetailImgBack.setOnClickListener {
@@ -86,7 +97,7 @@ class EventDetailFragment : BaseFragment<FragmentEventDetailBinding>() {
         )
     }
 
-    private fun setupEventDetailObserver(uuid: String) {
+    private fun setupEventDetailObserver() {
         eventDetailViewModel.getEventDetailData()
             .observe(viewLifecycleOwner, object : ResourceObserver<EventBo>() {
                 override fun onSuccess(response: EventBo?) {
@@ -97,8 +108,6 @@ class EventDetailFragment : BaseFragment<FragmentEventDetailBinding>() {
                 }
 
             })
-        eventDetailViewModel.getEventDetail(uuid)
-
     }
 
     private fun setupUserObserver() {
@@ -107,12 +116,12 @@ class EventDetailFragment : BaseFragment<FragmentEventDetailBinding>() {
                 override fun onSuccess(response: UserBo?) {
                     response?.let {
                         userIsPlayer = it.isPlayer()
-                        eventsViewModel.getEvents()
-                        setupButtonCreateEventVisibility(!userIsPlayer)
+                        setupList()
+                        eventDetailViewModel.getEventDetail(eventId)
                     }
                 }
             })
-        eventsViewModel.getUser()
+        eventDetailViewModel.getUser()
     }
 
     private fun setupView(event: EventBo) {
@@ -124,8 +133,8 @@ class EventDetailFragment : BaseFragment<FragmentEventDetailBinding>() {
             }
             eventDetailLabelType.text = event.eventType
             eventDetailLabelBody.text = event.description
-            playersAdapter.setData(called)
-            playersAdapter.notifyDataSetChanged()
+            playersAdapter?.setData(called)
+            playersAdapter?.notifyDataSetChanged()
             if (called.isNotEmpty()) {
                 viewBinding.eventDetailListCalled.visibility = VISIBLE
                 viewBinding.eventDetailLabelCalled.visibility = VISIBLE
@@ -136,6 +145,7 @@ class EventDetailFragment : BaseFragment<FragmentEventDetailBinding>() {
             if (event.location == null) {
                 viewBinding.eventDetailBtnGoToLocation.visibility = GONE
             }
+
         }
     }
 
