@@ -12,6 +12,7 @@ import es.us.managemyteam.data.model.UserCalledBo
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.RepositoryUtil
 import es.us.managemyteam.repository.util.Resource
+import java.util.*
 
 interface CallRepository {
 
@@ -97,7 +98,7 @@ class CallRepositoryImpl : CallRepository {
                             it.call?.called?.find { call ->
                                 call.userId == userUuid &&
                                         call.enable == CallStatus.PENDING.ordinal
-                            } != null
+                            } != null && it.date?.after(Date()) ?: false
                         }
                         .sortedBy {
                             it.date?.time ?: 0L
