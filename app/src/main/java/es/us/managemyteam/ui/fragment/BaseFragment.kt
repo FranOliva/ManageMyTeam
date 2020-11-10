@@ -51,6 +51,7 @@ abstract class BaseFragment<Any : ViewBinding> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         viewBinding = inflateViewBinding(inflater, container)
         return viewBinding.root
     }

@@ -137,7 +137,7 @@ class AcceptedCallFragment : BaseFragment<FragmentAcceptedCallsBinding>(), Accep
     }
 
     override fun onRefused(uuid: String) {
-        acceptedCallViewModel.rejectCall(uuid, "No quiero ir que no vamos a ganar joder")
+        acceptedCallViewModel.rejectCall(uuid, "No puedo ir")
     }
 
     override fun onAdapterItemClicked(item: EventBo, position: Int) {
