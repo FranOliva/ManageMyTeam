@@ -77,7 +77,6 @@ class UserRepositoryImpl : UserRepository {
     private val updateEmailData = MutableLiveData<Resource<Boolean>>()
     private val updatePasswordData = MutableLiveData<Resource<Boolean>>()
     private var currentUser: RegistrationBo? = RegistrationBo()
-    private var termsChecked = false
 
     private val recoverPasswordData = MutableLiveData<Resource<Boolean>>()
 
@@ -133,6 +132,7 @@ class UserRepositoryImpl : UserRepository {
 
     override suspend fun removeUser(uuid: String): LiveData<Resource<Boolean>> {
         removeUserData.postValue(null)
+        auth.signOut()
         userTable.child(uuid).removeValue { error, _ ->
             removeUserData.value = if (error != null) {
                 Resource.error(Error(serverErrorMessage = error.message))
