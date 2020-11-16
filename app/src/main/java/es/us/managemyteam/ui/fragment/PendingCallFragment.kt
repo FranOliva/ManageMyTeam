@@ -1,6 +1,5 @@
 package es.us.managemyteam.ui.fragment
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -117,10 +116,10 @@ class PendingCallFragment : BaseFragment<FragmentPendingCallsBinding>(), AcceptL
 
                 override fun onError(error: Error) {
                     super.onError(error)
-                    showErrorDialog(error.serverErrorMessage ?: "",
-                        DialogInterface.OnClickListener { _, _ ->
-                            popBack()
-                        })
+                    showErrorDialog(
+                        error.serverErrorMessage ?: "",
+                        getDefaultDialogErrorListener()
+                    )
                 }
             })
         }
@@ -157,6 +156,7 @@ class PendingCallFragment : BaseFragment<FragmentPendingCallsBinding>(), AcceptL
     }
 
     override fun onRefused(uuid: String) {
+        // TODO: show dialog
         pendingCallViewModel.rejectCall(uuid, "No quiero ir que no vamos a ganar joder")
     }
 
