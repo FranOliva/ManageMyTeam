@@ -180,7 +180,7 @@ val appModule = module {
     }
 
     viewModel {
-        UserProfileViewModel(get())
+        UserProfileViewModel(get(), get())
     }
 
     viewModel {
