@@ -12,4 +12,5 @@
     <color name="dark_gray">#a0a0a0</color>
     <color name="red">#ff0000</color>
     <color name="redWithAlpha">#65ff0000</color>
+    <color name="blackWithAlpha">#cc000000</color>
 </resources>

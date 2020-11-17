@@ -15,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
 import es.us.managemyteam.contract.AcceptListener
 import es.us.managemyteam.contract.BaseAdapterClickListener
+import es.us.managemyteam.contract.RejectReasonSendedListener
 import es.us.managemyteam.data.model.CallStatus
 import es.us.managemyteam.data.model.EventBo
 import es.us.managemyteam.databinding.FragmentAcceptedCallsBinding
@@ -26,7 +27,7 @@ import es.us.managemyteam.ui.viewmodel.AcceptedCallViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class AcceptedCallFragment : BaseFragment<FragmentAcceptedCallsBinding>(), AcceptListener,
-    BaseAdapterClickListener<EventBo> {
+    BaseAdapterClickListener<EventBo>, RejectReasonSendedListener {
 
     companion object {
         fun newInstance() = AcceptedCallFragment()
@@ -137,7 +138,7 @@ class AcceptedCallFragment : BaseFragment<FragmentAcceptedCallsBinding>(), Accep
     }
 
     override fun onRefused(uuid: String) {
-        acceptedCallViewModel.rejectCall(uuid, "No puedo ir")
+        activity?.supportFragmentManager?.let { RejectReasonDialogFragment.show(it, uuid, this) }
     }
 
     override fun onAdapterItemClicked(item: EventBo, position: Int) {
@@ -146,6 +147,10 @@ class AcceptedCallFragment : BaseFragment<FragmentAcceptedCallsBinding>(), Accep
                 Pair(getString(R.string.navigation_event__uuid__argument), item.uuid)
             )
         )
+    }
+
+    override fun onRejectReasonSended(uuid: String, observation: String) {
+        acceptedCallViewModel.rejectCall(uuid, observation)
     }
 
 //endregion

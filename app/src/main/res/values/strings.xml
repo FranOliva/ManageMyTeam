@@ -159,5 +159,8 @@
     <string name="my_calls_pending">Pendientes</string>
     <string name="my_calls_accepted">Aceptadas</string>
     <string name="my_calls_rejected">Rechazadas</string>
+    <string name="my_calls_success">Tu respuesta se envió con éxito</string>
+    <string name="dialog_reject_reason_title">Escriba la razón por la que rechaza la convocatoria</string>
+    <string name="dialog_reject_reason_error">Debe rellenar la razón obligatoriamente</string>
 
 </resources>
