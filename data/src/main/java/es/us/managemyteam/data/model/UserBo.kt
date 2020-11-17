@@ -12,7 +12,7 @@ data class UserBo(
     val age: Int? = null,
     val role: Role? = null,
     val dorsal: Long? = null,
-    val enable: Boolean? = null
+    var enable: Boolean? = null
 ) : BaseBo(), Parcelable {
 
     fun getFullName() = (name ?: "").plus(" ").plus(surname ?: "")

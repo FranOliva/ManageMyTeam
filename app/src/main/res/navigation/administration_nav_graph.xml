@@ -24,6 +24,10 @@
         android:id="@+id/fragmentCreateCoach"
         android:name="es.us.managemyteam.ui.fragment.CreateCoachFragment" />
 
+    <fragment
+        android:id="@+id/fragmentUnableUsers"
+        android:name="es.us.managemyteam.ui.fragment.UnableUsersFragment" />
+
     <action
         android:id="@+id/action_administration_to_accept_player"
         app:destination="@+id/fragmentAcceptPlayers"
@@ -58,6 +62,15 @@
         app:exitAnim="@anim/nav_default_exit_anim"
         app:launchSingleTop="true"
         app:popUpTo="@id/fragmentCreateCoach"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_administration_to_unable_users"
+        app:destination="@+id/fragmentUnableUsers"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:launchSingleTop="true"
+        app:popUpTo="@id/fragmentUnableUsers"
         app:popUpToInclusive="true" />
 
 </navigation>

@@ -3,36 +3,34 @@ package es.us.managemyteam.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import es.us.managemyteam.contract.UserSelectedListener
-import es.us.managemyteam.data.model.UserCalledBo
+import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.databinding.RowSelectPlayerBinding
 
-class SelectPlayersAdapter :
-    BaseAdapter<UserCalledBo, RowSelectPlayerBinding, SelectPlayersAdapter.SelectPlayerViewHolder>(),
+class UnableUsersAdapter :
+    BaseAdapter<UserBo, RowSelectPlayerBinding, UnableUsersAdapter.UnableUserViewHolder>(),
     UserSelectedListener {
 
     override fun onCreate(
         inflater: LayoutInflater,
         parent: ViewGroup,
         viewType: Int
-    ): SelectPlayerViewHolder {
-        return SelectPlayerViewHolder(RowSelectPlayerBinding.inflate(inflater, parent, false), this)
+    ): UnableUserViewHolder {
+        return UnableUserViewHolder(RowSelectPlayerBinding.inflate(inflater, parent, false), this)
     }
 
-    override fun onBind(item: UserCalledBo, position: Int, holder: SelectPlayerViewHolder) {
+    override fun onBind(item: UserBo, position: Int, holder: UnableUserViewHolder) {
         holder.setup(holder.getViewBinding(), data[position])
     }
 
-    fun getPlayers(selected: Boolean) = data.filter { it.called == selected }
-
-    class SelectPlayerViewHolder(
+    class UnableUserViewHolder(
         viewBinding: RowSelectPlayerBinding,
         private val playerSelectedListener: UserSelectedListener
     ) :
-        BaseAdapter.BaseViewHolder<UserCalledBo, RowSelectPlayerBinding>(viewBinding) {
-        override fun setup(viewBinding: RowSelectPlayerBinding, item: UserCalledBo) {
-            viewBinding.rowSelectPlayerLabelName.text = item.userName
+        BaseAdapter.BaseViewHolder<UserBo, RowSelectPlayerBinding>(viewBinding) {
+        override fun setup(viewBinding: RowSelectPlayerBinding, item: UserBo) {
+            viewBinding.rowSelectPlayerLabelName.text = item.getFullName()
             viewBinding.rowSelectPlayerSwitcher.apply {
-                setChecked(item.called)
+                setChecked(item.enable ?: true)
                 setOnCheckedChangeListener {
                     setChecked(it)
                     playerSelectedListener.onUserSelected(adapterPosition, it)
@@ -42,7 +40,7 @@ class SelectPlayersAdapter :
     }
 
     override fun onUserSelected(position: Int, enable: Boolean) {
-        data[position].called = enable
+        data[position].enable = enable
     }
 
 }

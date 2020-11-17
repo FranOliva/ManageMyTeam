@@ -37,6 +37,10 @@ class AdministrationFragment : BaseFragment<FragmentAdministrationBinding>() {
             findNavController().navigate(R.id.action_administration_to_paypal_config)
         }
 
+        viewBinding.administratorContainerUnableUser.setOnClickListener {
+            findNavController().navigate(R.id.action_administration_to_unable_users)
+        }
+
         viewBinding.administrationMenuImgBack.setOnClickListener {
             popBack()
         }
