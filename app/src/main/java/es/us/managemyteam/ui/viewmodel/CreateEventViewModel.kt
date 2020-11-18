@@ -131,23 +131,6 @@ class CreateEventViewModel(
             }
         }
 
-    fun getCurrentCall() =
-        viewModelScope.launch(Dispatchers.Main) {
-            currentCall.setData(Resource.loading())
-            withContext(Dispatchers.IO) {
-                currentCall.changeSource(Dispatchers.Main, getCurrentCallUc())
-            }
-        }
-
-    fun getCurrentCallData() = currentCall.liveData()
-
-    fun setCurrentCall(call: CallBo) =
-        viewModelScope.launch(Dispatchers.Main) {
-            withContext(Dispatchers.IO) {
-                setCurrentCallUc(call)
-            }
-        }
-
     fun getLocationSelected() =
         viewModelScope.launch(Dispatchers.Main) {
             locationSelected.setData(Resource.loading())

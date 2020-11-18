@@ -23,7 +23,7 @@ class PastEventsViewModel(
         getPastEvents()
     }
 
-    fun getPastEvents() {
+    private fun getPastEvents() {
         viewModelScope.launch(Dispatchers.Main) {
             pastEvents.setData(Resource.loading())
             withContext(Dispatchers.IO) {

@@ -24,28 +24,12 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="Regular.Fourteen.White" parent="Regular.Fourteen">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
     <style name="Regular.Fourteen.Primary" parent="Regular.Fourteen">
-        <item name="android:textColor">@color/primary</item>
-    </style>
-
-    <style name="Regular.Fifteen" parent="Regular">
-        <item name="android:textSize">@dimen/text_fifteen</item>
-    </style>
-
-    <style name="Regular.Fifteen.Primary" parent="Regular.Fifteen">
         <item name="android:textColor">@color/primary</item>
     </style>
 
     <style name="Regular.Twelve" parent="Regular">
         <item name="android:textSize">@dimen/text_twelve</item>
-    </style>
-
-    <style name="Regular.Twelve.White" parent="Regular.Twelve">
-        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="Regular.Twelve.BlueGrey" parent="Regular.Twelve">
@@ -76,36 +60,12 @@
         <item name="android:textSize">@dimen/text_twentytwo</item>
     </style>
 
-    <style name="Regular.TwentyTwo.Primary" parent="Regular.TwentyTwo">
-        <item name="android:textColor">@color/primary</item>
-    </style>
-
     <style name="Regular.TwentyTwo.White" parent="Regular.TwentyTwo">
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="Regular.TwentyTwo.Black" parent="Regular.TwentyTwo">
-        <item name="android:textColor">@color/black</item>
-    </style>
-
     <style name="Medium">
         <item name="android:fontFamily">@font/fonts_notosans_regular</item>
-    </style>
-
-    <style name="Medium.Eleven" parent="Medium">
-        <item name="android:textSize">@dimen/text_eleven</item>
-    </style>
-
-    <style name="Medium.Eleven.White" parent="Medium.Eleven">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="Medium.Eleven.Black" parent="Medium.Eleven">
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="Medium.Eleven.Primary" parent="Medium.Eleven">
-        <item name="android:textColor">@color/primary</item>
     </style>
 
     <style name="Medium.Eighteen" parent="Medium">
@@ -120,52 +80,12 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="Medium.Eighteen.Primary" parent="Medium.Eighteen">
-        <item name="android:textColor">@color/primary</item>
-    </style>
-
-    <style name="Medium.Twelve" parent="Medium">
-        <item name="android:textSize">@dimen/text_twelve</item>
-    </style>
-
-    <style name="Medium.Twelve.Primary" parent="Medium.Twelve">
-        <item name="android:textColor">@color/primary</item>
-    </style>
-
-    <style name="Medium.Twelve.White" parent="Medium.Twelve">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="Medium.Twelve.Black" parent="Medium.Twelve">
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="Medium.TwentyTwo" parent="Medium">
-        <item name="android:textSize">@dimen/text_twentytwo</item>
-    </style>
-
-    <style name="Medium.TwentyTwo.Black" parent="Medium.TwentyTwo">
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="Medium.TwentyFour" parent="Medium">
-        <item name="android:textSize">@dimen/text_twentyfour</item>
-    </style>
-
-    <style name="Medium.TwentyFour.White" parent="Medium.TwentyFour">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
     <style name="Medium.Sixteen" parent="Medium">
         <item name="android:textSize">@dimen/text_sixteen</item>
     </style>
 
     <style name="Medium.Sixteen.Black" parent="Medium.Sixteen">
         <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="Medium.Sixteen.Primary" parent="Medium.Sixteen">
-        <item name="android:textColor">@color/primary</item>
     </style>
 
     <style name="Medium.Sixteen.White" parent="Medium.Sixteen">
@@ -176,113 +96,20 @@
         <item name="android:textSize">@dimen/text_fourteen</item>
     </style>
 
-    <style name="Medium.Fourteen.White" parent="Medium.Fourteen">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="Medium.Fourteen.Black" parent="Medium.Fourteen">
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="Medium.Fourteen.Primary" parent="Medium.Fourteen">
-        <item name="android:textColor">@color/primary</item>
-    </style>
-
     <style name="SemiBold">
         <item name="android:fontFamily">@font/fonts_worksans_semibold</item>
-    </style>
-
-    <style name="SemiBold.Twelve" parent="SemiBold">
-        <item name="android:textSize">@dimen/text_twelve</item>
-    </style>
-
-    <style name="SemiBold.Twelve.White" parent="SemiBold.Twelve">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="SemiBold.Twelve.Black" parent="SemiBold.Twelve">
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="SemiBold.Twelve.Primary" parent="SemiBold.Twelve">
-        <item name="android:textColor">@color/primary</item>
-    </style>
-
-    <style name="SemiBold.Eighteen" parent="SemiBold">
-        <item name="android:textSize">@dimen/text_eighteen</item>
     </style>
 
     <style name="SemiBold.Twenty" parent="SemiBold">
         <item name="android:textSize">@dimen/text_twenty</item>
     </style>
 
-    <style name="SemiBold.TwentyEight" parent="SemiBold">
-        <item name="android:textSize">@dimen/text_twentyeight</item>
-    </style>
-
-    <style name="SemiBold.TwentyEight.Black" parent="SemiBold.TwentyEight">
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="SemiBold.TwentyEight.White" parent="SemiBold.TwentyEight">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-
-    <style name="SemiBold.TwentyEight.Primary" parent="SemiBold.TwentyEight">
-        <item name="android:textColor">@color/primary</item>
-    </style>
-
-
-    <style name="SemiBold.TwentyTwo" parent="SemiBold">
-        <item name="android:textSize">@dimen/text_twentytwo</item>
-    </style>
-
-    <style name="SemiBold.Eighteen.White" parent="SemiBold.Eighteen">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="SemiBold.Eighteen.Black" parent="SemiBold.Eighteen">
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="SemiBold.Eighteen.Primary" parent="SemiBold.Eighteen">
-        <item name="android:textColor">@color/primary</item>
-    </style>
 
     <style name="SemiBold.Twenty.White" parent="SemiBold.Twenty">
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="SemiBold.TwentyTwo.White" parent="SemiBold.TwentyTwo">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="SemiBold.TwentyTwo.Primary" parent="SemiBold.TwentyTwo">
-        <item name="android:textColor">@color/primary</item>
-    </style>
-
     <style name="SemiBold.Twenty.Black" parent="SemiBold.Twenty">
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="SemiBold.Fourteen" parent="SemiBold">
-        <item name="android:textSize">@dimen/text_fourteen</item>
-    </style>
-
-    <style name="SemiBold.Fourteen.Primary" parent="SemiBold.Fourteen">
-        <item name="android:textColor">@color/primary</item>
-    </style>
-
-    <style name="SemiBold.TwentyFour" parent="SemiBold">
-        <item name="android:textSize">@dimen/text_twentyfour</item>
-    </style>
-
-    <style name="SemiBold.TwentyFour.White" parent="SemiBold.TwentyFour">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="SemiBold.TwentyFour.Black" parent="SemiBold.TwentyFour">
         <item name="android:textColor">@color/black</item>
     </style>
 
@@ -290,24 +117,8 @@
         <item name="android:textSize">@dimen/text_sixteen</item>
     </style>
 
-    <style name="SemiBold.Sixteen.White" parent="SemiBold.Sixteen">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="SemiBold.Sixteen.Primary" parent="SemiBold.Sixteen">
-        <item name="android:textColor">@color/primary</item>
-    </style>
-
     <style name="SemiBold.Sixteen.Black" parent="SemiBold.Sixteen">
         <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="SemiBold.Ten" parent="SemiBold">
-        <item name="android:textSize">@dimen/text_ten</item>
-    </style>
-
-    <style name="SemiBold.Ten.White" parent="SemiBold.Ten">
-        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="Bold">
@@ -316,10 +127,6 @@
 
     <style name="Bold.Eighteen" parent="Bold">
         <item name="android:textSize">@dimen/text_eighteen</item>
-    </style>
-
-    <style name="Bold.Eighteen.Black" parent="Bold.Eighteen">
-        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Bold.Eighteen.White" parent="Bold.Eighteen">
@@ -335,22 +142,6 @@
     </style>
 
     <style name="Bold.Twenty.White" parent="Bold.Twenty">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="Bold.Sixteen" parent="Bold">
-        <item name="android:textSize">@dimen/text_sixteen</item>
-    </style>
-
-    <style name="Bold.Sixteen.Black" parent="Bold.Sixteen">
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="Bold.Twelve" parent="Bold">
-        <item name="android:textSize">@dimen/text_twelve</item>
-    </style>
-
-    <style name="Bold.Twelve.White" parent="Bold.Twelve">
         <item name="android:textColor">@color/white</item>
     </style>
 

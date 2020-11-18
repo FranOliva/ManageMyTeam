@@ -25,7 +25,7 @@ private const val CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_NO_NETWOR
 
 class PaypalManager : PaypalInterface {
 
-    private val TAG = javaClass.simpleName
+    private val tag = javaClass.simpleName
     private val config = PayPalConfiguration()
         .environment(CONFIG_ENVIRONMENT)
         .clientId(CONFIG_CLIENT_ID)
@@ -73,8 +73,8 @@ class PaypalManager : PaypalInterface {
                     data?.getParcelableExtra<PaymentConfirmation>(PaymentActivity.EXTRA_RESULT_CONFIRMATION)
                 if (confirm != null) {
                     try {
-                        Log.i(TAG, confirm.toJSONObject().toString(4))
-                        Log.i(TAG, confirm.payment.toJSONObject().toString(4))
+                        Log.i(tag, confirm.toJSONObject().toString(4))
+                        Log.i(tag, confirm.payment.toJSONObject().toString(4))
 
                         resultListener?.onPaymentOk(
                             confirm.payment.toJSONObject().getString("short_description"),
@@ -86,17 +86,17 @@ class PaypalManager : PaypalInterface {
 
 
                     } catch (e: JSONException) {
-                        Log.e(TAG, "an extremely unlikely failure occurred: ", e)
+                        Log.e(tag, "an extremely unlikely failure occurred: ", e)
                         resultListener?.onPaymentError()
                     }
 
                 }
             } else if (resultCode == Activity.RESULT_CANCELED) {
-                Log.i(TAG, "The user canceled.")
+                Log.i(tag, "The user canceled.")
                 resultListener?.onPaymentCancelled()
             } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
                 Log.i(
-                    TAG,
+                    tag,
                     "An invalid Payment or PayPalConfiguration was submitted. Please see the docs."
                 )
                 resultListener?.onPaymentError()

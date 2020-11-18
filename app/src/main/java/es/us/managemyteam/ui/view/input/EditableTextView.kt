@@ -24,9 +24,7 @@ class EditableTextView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    companion object {
-        const val DEFAULT_ALPHA = 0.43F
-    }
+    companion object
 
     val text get() = viewBinding.editableTextInputInfo.text.toString().trim()
     var listener = object : EditableTextChangeListener {
@@ -50,17 +48,7 @@ class EditableTextView @JvmOverloads constructor(
         viewBinding.editableTextInputInfo.setText(text)
     }
 
-    fun setupActionImage(
-        actionImage: Drawable?,
-        contentDescription: String? = null,
-        clickListener: OnClickListener? = null
-    ) {
-        setActionImage(actionImage)
-        setActionContentDescription(contentDescription)
-        setActionClickListener(clickListener)
-    }
-
-    fun setInputType(inputType: Int) {
+    private fun setInputType(inputType: Int) {
         viewBinding.editableTextInputInfo.inputType = when (inputType) {
             CommonInputType.NONE -> InputType.TYPE_NULL
             CommonInputType.TEXT -> InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
@@ -169,11 +157,11 @@ class EditableTextView @JvmOverloads constructor(
         }
     }
 
-    fun setHint(hint: String?) {
+    private fun setHint(hint: String?) {
         viewBinding.editableTextInputInfo.hint = hint
     }
 
-    fun setHintColor(colorId: Int) {
+    private fun setHintColor(colorId: Int) {
         viewBinding.editableTextInputInfo.setHintTextColor(colorId)
     }
 

@@ -27,9 +27,7 @@
     <string name="create_event_title">Nuevo evento</string>
     <string name="create_event_event_title">Título *</string>
     <string name="create_event_event_date">Fecha y hora *</string>
-    <string name="create_event_event_location">Localización</string>
     <string name="create_event_event_description">Descripción</string>
-    <string name="create_event_event_assistants">Asistentes</string>
     <string name="create_event_event_type">Tipo de evento *</string>
     <string name="create_event_event_type_hint">Partido, entrenamiento u otro</string>
     <string name="create_event_date_format">%02d/%02d/%04d %02d:%02d</string>
@@ -42,12 +40,10 @@
     <string name="create_event_select_call">Modifique la convocatoria</string>
     <string name="event_detail_announcement">Convocatoria</string>
     <string name="event_detail_location">Ver localización</string>
-    <string name="create_event_create_call">Crear convocatoria</string>
     <string name="past_events">Eventos pasados</string>
 
 
     <!-- User -->
-    <string name="user">Usuario</string>
     <string name="user_email">Correo electrónico *</string>
     <string name="user_password">Contraseña *</string>
     <string name="user_confirm_password">Confirmar contraseña *</string>
@@ -56,13 +52,11 @@
     <string name="user_phone">Teléfono *</string>
     <string name="user_age">Edad</string>
     <string name="user_dorsal">Dorsal</string>
-    <string name="user_edit">Editar</string>
     <string name="edit_user_user_name">Nombre</string>
     <string name="edit_user_user_surname">Apellidos</string>
     <string name="edit_user_user_mail">Email</string>
     <string name="edit_user_user_phone_number">Número de teléfono</string>
     <string name="edit_user_user_age">Edad</string>
-    <string name="edit_user_user_dorsal">Dorsal</string>
     <string name="edit_user_title">Editar datos del usuario</string>
     <string name="user_created_successfully">Solicitud de registro enviada con éxito</string>
     <string name="checkbox_error">Debes aceptar los términos y condiciones</string>
@@ -85,16 +79,12 @@
     <string name="edit_password_old_password">Contraseña actual *</string>
     <string name="edit_password_new">Nueva contraseña *</string>
     <string name="edit_email_new">Nuevo correo electrónico *</string>
-    <string name="edit_user_wrong_password">Comprueba que tu contraseña actual es correcta</string>
     <string name="user_profile">Perfil de usuario</string>
     <string name="user_recover_password">Recuperar contraseña</string>
     <string name="user_recover_password_information">Le enviaremos un correo electrónico para que restaure su contraseña.</string>
 
     <!-- Club module -->
-    <string name="club_stats">Estadísticas</string>
     <string name="club">Club</string>
-    <string name="club_edit">Editar</string>
-    <string name="edit_club_club_shield">Escudo</string>
     <string name="edit_club_club_name">Nombre</string>
     <string name="edit_club_club_date_fundation">Fecha de fundación</string>
     <string name="edit_club_club_president">Presidente</string>
@@ -103,7 +93,6 @@
     <string name="edit_club_club_mail">Email</string>
     <string name="edit_club_club_phone_number">Número de teléfono</string>
     <string name="edit_club_club_web">Página web</string>
-    <string name="edit_club_select_shield">Pulse para subir archivo y editar el escudo</string>
     <string name="edit_club_success">Datos del club editados correctamente</string>
     <string name="edit_club_title">Editar datos del club</string>
     <string name="edit_club_error_name">Debe introducir un nombre\n</string>

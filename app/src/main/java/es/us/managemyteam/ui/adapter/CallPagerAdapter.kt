@@ -7,10 +7,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 import es.us.managemyteam.R
-import es.us.managemyteam.data.model.CallStatus
 import es.us.managemyteam.ui.fragment.AcceptedCallFragment
-import es.us.managemyteam.ui.fragment.RejectCallFragment
 import es.us.managemyteam.ui.fragment.PendingCallFragment
+import es.us.managemyteam.ui.fragment.RejectCallFragment
 
 class CallPagerAdapter(
     fm: FragmentManager,

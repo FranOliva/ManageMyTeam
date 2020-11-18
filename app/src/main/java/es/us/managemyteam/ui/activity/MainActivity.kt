@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
-            setDisplayShowTitleEnabled(false);
+            setDisplayShowTitleEnabled(false)
         }
     }
 
@@ -89,7 +89,4 @@ class MainActivity : AppCompatActivity() {
         return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
 }

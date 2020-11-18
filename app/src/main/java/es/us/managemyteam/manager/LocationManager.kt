@@ -27,6 +27,7 @@ import java.util.concurrent.TimeUnit
 private val INTERVAL = TimeUnit.SECONDS.toMillis(10L)
 private val FASTEST_INTERVAL = TimeUnit.SECONDS.toMillis(5L)
 
+@Suppress("DEPRECATION")
 class LocationManager(appContext: Context) : LocationInterface,
     GoogleApiClient.ConnectionCallbacks,
     GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
