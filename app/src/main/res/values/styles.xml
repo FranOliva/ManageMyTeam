@@ -125,6 +125,14 @@
         <item name="android:fontFamily">@font/fonts_notosans_bold</item>
     </style>
 
+    <style name="Bold.Sixteen" parent="Bold">
+        <item name="android:textSize">@dimen/text_sixteen</item>
+    </style>
+
+    <style name="Bold.Sixteen.Black" parent="Bold.Sixteen">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="Bold.Eighteen" parent="Bold">
         <item name="android:textSize">@dimen/text_eighteen</item>
     </style>
