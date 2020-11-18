@@ -132,6 +132,7 @@ class UserRepositoryImpl : UserRepository {
 
     override suspend fun removeUser(uuid: String): LiveData<Resource<Boolean>> {
         removeUserData.postValue(null)
+        auth.signOut()
         userTable.child(uuid).removeValue { error, _ ->
             removeUserData.value = if (error != null) {
                 Resource.error(Error(serverErrorMessage = error.message))

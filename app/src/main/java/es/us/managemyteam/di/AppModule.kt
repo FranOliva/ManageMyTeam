@@ -74,7 +74,7 @@ val appModule = module {
     }
 
     viewModel {
-        EventDetailViewModel(get())
+        EventDetailViewModel(get(), get())
     }
 
     viewModel {
@@ -184,7 +184,7 @@ val appModule = module {
     }
 
     viewModel {
-        UserProfileViewModel(get())
+        UserProfileViewModel(get(), get())
     }
 
     viewModel {
