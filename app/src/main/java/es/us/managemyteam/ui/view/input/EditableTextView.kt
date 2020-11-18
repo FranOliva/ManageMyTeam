@@ -131,23 +131,6 @@ class EditableTextView @JvmOverloads constructor(
             }
     }
 
-    private fun setActionImage(drawable: Drawable?) {
-        viewBinding.editableTextImgAction.setImageDrawable(drawable)
-        viewBinding.editableTextImgAction.visibility = if (drawable != null) {
-            View.VISIBLE
-        } else {
-            GONE
-        }
-    }
-
-    private fun setActionContentDescription(contentDescription: String?) {
-        viewBinding.editableTextImgAction.contentDescription = contentDescription
-    }
-
-    private fun setActionClickListener(clickListener: OnClickListener?) {
-        viewBinding.editableTextImgAction.setOnClickListener(clickListener)
-    }
-
     private fun setHeader(header: String?) {
         viewBinding.editableTextLabelHeader.text = header
         viewBinding.editableTextLabelHeader.visibility = if (TextUtils.isEmpty(header)) {
