@@ -6,7 +6,6 @@ import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import es.us.managemyteam.R
 import es.us.managemyteam.databinding.ViewLoadingButtonBinding
@@ -75,7 +74,7 @@ class LoadingButtonView @JvmOverloads constructor(
                 typedArray.getBoolean(R.styleable.LoadingButtonView_btn_has_radius, true)
 
             if (!hasRadius) {
-                (viewBinding.root as CardView).radius = 0f
+                viewBinding.root.radius = 0f
             }
 
             viewBinding.loadingButtonBtnAction.setTextColor(textColor)

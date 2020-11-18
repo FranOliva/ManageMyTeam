@@ -58,8 +58,4 @@ class ChatViewModel(
         return messages.apply { setData(null) }.liveData()
     }
 
-    fun getMessageCreatedData(): LiveData<Resource<Boolean>> {
-        return messageCreated.apply { setData(null) }.liveData()
-    }
-
 }

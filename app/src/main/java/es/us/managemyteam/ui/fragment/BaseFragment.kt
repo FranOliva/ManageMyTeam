@@ -24,10 +24,6 @@ abstract class BaseFragment<Any : ViewBinding> : Fragment() {
 
     fun getToolbar() = (activity as MainActivity).getToolbar()
 
-    /*fun notifyVerticalMenuChanged() {
-        (activity as MainActivity).getVerticalNavigation().notifyUserChanged()
-    }*/
-
     fun showLoader(show: Boolean) {
         activity?.findViewById<View>(R.id.main__container__loader)?.visibility = if (show) {
             View.VISIBLE

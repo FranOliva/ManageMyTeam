@@ -20,8 +20,6 @@ class MessageAdapter :
         currentUserId = userId
     }
 
-    fun getCurrentUserId() = currentUserId
-
     override fun getItemViewType(position: Int): Int {
         return if (currentUserId.isNotBlank() &&
             currentUserId == data[position].fromId
@@ -52,7 +50,9 @@ class MessageAdapter :
         viewBinding: ViewBinding
     ) : BaseViewHolder<MessageBo, ViewBinding>(viewBinding) {
 
-        override fun setup(viewBinding: ViewBinding, item: MessageBo) {}
+        override fun setup(viewBinding: ViewBinding, item: MessageBo) {
+            //no-op
+        }
 
     }
 

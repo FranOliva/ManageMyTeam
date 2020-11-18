@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import es.us.managemyteam.constant.Permission
 
 class PermissionUtil {
@@ -30,12 +29,6 @@ class PermissionUtil {
 
         fun requestPermission(fragment: Fragment, vararg permissions: String) {
             fragment.requestPermissions(permissions, Permission.REQUEST_CODE)
-        }
-
-        fun requestPermission(activity: FragmentActivity, vararg permissions: String) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                activity.requestPermissions(permissions, Permission.REQUEST_CODE)
-            }
         }
 
         fun isPermissionGranted(requestCode: Int, responses: IntArray): Boolean {

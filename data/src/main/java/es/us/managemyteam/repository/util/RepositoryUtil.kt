@@ -4,7 +4,7 @@ import com.google.firebase.database.FirebaseDatabase
 
 object RepositoryUtil {
 
-    fun getDatabase() = FirebaseDatabase.getInstance()
+    private fun getDatabase() = FirebaseDatabase.getInstance()
 
     fun getDatabaseTable(tableName: String) = getDatabase().getReference(tableName)
 }

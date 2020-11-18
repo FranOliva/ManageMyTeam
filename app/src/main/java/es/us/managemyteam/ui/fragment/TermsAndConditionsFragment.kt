@@ -17,9 +17,9 @@ class TermsAndConditionsFragment : BaseFragment<FragmentTermsAndConditionsBindin
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val htmlAsString = getString(R.string.terms_and_conditions_description);
+        val htmlAsString = getString(R.string.terms_and_conditions_description)
 
-        viewBinding.termsAndConditionsLabelDescription.text = HtmlUtil.fromHtml(htmlAsString);
+        viewBinding.termsAndConditionsLabelDescription.text = HtmlUtil.fromHtml(htmlAsString)
 
         setupClickListeners()
     }

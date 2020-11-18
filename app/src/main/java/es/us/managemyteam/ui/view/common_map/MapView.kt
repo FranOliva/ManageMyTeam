@@ -23,7 +23,6 @@ import es.us.managemyteam.R
 import es.us.managemyteam.databinding.ViewMapBinding
 import es.us.managemyteam.extension.getBounds
 import es.us.managemyteam.extension.getBoundsWithUserLocation
-import es.us.managemyteam.extension.tint
 import es.us.managemyteam.extension.toBitmapDescriptor
 import es.us.managemyteam.manager.LocationManager
 import kotlin.math.roundToInt
@@ -45,7 +44,7 @@ class MapView @JvmOverloads constructor(
         this,
         true
     )
-    var map: GoogleMap? = null
+    private var map: GoogleMap? = null
     private var mapListener: MapListener? = null
     private var mapTransitionListener: MapTransitionListener? = null
     private val locationManager = LocationManager(context)
@@ -102,10 +101,6 @@ class MapView @JvmOverloads constructor(
         viewBinding.mapViewMainMap.onDestroy()
     }
 
-    fun enableLiteMode(enable: Boolean) {
-        liteMode = enable
-    }
-
     fun setShowUserPosition(show: Boolean) {
         showUserPosition = show
     }
@@ -143,10 +138,6 @@ class MapView @JvmOverloads constructor(
         }
     }
 
-    fun setMapTransitionListener(transitionListener: MapTransitionListener) {
-        this.mapTransitionListener = transitionListener
-    }
-
     fun setMapListener(mapListener: MapListener?) {
         this.mapListener = mapListener
         if (isMapReady()) { // Notify if map is already initialized
@@ -154,11 +145,7 @@ class MapView @JvmOverloads constructor(
         }
     }
 
-    fun animateCamera(animate: Boolean) {
-        animateCamera = animate
-    }
-
-    fun isMapReady(): Boolean {
+    private fun isMapReady(): Boolean {
         return map != null
     }
 
@@ -167,20 +154,6 @@ class MapView @JvmOverloads constructor(
             View.VISIBLE
         } else {
             View.GONE
-        }
-    }
-
-    fun showMarkers(animateCamera: Boolean = false) {
-        map?.let {
-            currentLocation?.let {
-                mapListener?.onLocationChanged(it)
-                if (showUserPosition) {
-                    currentLocationMarker?.remove()
-                    currentLocationMarker =
-                        map?.addMarker(getCurrentPositionMarker(it))
-                }
-            }
-            addMarker(animateCamera, *markers.values.toTypedArray())
         }
     }
 
@@ -194,16 +167,8 @@ class MapView @JvmOverloads constructor(
         }
     }
 
-    fun isEmpty(): Boolean {
-        return markers.isEmpty()
-    }
-
     fun getAddressFromMarkerPosition(latLng: LatLng): String? {
         return locationManager.getAddressOfLatLng(latLng)
-    }
-
-    fun getMarkerPositionFromAddress(address: String): LatLng? {
-        return locationManager.getLatLngOfAddress(address)
     }
 
     fun showMarkerInfo(markerItem: MarkerItemVo) {
@@ -237,10 +202,6 @@ class MapView @JvmOverloads constructor(
                 (map?.cameraPosition?.zoom ?: NO_ZOOM) > DEFAULT_ZOOM)
     }
 
-    private fun applyColorToBackground(color: Int) {
-        viewBinding.mapContainerLocation.background.tint(color)
-    }
-
     private fun applyZoom(
         latLng: LatLng,
         animate: Boolean = animateCamera,
@@ -260,8 +221,7 @@ class MapView @JvmOverloads constructor(
 
     private fun applyZoom(
         bounds: LatLngBounds,
-        animate: Boolean = animateCamera,
-        zoom: Float = DEFAULT_ZOOM
+        animate: Boolean = animateCamera
     ) {
         try {
             val padding = (measuredWidth * 0.20).roundToInt()
@@ -312,7 +272,7 @@ class MapView @JvmOverloads constructor(
         }
     }
 
-    fun updateCurrentLocation(lifecycleOwner: LifecycleOwner, animate: Boolean = true) {
+    private fun updateCurrentLocation(lifecycleOwner: LifecycleOwner, animate: Boolean = true) {
         currentLocation = locationManager.getCurrentLocation()
         locationManager.getCurrentLocationData().observe(lifecycleOwner,
             Observer<LatLng> {
@@ -320,12 +280,6 @@ class MapView @JvmOverloads constructor(
                 showCurrentLocation(animate)
             })
         showCurrentLocation(animate)
-    }
-
-    fun snapshot() {
-        map?.snapshot {
-            mapTransitionListener?.onSnapshot(it)
-        }
     }
 
     private fun getCurrentPositionMarker(position: LatLng): MarkerOptions {
@@ -393,9 +347,6 @@ class MapView @JvmOverloads constructor(
             applyZoom(it, true, DEFAULT_ZOOM)
         }
     }
-
-    fun getBounds() =
-        map?.cameraPosition?.target
 
 
     //endregion

@@ -41,12 +41,4 @@ data class Resource<out T>(val status: Status, val data: T?, val error: Error?) 
         return status == Status.ERROR
     }
 
-    fun isLoading(): Boolean {
-        return status == Status.LOADING
-    }
-
-    fun isNotError(): Boolean {
-        return status == Status.SUCCESS || status == Status.LOADING
-    }
-
 }

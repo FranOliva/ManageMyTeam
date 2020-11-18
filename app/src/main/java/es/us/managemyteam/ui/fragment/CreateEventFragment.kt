@@ -374,7 +374,7 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
         context?.let {
             TimePickerDialog(
                 it,
-                TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+                { _, hourOfDay, minute ->
                     viewBinding.createEventEditTextDate.setText(
                         String.format(
                             getString(R.string.create_event_date_format),

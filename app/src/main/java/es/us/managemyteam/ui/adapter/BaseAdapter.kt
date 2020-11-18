@@ -40,10 +40,6 @@ abstract class BaseAdapter<T, VB : ViewBinding, VH : BaseAdapter.BaseViewHolder<
         data.addAll(newData)
     }
 
-    open fun addData(vararg newData: T, notify: Boolean = true) {
-        addData(*newData, notify = notify)
-    }
-
     open fun addData(newData: List<T>, notify: Boolean = true) {
         data.addAll(newData)
         if (notify && newData.isNotEmpty()) {

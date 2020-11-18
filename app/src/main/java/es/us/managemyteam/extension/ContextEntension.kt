@@ -21,10 +21,6 @@ fun Context.startGoogleMapsByLatLng(latLng: LatLng) {
     startUrlActionView(GOOGLE_MAPS_URL + latLng.toGoogleMapsFormat())
 }
 
-fun Context.startCallActionView(phone: String) {
-    startActivity(Intent(Intent.ACTION_DIAL, Uri.parse(PREFIX_PHONE + phone)))
-}
-
 @SuppressLint("MissingPermission")
 fun Context.startCalendarEvent(title: String?, dateInit: Long?) {
     val uri = contentResolver.insert(

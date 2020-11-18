@@ -23,7 +23,7 @@ class MyTeamViewModel
         getPlayers()
     }
 
-    fun getPlayers() {
+    private fun getPlayers() {
         viewModelScope.launch(Dispatchers.Main) {
             players.setData(Resource.loading())
             withContext(Dispatchers.IO) {
