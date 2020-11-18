@@ -241,7 +241,7 @@
                 android:layout_marginEnd="@dimen/size_sixteen"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@string/administration_playpal_config"
+                android:text="@string/administration_unable_user"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/administration__img__unable_user"
                 app:layout_constraintStart_toStartOf="parent"

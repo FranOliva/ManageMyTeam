@@ -7,8 +7,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/select_players__list__players"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/select_players__btn__save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -18,6 +19,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:btn_background_color="@color/primaryDark"
+        app:btn_has_radius="false"
         app:btn_text="@string/save"
         app:btn_text_color="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

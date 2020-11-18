@@ -20,6 +20,8 @@ interface AdminRepository {
     suspend fun rejectPlayer(uuid: String): LiveData<Resource<Boolean>>
 
     suspend fun getUsers(): LiveData<Resource<List<UserBo>>>
+
+    suspend fun updateUsersEnable(users: List<UserBo>): LiveData<Resource<Boolean>>
 }
 
 class AdminRepositoryImpl : AdminRepository {
@@ -28,6 +30,7 @@ class AdminRepositoryImpl : AdminRepository {
     private val playersData = MutableLiveData<Resource<List<UserBo>>>()
     private val playerNotEnabledData = MutableLiveData<Resource<Boolean>>()
     private val usersData = MutableLiveData<Resource<List<UserBo>>>()
+    private val usersEnabledData = MutableLiveData<Resource<Boolean>>()
 
     override suspend fun getPlayers(enabled: Boolean): LiveData<Resource<List<UserBo>>> {
         playersData.postValue(null)
@@ -89,9 +92,7 @@ class AdminRepositoryImpl : AdminRepository {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val users =
                     snapshot.children.mapNotNull { it.getValue(UserBo::class.java) }
-                        .sortedBy {
-                            it.getFullName()
-                        }
+                        .sortedWith(compareBy({ it.role }, { it.getFullName() }))
                 usersData.value =
                     Resource.success(users)
             }
@@ -99,6 +100,21 @@ class AdminRepositoryImpl : AdminRepository {
         })
 
         return usersData
+    }
+
+    override suspend fun updateUsersEnable(users: List<UserBo>): LiveData<Resource<Boolean>> {
+        usersEnabledData.postValue(null)
+        users.forEach {
+            it.uuid?.let { uuid ->
+                userTable.child(uuid).updateChildren(
+                    mapOf(
+                        Pair("enable", it.enable)
+                    )
+                )
+            }
+        }
+        usersEnabledData.postValue(Resource.success(true))
+        return usersEnabledData
     }
 
 }

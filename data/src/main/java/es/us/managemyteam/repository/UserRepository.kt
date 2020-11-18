@@ -77,7 +77,6 @@ class UserRepositoryImpl : UserRepository {
     private val updateEmailData = MutableLiveData<Resource<Boolean>>()
     private val updatePasswordData = MutableLiveData<Resource<Boolean>>()
     private var currentUser: RegistrationBo? = RegistrationBo()
-    private var termsChecked = false
 
     private val recoverPasswordData = MutableLiveData<Resource<Boolean>>()
 

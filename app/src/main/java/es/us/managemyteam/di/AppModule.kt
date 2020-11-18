@@ -227,6 +227,10 @@ val appModule = module {
         GetUsersUc(get())
     }
 
+    factory {
+        UpdateUsersEnabledUc(get())
+    }
+
     viewModel {
         AcceptPlayersViewModel(get(), get(), get())
     }
@@ -236,7 +240,7 @@ val appModule = module {
     }
 
     viewModel {
-        UnableUsersViewModel(get())
+        UnableUsersViewModel(get(), get())
     }
 
     // Call

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -25,12 +26,13 @@ class UnableUsersFragment : BaseFragment<FragmentSelectPlayersBinding>() {
         super.onViewCreated(view, savedInstanceState)
         setupList()
         setupUsersObserver()
+        setupUsersUpdatedObserver()
         setupClickListener()
     }
 
     private fun setupClickListener() {
         viewBinding.selectPlayersBtnSave.setOnClickListener {
-
+            unableUsersViewModel.updateUsers(unableUsersAdapter?.data ?: arrayListOf())
         }
     }
 
@@ -38,11 +40,33 @@ class UnableUsersFragment : BaseFragment<FragmentSelectPlayersBinding>() {
         unableUsersViewModel.getUsersData()
             .observe(viewLifecycleOwner, object : ResourceObserver<List<UserBo>>() {
                 override fun onSuccess(response: List<UserBo>?) {
-
+                    response?.let {
+                        unableUsersAdapter?.addData(it)
+                        unableUsersAdapter?.notifyDataSetChanged()
+                    }
                 }
 
             })
         unableUsersViewModel.getUsers()
+    }
+
+    private fun setupUsersUpdatedObserver() {
+        unableUsersViewModel.getUpdateUsersData()
+            .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
+                override fun onSuccess(response: Boolean?) {
+                    response?.let {
+                        if (it) {
+                            Toast.makeText(
+                                context,
+                                getString(R.string.administration_unable_user_success),
+                                Toast.LENGTH_LONG
+                            ).show()
+                            popBack()
+                        }
+                    }
+                }
+
+            })
     }
 
     private fun setupList() {
@@ -65,7 +89,7 @@ class UnableUsersFragment : BaseFragment<FragmentSelectPlayersBinding>() {
 
     override fun setupToolbar(toolbar: Toolbar) {
         toolbar.apply {
-            setToolbarTitle(getString(R.string.create_event_select_call))
+            setToolbarTitle(getString(R.string.administration_unable_user))
             setNavIcon(ContextCompat.getDrawable(context, R.drawable.ic_back))
             setNavAction { popBack() }
             show()
