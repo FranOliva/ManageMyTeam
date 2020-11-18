@@ -17,10 +17,11 @@
         <TextView
             android:id="@+id/row_select_player__label__name"
             style="@style/Regular.Sixteen.Black"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/size_sixteen"
+            android:layout_marginEnd="@dimen/size_twenty"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/row_select_player__switcher"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Lucía del Carmen Fuentes" />

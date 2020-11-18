@@ -2,13 +2,13 @@ package es.us.managemyteam.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import es.us.managemyteam.contract.PlayerSelectedListener
+import es.us.managemyteam.contract.UserSelectedListener
 import es.us.managemyteam.data.model.UserCalledBo
 import es.us.managemyteam.databinding.RowSelectPlayerBinding
 
 class SelectPlayersAdapter :
     BaseAdapter<UserCalledBo, RowSelectPlayerBinding, SelectPlayersAdapter.SelectPlayerViewHolder>(),
-    PlayerSelectedListener {
+    UserSelectedListener {
 
     override fun onCreate(
         inflater: LayoutInflater,
@@ -26,7 +26,7 @@ class SelectPlayersAdapter :
 
     class SelectPlayerViewHolder(
         viewBinding: RowSelectPlayerBinding,
-        private val playerSelectedListener: PlayerSelectedListener
+        private val playerSelectedListener: UserSelectedListener
     ) :
         BaseAdapter.BaseViewHolder<UserCalledBo, RowSelectPlayerBinding>(viewBinding) {
         override fun setup(viewBinding: RowSelectPlayerBinding, item: UserCalledBo) {
@@ -35,13 +35,13 @@ class SelectPlayersAdapter :
                 setChecked(item.called)
                 setOnCheckedChangeListener {
                     setChecked(it)
-                    playerSelectedListener.onPlayerSelected(adapterPosition, it)
+                    playerSelectedListener.onUserSelected(adapterPosition, it)
                 }
             }
         }
     }
 
-    override fun onPlayerSelected(position: Int, enable: Boolean) {
+    override fun onUserSelected(position: Int, enable: Boolean) {
         data[position].called = enable
     }
 

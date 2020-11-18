@@ -206,7 +206,48 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/administrator__container__unable_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_sixteen"
+            android:layout_marginTop="@dimen/size_six"
+            android:layout_marginEnd="@dimen/size_sixteen"
+            android:layout_marginBottom="@dimen/size_six"
+            android:background="@color/white"
+            android:elevation="@dimen/size_six"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:paddingStart="@dimen/size_twentyfour"
+            android:paddingTop="@dimen/size_twenty"
+            android:paddingEnd="@dimen/size_twentyfour"
+            android:paddingBottom="@dimen/size_twenty">
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/administration__img__unable_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_arrow_right"
+                app:tint="@color/bluegrey" />
+
+            <TextView
+                android:id="@+id/administration__label__unable_user_title"
+                style="@style/Medium.Eighteen.Black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/size_sixteen"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/administration_unable_user"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/administration__img__unable_user"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

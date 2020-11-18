@@ -120,6 +120,8 @@
     <string name="administration_accept_players">Solicitudes de jugadores</string>
     <string name="administration_create_coach">Crear entrenador</string>
     <string name="administration_playpal_config">Configuración de PayPal</string>
+    <string name="administration_unable_user">Desactivar usuarios</string>
+    <string name="administration_unable_user_success">Usuarios actualizados correctamente</string>
     <string name="create_payment_send">Enviar</string>
     <string name="payment_empty">Aún no has realizado ningún pago</string>
     <string name="request_empty">¡Genial! No te quedan más solicitudes que atender</string>

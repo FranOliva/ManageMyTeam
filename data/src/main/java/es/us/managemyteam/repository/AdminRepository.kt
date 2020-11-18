@@ -18,6 +18,10 @@ interface AdminRepository {
     suspend fun acceptPlayer(uuid: String): LiveData<Resource<Boolean>>
 
     suspend fun rejectPlayer(uuid: String): LiveData<Resource<Boolean>>
+
+    suspend fun getUsers(): LiveData<Resource<List<UserBo>>>
+
+    suspend fun updateUsersEnable(users: List<UserBo>): LiveData<Resource<Boolean>>
 }
 
 class AdminRepositoryImpl : AdminRepository {
@@ -25,6 +29,8 @@ class AdminRepositoryImpl : AdminRepository {
     private val userTable = RepositoryUtil.getDatabaseTable(DatabaseTables.USER_TABLE)
     private val playersData = MutableLiveData<Resource<List<UserBo>>>()
     private val playerNotEnabledData = MutableLiveData<Resource<Boolean>>()
+    private val usersData = MutableLiveData<Resource<List<UserBo>>>()
+    private val usersEnabledData = MutableLiveData<Resource<Boolean>>()
 
     override suspend fun getPlayers(enabled: Boolean): LiveData<Resource<List<UserBo>>> {
         playersData.postValue(null)
@@ -74,6 +80,41 @@ class AdminRepositoryImpl : AdminRepository {
             }
 
         return playerNotEnabledData
+    }
+
+    override suspend fun getUsers(): LiveData<Resource<List<UserBo>>> {
+        usersData.postValue(null)
+        userTable.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                usersData.value = Resource.error(Error(serverErrorMessage = error.message))
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val users =
+                    snapshot.children.mapNotNull { it.getValue(UserBo::class.java) }
+                        .sortedWith(compareBy({ it.role }, { it.getFullName() }))
+                usersData.value =
+                    Resource.success(users)
+            }
+
+        })
+
+        return usersData
+    }
+
+    override suspend fun updateUsersEnable(users: List<UserBo>): LiveData<Resource<Boolean>> {
+        usersEnabledData.postValue(null)
+        users.forEach {
+            it.uuid?.let { uuid ->
+                userTable.child(uuid).updateChildren(
+                    mapOf(
+                        Pair("enable", it.enable)
+                    )
+                )
+            }
+        }
+        usersEnabledData.postValue(Resource.success(true))
+        return usersEnabledData
     }
 
 }

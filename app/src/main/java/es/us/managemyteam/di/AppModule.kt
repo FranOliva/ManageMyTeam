@@ -223,12 +223,24 @@ val appModule = module {
         AcceptPlayerUc(get())
     }
 
+    factory {
+        GetUsersUc(get())
+    }
+
+    factory {
+        UpdateUsersEnabledUc(get())
+    }
+
     viewModel {
         AcceptPlayersViewModel(get(), get(), get())
     }
 
     viewModel {
         CreateCoachViewModel(get())
+    }
+
+    viewModel {
+        UnableUsersViewModel(get(), get())
     }
 
     // Call
