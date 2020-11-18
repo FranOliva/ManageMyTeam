@@ -1,11 +1,14 @@
 package es.us.managemyteam.ui.fragment
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -43,8 +46,27 @@ class UserProfileFragment : BaseFragment<FragmentUserProfileBinding>() {
 
         setupBackPressed()
         setupUserObserver(userId)
+        setupUserRemovedObserver()
         setupClickListeners()
 
+    }
+
+    private fun setupUserRemovedObserver() {
+        userProfileViewModel.getRemoveUserData()
+            .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
+                override fun onSuccess(response: Boolean?) {
+                    response?.let {
+                        Toast.makeText(context, "Usuario borrado correctamente", Toast.LENGTH_LONG)
+                            .show()
+                        findNavController().navigate(R.id.action_user_profile_to_login)
+                    }
+                }
+
+                override fun onError(error: Error) {
+                    super.onError(error)
+                    showErrorDialog(getString(error.errorMessageId))
+                }
+            })
     }
 
     private fun setupBackPressed() {
@@ -90,6 +112,8 @@ class UserProfileFragment : BaseFragment<FragmentUserProfileBinding>() {
         viewBinding.userFabEdit.setOnClickListener {
             findNavController().navigate(R.id.action_user_to_edit_user)
         }
+
+
     }
 
     private fun setupView(user: UserBo) {
@@ -110,7 +134,46 @@ class UserProfileFragment : BaseFragment<FragmentUserProfileBinding>() {
         } else {
             viewBinding.userLabelDorsalValue.text = ""
         }
+        viewBinding.userFabDelete.setOnClickListener {
+            showDialog(user.uuid ?: "")
+        }
     }
+
+    private fun showDialog(userId: String) {
+        lateinit var dialog: AlertDialog
+
+        val builder = AlertDialog.Builder(this.context)
+
+        builder.setTitle("Está a punto de eliminar su cuenta de usuario.")
+        builder.setMessage("¿Seguro que desea eliminarla?")
+
+        val dialogClickListener = DialogInterface.OnClickListener { _, which ->
+            when (which) {
+                DialogInterface.BUTTON_POSITIVE -> userProfileViewModel.removeUser(userId)
+                DialogInterface.BUTTON_NEGATIVE -> dialog.cancel()
+            }
+        }
+
+        builder.setPositiveButton("Sí", dialogClickListener)
+        builder.setNegativeButton("No", dialogClickListener)
+
+
+        dialog = builder.create()
+        context?.let { context ->
+            dialog.setOnShowListener {
+                dialog.getButton(DialogInterface.BUTTON_NEGATIVE).apply {
+                    setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+                    setTextColor(ContextCompat.getColor(context, R.color.black))
+                }
+                dialog.getButton(DialogInterface.BUTTON_POSITIVE).apply {
+                    setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+                    setTextColor(ContextCompat.getColor(context, R.color.black))
+                }
+            }
+        }
+        dialog.show()
+    }
+
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,

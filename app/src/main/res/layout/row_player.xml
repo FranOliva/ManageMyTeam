@@ -3,20 +3,62 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/size_six">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/row_player__label__name"
-        style="@style/Regular.Sixteen.Black"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/row_player__container__header"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:maxLines="1"
-        android:ellipsize="end"
+        android:padding="@dimen/size_six"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Lucía del Carmen Fuentes" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/row_player__label__name"
+            style="@style/Regular.Sixteen.Black"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_ten"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/row_player__img__call_status"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1. Lucía del Carmen Fuentes" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/row_player__img__call_status"
+            android:layout_width="@dimen/size_twenty"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/row_player__label__name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/row_player__label__name"
+            app:srcCompat="@drawable/ic_pending" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/row_player__container__reject_reason"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_fourty"
+        android:background="@color/redWithAlpha"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/row_player__container__header">
+
+        <TextView
+            android:id="@+id/row_player__label__reject_reason"
+            style="@style/Regular.Fourteen.Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/size_four"
+            tools:text="No voy porque no puedo ir" />
+
+    </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

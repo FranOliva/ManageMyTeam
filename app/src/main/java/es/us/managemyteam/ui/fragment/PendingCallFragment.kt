@@ -1,6 +1,5 @@
 package es.us.managemyteam.ui.fragment
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
 import es.us.managemyteam.contract.AcceptListener
 import es.us.managemyteam.contract.BaseAdapterClickListener
+import es.us.managemyteam.contract.RejectReasonSendedListener
 import es.us.managemyteam.data.model.CallStatus
 import es.us.managemyteam.data.model.EventBo
 import es.us.managemyteam.databinding.FragmentPendingCallsBinding
@@ -24,7 +24,7 @@ import es.us.managemyteam.ui.viewmodel.PendingCallViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class PendingCallFragment : BaseFragment<FragmentPendingCallsBinding>(), AcceptListener,
-    BaseAdapterClickListener<EventBo> {
+    BaseAdapterClickListener<EventBo>, RejectReasonSendedListener {
 
     companion object {
 
@@ -59,7 +59,7 @@ class PendingCallFragment : BaseFragment<FragmentPendingCallsBinding>(), AcceptL
                 .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
                     override fun onSuccess(response: Boolean?) {
                         response?.let {
-                            showInformationDialog("Tu respuesta se envió con éxito")
+                            showInformationDialog(getString(R.string.my_calls_success))
                         }
                     }
 
@@ -81,7 +81,7 @@ class PendingCallFragment : BaseFragment<FragmentPendingCallsBinding>(), AcceptL
                 .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
                     override fun onSuccess(response: Boolean?) {
                         response?.let {
-                            showInformationDialog("Tu respuesta se envió con éxito")
+                            showInformationDialog(getString(R.string.my_calls_success))
                         }
                     }
 
@@ -117,10 +117,10 @@ class PendingCallFragment : BaseFragment<FragmentPendingCallsBinding>(), AcceptL
 
                 override fun onError(error: Error) {
                     super.onError(error)
-                    showErrorDialog(error.serverErrorMessage ?: "",
-                        DialogInterface.OnClickListener { _, _ ->
-                            popBack()
-                        })
+                    showErrorDialog(
+                        error.serverErrorMessage ?: "",
+                        getDefaultDialogErrorListener()
+                    )
                 }
             })
         }
@@ -157,7 +157,7 @@ class PendingCallFragment : BaseFragment<FragmentPendingCallsBinding>(), AcceptL
     }
 
     override fun onRefused(uuid: String) {
-        pendingCallViewModel.rejectCall(uuid, "No quiero ir que no vamos a ganar joder")
+        activity?.supportFragmentManager?.let { RejectReasonDialogFragment.show(it, uuid, this) }
     }
 
 //endregion
@@ -168,6 +168,11 @@ class PendingCallFragment : BaseFragment<FragmentPendingCallsBinding>(), AcceptL
                 Pair(getString(R.string.navigation_event__uuid__argument), item.uuid)
             )
         )
+    }
+
+    override fun onRejectReasonSended(uuid: String, observation: String) {
+        pendingCallViewModel.rejectCall(uuid, observation)
+
     }
 
 }
