@@ -37,9 +37,8 @@ class MainApp : Application() {
                     return@OnCompleteListener
                 }
 
-                val token = task.result?.token?:""
+                val token = task.result?.token ?: ""
                 Log.i("Token ", token)
             })
-    }
     }
 }
