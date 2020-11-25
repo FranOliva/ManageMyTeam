@@ -154,5 +154,7 @@
     <string name="my_calls_success">Tu respuesta se envió con éxito</string>
     <string name="dialog_reject_reason_title">Escriba la razón por la que rechaza la convocatoria</string>
     <string name="dialog_reject_reason_error">Debe rellenar la razón obligatoriamente</string>
+    <string name="notification_message">¡Fuiste convocado/a para el próximo evento!</string>
+    <string name="notification_error_creation_ok">Ha ocurrido un error al enviar las notificaciones, pero el evento fue creado satisfactoriamente</string>
 
 </resources>

@@ -9,12 +9,12 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import es.us.managemyteam.R
 import es.us.managemyteam.data.model.CallBo
 import es.us.managemyteam.data.model.EventBo
@@ -63,6 +63,8 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
     }
 
     private fun setupObservers() {
+        setupDeviceIdsObserver()
+        setupSendNotificationObserver()
         setupCurrentEventObserver()
         setupCreateEventObserver()
         setupGetCurrentNewEventObserver()
@@ -129,7 +131,74 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
 
     //endregion
 
+    private fun onEventSuccessfullyCreated(showMessage: Boolean) {
+        createEventViewModel.clearEvent()
+        if (showMessage) {
+            Snackbar.make(
+                viewBinding.createEventBtnSave,
+                getString(R.string.create_event_success),
+                Snackbar.LENGTH_LONG
+            )
+                .show()
+        }
+        popBack()
+    }
+
+    private fun showErrorMessageAfterCreationSuccessfully() {
+        Snackbar.make(
+            viewBinding.createEventBtnSave,
+            R.string.notification_error_creation_ok, Snackbar.LENGTH_LONG
+        ).apply {
+            addCallback(object : Snackbar.Callback() {
+                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                    super.onDismissed(transientBottomBar, event)
+                    onEventSuccessfullyCreated(false)
+                }
+            })
+        }.show()
+    }
+
     //region Observers
+
+    private fun setupDeviceIdsObserver() {
+        createEventViewModel.getDeviceIds().observe(viewLifecycleOwner, object :
+            ResourceObserver<List<String>>() {
+            override fun onSuccess(response: List<String>?) {
+                response?.let {
+                    createEventViewModel.sendNotification(
+                        getString(R.string.app_name),
+                        getString(R.string.notification_message),
+                        *it.toTypedArray()
+                    )
+                }
+            }
+
+            override fun onError(error: Error) {
+                super.onError(error)
+                showErrorMessageAfterCreationSuccessfully()
+            }
+        })
+    }
+
+    private fun setupSendNotificationObserver() {
+        createEventViewModel.getNotification().observe(viewLifecycleOwner, object :
+            ResourceObserver<Boolean>() {
+            override fun onSuccess(response: Boolean?) {
+                response?.let {
+                    if (it) {
+                        onEventSuccessfullyCreated(it)
+                    } else {
+                        showErrorMessageAfterCreationSuccessfully()
+                    }
+                }
+            }
+
+            override fun onError(error: Error) {
+                super.onError(error)
+                showErrorMessageAfterCreationSuccessfully()
+            }
+        })
+    }
 
     private fun setupCurrentEventObserver() {
         createEventViewModel.getCurrentNewEventData()
@@ -148,17 +217,11 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
 
     private fun setupCreateEventObserver() {
         createEventViewModel.createEventData()
-            .observe(viewLifecycleOwner, object : ResourceObserver<Boolean>() {
-                override fun onSuccess(response: Boolean?) {
-                    response?.let {
-                        createEventViewModel.clearEvent()
-                        Toast.makeText(
-                            context,
-                            getString(R.string.create_event_success),
-                            Toast.LENGTH_LONG
-                        )
-                            .show()
-                        popBack()
+            .observe(viewLifecycleOwner, object : ResourceObserver<EventBo>() {
+                override fun onSuccess(response: EventBo?) {
+                    response?.let { event ->
+                        createEventViewModel.getDeviceIds(*event.call?.called?.map { it.userId }
+                            ?.toTypedArray() ?: arrayOf())
                     }
                 }
 
