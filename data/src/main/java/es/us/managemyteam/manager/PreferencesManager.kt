@@ -10,8 +10,9 @@ import com.google.gson.reflect.TypeToken
 import es.us.managemyteam.contract.PreferencesInterface
 
 
-private const val KEY_SIZE = 2048 // recommended
+private const val KEY_SIZE = 256 // recommended
 private const val PREF_NAME = "manage_my_team_preferences"
+private const val MASTER_KEY_NAME = "_androidx_security_master_key_"
 
 class PreferencesManager(appContext: Context) : PreferencesInterface {
 
@@ -70,7 +71,7 @@ class PreferencesManager(appContext: Context) : PreferencesInterface {
         .build()
 
     private fun getMasterKey(
-        appContext: Context, spec: KeyGenParameterSpec = getParameterSpec(PREF_NAME)
+        appContext: Context, spec: KeyGenParameterSpec = getParameterSpec(MASTER_KEY_NAME)
     ) = MasterKey.Builder(appContext)
         .setKeyGenParameterSpec(spec)
         .build()
