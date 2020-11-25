@@ -9,7 +9,6 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import es.us.managemyteam.R
@@ -26,12 +25,11 @@ class NotificationService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-
         if (message.data.isNotEmpty()) {
             createNotificationChannel()
 
             val myID = FirebaseAuth.getInstance().currentUser?.uid
-            if (myID == message.data.getOrDefault("uid", "")){
+            if (myID == message.data.getOrDefault("uid", "")) {
                 NotificationManagerCompat.from(applicationContext).notify(
                     1,
                     buildNotification(
