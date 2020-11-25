@@ -57,16 +57,12 @@ val appModule = module {
         SetCurrentCallUc(get())
     }
 
-    factory {
-        SetCurrentDeviceIdUc(get())
+    viewModel {
+        EventsViewModel(get(), get())
     }
 
     viewModel {
-        EventsViewModel(get(), get(), get(), get())
-    }
-
-    viewModel {
-        CreateEventViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(), get())
+        CreateEventViewModel(get(), get(), get(), get(), get(), get(), get(), get())
     }
 
     viewModel {
@@ -179,10 +175,6 @@ val appModule = module {
         GetCurrentNewUserUc(get())
     }
 
-    factory {
-        GetUserDeviceIdsUc(get())
-    }
-
     viewModel {
         RegistrationViewModel(get(), get(), get())
     }
@@ -275,12 +267,6 @@ val appModule = module {
 
     viewModel {
         RejectedCallViewModel(get(), get())
-    }
-
-    // Notification
-
-    factory {
-        SendNotificationsUc(get(), get())
     }
 
 }

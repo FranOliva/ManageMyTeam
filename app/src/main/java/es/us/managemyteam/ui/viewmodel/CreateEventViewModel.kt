@@ -25,17 +25,14 @@ class CreateEventViewModel(
     private val createEventUc: CreateEventUc,
     private val getPlayersUc: GetPlayersUc,
     private val getCurrentCallUc: GetCurrentCallUc,
-    private val setCurrentCallUc: SetCurrentCallUc,
-    private val getUserDeviceIdsUc: GetUserDeviceIdsUc,
-    private val sendNotificationsUc: SendNotificationsUc
+    private val setCurrentCallUc: SetCurrentCallUc
 ) : ViewModel() {
 
     private val currentNewEvent = CustomMediatorLiveData<Resource<EventBo>>()
-    private val createEvent = CustomMediatorLiveData<Resource<EventBo>>()
+    private val createEvent = CustomMediatorLiveData<Resource<Boolean>>()
     private val locationSelected = CustomMediatorLiveData<Resource<LocationBo?>>()
     private val players = CustomMediatorLiveData<Resource<List<UserBo>>>()
-    private val deviceIds = CustomMediatorLiveData<Resource<List<String>>>()
-    private val notificationSent = CustomMediatorLiveData<Resource<Boolean>>()
+    private val currentCall = CustomMediatorLiveData<Resource<CallBo>>()
 
     fun getPlayers() {
         viewModelScope.launch(Dispatchers.Main) {
@@ -48,16 +45,6 @@ class CreateEventViewModel(
 
     fun getPlayersData(): LiveData<Resource<List<UserBo>>> {
         return players.liveData()
-    }
-
-    fun getDeviceIds(): LiveData<Resource<List<String>>> {
-        deviceIds.setData(null)
-        return deviceIds.liveData()
-    }
-
-    fun getNotification(): LiveData<Resource<Boolean>> {
-        notificationSent.setData(null)
-        return notificationSent.liveData()
     }
 
     fun createEvent(
@@ -79,30 +66,7 @@ class CreateEventViewModel(
             }
         }
 
-    fun sendNotification(
-        title: String,
-        message: String,
-        vararg deviceIds: String
-    ) = viewModelScope.launch(Dispatchers.IO) {
-        notificationSent.changeSource(
-            Dispatchers.Main,
-            sendNotificationsUc(
-                title,
-                message,
-                *deviceIds
-            )
-        )
-
-    }
-
-    fun getDeviceIds(vararg userIds: String) = viewModelScope.launch(Dispatchers.IO) {
-        deviceIds.changeSource(
-            Dispatchers.Main,
-            getUserDeviceIdsUc(*userIds)
-        )
-    }
-
-    fun createEventData(): LiveData<Resource<EventBo>> {
+    fun createEventData(): LiveData<Resource<Boolean>> {
         createEvent.setData(null)
         return createEvent.liveData()
     }

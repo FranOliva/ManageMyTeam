@@ -42,7 +42,7 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(), BaseAdapterClickLi
         setupClickListeners()
         setupEventsObserver()
         setupUserObserver()
-        eventsViewModel.saveDeviceIdIfNecessary()
+
     }
 
     private fun setupBackPressed() {

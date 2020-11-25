@@ -33,7 +33,7 @@ interface EventRepository {
         description: String?,
         location: LocationBo?,
         call: CallBo?
-    ): LiveData<Resource<EventBo>>
+    ): LiveData<Resource<Boolean>>
 
     suspend fun getEventDetail(uuid: String): LiveData<Resource<EventBo>>
 
@@ -50,7 +50,7 @@ class EventRepositoryImpl : EventRepository {
     private val events = MutableLiveData<Resource<List<EventBo>>>()
     private var currentEvent: EventBo? = EventBo()
     private var currentCall: CallBo? = CallBo()
-    private val eventCreateData = MutableLiveData<Resource<EventBo>>()
+    private val eventCreateData = MutableLiveData<Resource<Boolean>>()
     private val eventDetail = MutableLiveData<Resource<EventBo>>()
 
     override suspend fun getEventLocation(): LocationBo? {
@@ -76,7 +76,7 @@ class EventRepositoryImpl : EventRepository {
         description: String?,
         location: LocationBo?,
         call: CallBo?
-    ): LiveData<Resource<EventBo>> {
+    ): LiveData<Resource<Boolean>> {
         val eventToCreate = EventBo(
             title, date, location, description, call, type
         )
@@ -90,7 +90,7 @@ class EventRepositoryImpl : EventRepository {
                         Pair("uuid", ref.key)
                     )
                 )
-                eventCreateData.value = Resource.success(eventToCreate)
+                eventCreateData.value = Resource.success(true)
             }
         }
         return eventCreateData

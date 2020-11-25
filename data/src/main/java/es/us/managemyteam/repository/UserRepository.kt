@@ -10,8 +10,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import es.us.managemyteam.constant.Preference
-import es.us.managemyteam.contract.PreferencesInterface
 import es.us.managemyteam.data.R
 import es.us.managemyteam.data.database.DatabaseTables
 import es.us.managemyteam.data.model.RegistrationBo
@@ -64,20 +62,14 @@ interface UserRepository {
 
     suspend fun recoverPassword(email: String): LiveData<Resource<Boolean>>
 
-    suspend fun updateDeviceInstanceIdDatabase(deviceInstanceId: String)
-
-    suspend fun getUserDeviceIds(vararg userIds: String): LiveData<Resource<List<String>>>
 }
 
-class UserRepositoryImpl(
-    private val preferencesInterface: PreferencesInterface
-) : UserRepository {
+class UserRepositoryImpl : UserRepository {
 
     private var user: UserBo? = null
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val createUserData = MutableLiveData<Resource<Boolean>>()
     private val userData = MutableLiveData<Resource<UserBo>>()
-    private val userDeviceIdsResponseData = MutableLiveData<Resource<List<String>>>()
     private val userTable = RepositoryUtil.getDatabaseTable(DatabaseTables.USER_TABLE)
     private val loginData = MutableLiveData<Resource<String>>()
     private val removeUserData = MutableLiveData<Resource<Boolean>>()
@@ -99,14 +91,7 @@ class UserRepositoryImpl(
 
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
-                createUserFirebaseDatabase(
-                    name,
-                    surname,
-                    email,
-                    phoneNumber,
-                    role,
-                    preferencesInterface.get<String>(Preference.KEY_DEVICE_INSTANCE_ID, null)
-                )
+                createUserFirebaseDatabase(name, surname, email, phoneNumber, role)
             } else {
                 val exception = (it.exception as FirebaseAuthException)
                 createUserData.value =
@@ -235,27 +220,6 @@ class UserRepositoryImpl(
         }
     }
 
-    override suspend fun updateDeviceInstanceIdDatabase(deviceInstanceId: String) {
-        auth.currentUser?.uid?.let { uid ->
-            userTable.child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onCancelled(error: DatabaseError) {
-                    // no-op
-                }
-
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    user = snapshot.getValue(UserBo::class.java)
-                    if (user?.deviceInstanceId != deviceInstanceId) {
-                        userTable.child(uid).child("deviceInstanceId")
-                            .setValue(deviceInstanceId) { _, _ ->
-                                user?.deviceInstanceId = deviceInstanceId
-                            }
-                    }
-                }
-            })
-
-        }
-    }
-
     override suspend fun updatePassword(
         currentPassword: String,
         password: String
@@ -359,51 +323,15 @@ class UserRepositoryImpl(
         return userData
     }
 
-    override suspend fun getUserDeviceIds(
-        vararg userIds: String
-    ): LiveData<Resource<List<String>>> {
-        userDeviceIdsResponseData.postValue(null)
-        userTable.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-                userDeviceIdsResponseData.value =
-                    Resource.error(Error(serverErrorMessage = error.message))
-            }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val deviceIds =
-                    snapshot.children.mapNotNull { it.getValue(UserBo::class.java) }
-                        .filter { it.isPlayer() && userIds.contains(it.uuid) }.mapNotNull {
-                            it.deviceInstanceId
-                        }
-
-                userDeviceIdsResponseData.value = Resource.success(deviceIds)
-            }
-
-        })
-
-        return userDeviceIdsResponseData
-    }
-
     private fun createUserFirebaseDatabase(
         name: String,
         surname: String,
         email: String,
         phoneNumber: String,
-        role: Role,
-        deviceInstanceId: String?
+        role: Role
     ): LiveData<Resource<Boolean>> {
         val user =
-            UserBo(
-                name,
-                surname,
-                email,
-                phoneNumber,
-                null,
-                role,
-                null,
-                false,
-                deviceInstanceId
-            ).apply {
+            UserBo(name, surname, email, phoneNumber, null, role, null, false).apply {
                 uuid = auth.currentUser?.uid
             }
 
