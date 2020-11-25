@@ -66,7 +66,7 @@ val appModule = module {
     }
 
     viewModel {
-        CreateEventViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(), get())
+        CreateEventViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get())
     }
 
     viewModel {
@@ -280,7 +280,7 @@ val appModule = module {
     // Notification
 
     factory {
-        SendNotificationsUc(get(), get())
+        SendNotificationsUc(get())
     }
 
 }

@@ -24,7 +24,6 @@ class CreateEventViewModel(
     private val setCurrentNewEventUc: SetCurrentNewEventUc,
     private val createEventUc: CreateEventUc,
     private val getPlayersUc: GetPlayersUc,
-    private val getCurrentCallUc: GetCurrentCallUc,
     private val setCurrentCallUc: SetCurrentCallUc,
     private val getUserDeviceIdsUc: GetUserDeviceIdsUc,
     private val sendNotificationsUc: SendNotificationsUc

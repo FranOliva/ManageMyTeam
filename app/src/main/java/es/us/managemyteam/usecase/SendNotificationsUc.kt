@@ -6,9 +6,7 @@ import es.us.managemyteam.repository.UserRepository
 import es.us.managemyteam.repository.util.Resource
 
 class SendNotificationsUc(
-    private val notificationRepository: NotificationRepository,
-    private val userRepository: UserRepository
-) {
+    private val notificationRepository: NotificationRepository) {
 
     suspend operator fun invoke(
         title: String,
