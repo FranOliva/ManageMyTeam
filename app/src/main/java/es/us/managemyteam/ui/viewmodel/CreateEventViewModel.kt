@@ -33,7 +33,7 @@ class CreateEventViewModel(
     private val createEvent = CustomMediatorLiveData<Resource<EventBo>>()
     private val locationSelected = CustomMediatorLiveData<Resource<LocationBo?>>()
     private val players = CustomMediatorLiveData<Resource<List<UserBo>>>()
-    private val deviceIds = CustomMediatorLiveData<Resource<List<String>>>()
+    private val deviceIds = CustomMediatorLiveData<Resource<List<Pair<String, String>>>>()
     private val notificationSent = CustomMediatorLiveData<Resource<Boolean>>()
 
     fun getPlayers() {
@@ -49,7 +49,7 @@ class CreateEventViewModel(
         return players.liveData()
     }
 
-    fun getDeviceIds(): LiveData<Resource<List<String>>> {
+    fun getDeviceIds(): LiveData<Resource<List<Pair<String, String>>>> {
         deviceIds.setData(null)
         return deviceIds.liveData()
     }
@@ -81,7 +81,7 @@ class CreateEventViewModel(
     fun sendNotification(
         title: String,
         message: String,
-        vararg deviceIds: String
+        vararg deviceIds: Pair<String, String>
     ) = viewModelScope.launch(Dispatchers.IO) {
         notificationSent.changeSource(
             Dispatchers.Main,

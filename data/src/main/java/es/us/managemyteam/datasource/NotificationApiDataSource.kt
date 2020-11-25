@@ -9,7 +9,8 @@ interface NotificationApiDataSource {
     suspend fun sendNotification(
         deviceId: String,
         title: String,
-        message: String
+        message: String,
+        uid: String
     ): Boolean
 
 }
@@ -21,12 +22,13 @@ class NotificationApiDataSourceImpl(
     override suspend fun sendNotification(
         deviceId: String,
         title: String,
-        message: String
+        message: String,
+        uid: String
     ) =
         notificationWs.sendNotification(
             body = NotificationBodyBo(
                 deviceId,
-                NotificationDataBo.new(title, message)
+                NotificationDataBo.new(title, message, uid)
             )
         ).isSuccess()
 

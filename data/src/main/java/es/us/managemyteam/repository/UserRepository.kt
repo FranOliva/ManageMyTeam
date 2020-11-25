@@ -66,7 +66,7 @@ interface UserRepository {
 
     suspend fun updateDeviceInstanceIdDatabase(deviceInstanceId: String)
 
-    suspend fun getUserDeviceIds(vararg userIds: String): LiveData<Resource<List<String>>>
+    suspend fun getUserDeviceIds(vararg userIds: String): LiveData<Resource<List<Pair<String, String>>>>
 }
 
 class UserRepositoryImpl(
@@ -77,7 +77,7 @@ class UserRepositoryImpl(
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val createUserData = MutableLiveData<Resource<Boolean>>()
     private val userData = MutableLiveData<Resource<UserBo>>()
-    private val userDeviceIdsResponseData = MutableLiveData<Resource<List<String>>>()
+    private val userDeviceIdsResponseData = MutableLiveData<Resource<List<Pair<String, String>>>>()
     private val userTable = RepositoryUtil.getDatabaseTable(DatabaseTables.USER_TABLE)
     private val loginData = MutableLiveData<Resource<String>>()
     private val removeUserData = MutableLiveData<Resource<Boolean>>()
@@ -361,7 +361,7 @@ class UserRepositoryImpl(
 
     override suspend fun getUserDeviceIds(
         vararg userIds: String
-    ): LiveData<Resource<List<String>>> {
+    ): LiveData<Resource<List<Pair<String, String>>>> {
         userDeviceIdsResponseData.postValue(null)
         userTable.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
@@ -373,7 +373,9 @@ class UserRepositoryImpl(
                 val deviceIds =
                     snapshot.children.mapNotNull { it.getValue(UserBo::class.java) }
                         .filter { it.isPlayer() && userIds.contains(it.uuid) }.mapNotNull {
-                            it.deviceInstanceId
+                            if (it.uuid != null && it.deviceInstanceId != null) {
+                                Pair(it.uuid?:"", it.deviceInstanceId?:"")
+                            } else null
                         }
 
                 userDeviceIdsResponseData.value = Resource.success(deviceIds)

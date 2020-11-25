@@ -162,8 +162,8 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
 
     private fun setupDeviceIdsObserver() {
         createEventViewModel.getDeviceIds().observe(viewLifecycleOwner, object :
-            ResourceObserver<List<String>>() {
-            override fun onSuccess(response: List<String>?) {
+            ResourceObserver<List<Pair<String, String>>>() {
+            override fun onSuccess(response: List<Pair<String, String>>?) {
                 response?.let {
                     createEventViewModel.sendNotification(
                         getString(R.string.app_name),

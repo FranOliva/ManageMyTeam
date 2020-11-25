@@ -9,10 +9,12 @@ data class NotificationBodyBo(
 
 data class NotificationDataBo(
     @SerializedName("title") val title: String,
-    @SerializedName("message") val message: String
+    @SerializedName("message") val message: String,
+    @SerializedName("uid") val uid: String
 ) {
     companion object {
-        fun new(title: String = "", message: String = "") = NotificationDataBo(title, message)
+        fun new(title: String = "", message: String = "", uid: String = "") =
+            NotificationDataBo(title, message, uid)
     }
 }
 

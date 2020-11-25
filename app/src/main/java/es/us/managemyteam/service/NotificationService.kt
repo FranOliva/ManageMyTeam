@@ -8,6 +8,8 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import es.us.managemyteam.R
@@ -28,13 +30,16 @@ class NotificationService : FirebaseMessagingService() {
         if (message.data.isNotEmpty()) {
             createNotificationChannel()
 
-            NotificationManagerCompat.from(applicationContext).notify(
-                1,
-                buildNotification(
-                    message.data.getOrDefault("title", getString(R.string.app_name)),
-                    message.data.getOrDefault("message", getString(R.string.app_name))
+            val myID = FirebaseAuth.getInstance().currentUser?.uid
+            if (myID == message.data.getOrDefault("uid", "")){
+                NotificationManagerCompat.from(applicationContext).notify(
+                    1,
+                    buildNotification(
+                        message.data.getOrDefault("title", getString(R.string.app_name)),
+                        message.data.getOrDefault("message", getString(R.string.app_name))
+                    )
                 )
-            )
+            }
         }
 
     }

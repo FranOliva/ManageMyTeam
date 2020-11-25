@@ -11,7 +11,7 @@ class SendNotificationsUc(
     suspend operator fun invoke(
         title: String,
         message: String,
-        vararg userIds: String
+        vararg userIds: Pair<String, String>
     ): LiveData<Resource<Boolean>> {
         return notificationRepository.sendNotifications(title, message, *userIds)
     }

@@ -10,7 +10,7 @@ interface NotificationRepository {
     suspend fun sendNotifications(
         title: String,
         message: String,
-        vararg userIds: String
+        vararg userIds: Pair<String, String>
     ): LiveData<Resource<Boolean>>
 
 }
@@ -24,14 +24,14 @@ class NotificationRepositoryImpl(
     override suspend fun sendNotifications(
         title: String,
         message: String,
-        vararg userIds: String
+        vararg userIds: Pair<String, String>
     ): LiveData<Resource<Boolean>> {
         notificationResponseData.postValue(null)
 
         val results = mutableListOf<Boolean>()
 
         userIds.forEach {
-            results.add(notificationApiDataSource.sendNotification(it, title, message))
+            results.add(notificationApiDataSource.sendNotification(it.second, title, message, it.first))
         }
 
         notificationResponseData.postValue(Resource.success(!results.contains(false)))
