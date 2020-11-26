@@ -4,6 +4,8 @@ import es.us.managemyteam.repository.UserRepository
 
 class LogoutUc(private val userRepository: UserRepository) {
 
-    suspend operator fun invoke() = userRepository.logout()
+    suspend operator fun invoke() {
+        userRepository.logout()
+    }
 
 }
