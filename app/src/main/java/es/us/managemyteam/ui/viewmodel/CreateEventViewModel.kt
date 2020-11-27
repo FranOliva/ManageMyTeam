@@ -136,6 +136,14 @@ class CreateEventViewModel(
                 )
                 false
             }
+            date.before(Calendar.getInstance().time) -> {
+                createEvent.setData(
+                    Resource.error(
+                        Error(R.string.create_event_error_time)
+                    )
+                )
+                false
+            }
             else -> true
         }
     }

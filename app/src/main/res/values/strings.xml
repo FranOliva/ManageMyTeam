@@ -33,6 +33,7 @@
     <string name="create_event_date_format">%02d/%02d/%04d %02d:%02d</string>
     <string name="create_event_error_title">Debe introducir un título\n</string>
     <string name="create_event_error_date">La fecha no puede ser nula\n</string>
+    <string name="create_event_error_time">La fecha y hora no puede ser anterior a la actual\n</string>
     <string name="create_event_error_event_type">Debe seleccionar un tipo de evento\n</string>
     <string name="create_event_select_location">Pulse para seleccionar la localización del evento</string>
     <string name="create_event_success">Evento creado correctamente</string>
