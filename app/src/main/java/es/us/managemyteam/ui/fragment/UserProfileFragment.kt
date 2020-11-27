@@ -3,11 +3,14 @@ package es.us.managemyteam.ui.fragment
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
@@ -143,18 +146,35 @@ class UserProfileFragment : BaseFragment<FragmentUserProfileBinding>() {
         lateinit var dialog: AlertDialog
 
         val builder = AlertDialog.Builder(this.context)
+        val passwordEditText = EditText(this.context)
+        passwordEditText.inputType =
+            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+        passwordEditText.setSingleLine()
+        val container = this.context?.let { FrameLayout(it) }
+        val params = FrameLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        params.marginStart = resources.getDimensionPixelSize(R.dimen.size_sixteen)
+        params.marginEnd = resources.getDimensionPixelSize(R.dimen.size_sixteen)
+        passwordEditText.layoutParams = params
+        container?.addView(passwordEditText)
 
         builder.setTitle("Está a punto de eliminar su cuenta de usuario.")
-        builder.setMessage("¿Seguro que desea eliminarla?")
+        builder.setMessage("Indique su contraseña para completar la eliminación")
+        builder.setView(container)
 
         val dialogClickListener = DialogInterface.OnClickListener { _, which ->
             when (which) {
-                DialogInterface.BUTTON_POSITIVE -> userProfileViewModel.removeUser(userId)
+                DialogInterface.BUTTON_POSITIVE -> userProfileViewModel.removeUser(
+                    userId,
+                    passwordEditText.text.toString()
+                )
                 DialogInterface.BUTTON_NEGATIVE -> dialog.cancel()
             }
         }
 
-        builder.setPositiveButton("Sí", dialogClickListener)
+        builder.setPositiveButton("Eliminar mi cuenta", dialogClickListener)
         builder.setNegativeButton("No", dialogClickListener)
 
 
