@@ -45,7 +45,10 @@ interface UserRepository {
 
     suspend fun logout()
 
-    suspend fun removeUser(uuid: String): LiveData<Resource<Boolean>>
+    suspend fun removeUser(
+        uuid: String,
+        password: String?
+    ): LiveData<Resource<Boolean>>
 
     suspend fun updateUserData(
         name: String,
@@ -145,9 +148,45 @@ class UserRepositoryImpl(
         currentUser = user
     }
 
-    override suspend fun removeUser(uuid: String): LiveData<Resource<Boolean>> {
+    override suspend fun removeUser(
+        uuid: String,
+        password: String?
+    ): LiveData<Resource<Boolean>> {
         removeUserData.postValue(null)
-        auth.signOut()
+        if (password == null) {
+            removeUserFromDatabase(uuid)
+        } else {
+            val currentUser = auth.currentUser
+            if (currentUser != null) {
+                val credentials = EmailAuthProvider.getCredential(
+                    currentUser.email!!,
+                    password
+                )
+                currentUser.reauthenticate(credentials)
+                    .addOnCompleteListener { reauthenticateTask ->
+                        if (reauthenticateTask.isSuccessful) {
+                            currentUser.delete()
+                                .addOnCompleteListener { deleteFromFirebaseAuthTask ->
+                                    if (deleteFromFirebaseAuthTask.isSuccessful) {
+                                        removeUserFromDatabase(uuid)
+                                    } else {
+                                        showGenericError(removeUserData)
+                                    }
+                                }
+                        } else {
+                            removeUserData.value =
+                                Resource.error(Error(errorMessageId = R.string.login_error_wrong_password))
+                        }
+                    }
+            } else {
+                showGenericError(removeUserData)
+            }
+        }
+
+        return removeUserData
+    }
+
+    private fun removeUserFromDatabase(uuid: String) {
         userTable.child(uuid).removeValue { error, _ ->
             removeUserData.value = if (error != null) {
                 Resource.error(Error(serverErrorMessage = error.message))
@@ -155,7 +194,6 @@ class UserRepositoryImpl(
                 Resource.success(false)
             }
         }
-        return removeUserData
     }
 
     override suspend fun updateUserData(
@@ -374,7 +412,7 @@ class UserRepositoryImpl(
                     snapshot.children.mapNotNull { it.getValue(UserBo::class.java) }
                         .filter { it.isPlayer() && userIds.contains(it.uuid) }.mapNotNull {
                             if (it.uuid != null && it.deviceInstanceId != null) {
-                                Pair(it.uuid?:"", it.deviceInstanceId?:"")
+                                Pair(it.uuid ?: "", it.deviceInstanceId ?: "")
                             } else null
                         }
 

@@ -17,11 +17,11 @@ class UserProfileViewModel(
 
     private val removeUserData = CustomMediatorLiveData<Resource<Boolean>>()
 
-    fun removeUser(uuid: String) {
+    fun removeUser(uuid: String, password: String) {
         viewModelScope.launch(Dispatchers.Main) {
             removeUserData.setData(Resource.loading(data = null))
             withContext(Dispatchers.IO) {
-                removeUserData.changeSource(Dispatchers.Main, removeUserUc(uuid))
+                removeUserData.changeSource(Dispatchers.Main, removeUserUc(uuid, password))
             }
         }
     }
