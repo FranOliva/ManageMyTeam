@@ -32,8 +32,7 @@ import es.us.managemyteam.util.EventUtil
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.Calendar.HOUR_OF_DAY
-import java.util.Calendar.MINUTE
+import java.util.Calendar.*
 
 class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListener {
 
@@ -322,7 +321,7 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
     private fun clickOnSave() {
         val title = viewBinding.createEventEditTextTitle.text.trim()
         val sdf = SimpleDateFormat(getString(R.string.date_time_format), Locale.getDefault())
-        val date = if (!viewBinding.createEventEditTextDate.text.isBlank()) {
+        val date = if (viewBinding.createEventEditTextDate.text.isNotBlank()) {
             sdf.parse(viewBinding.createEventEditTextDate.text)
         } else {
             null
@@ -448,8 +447,8 @@ class CreateEventFragment : BaseFragment<FragmentCreateEventBinding>(), MapListe
                             minute
                         )
                     )
-                }, Calendar.getInstance().get(HOUR_OF_DAY),
-                Calendar.getInstance().get(MINUTE),
+                }, getInstance().get(HOUR_OF_DAY),
+                getInstance().get(MINUTE),
                 true
             ).apply {
                 setCancelable(false)
