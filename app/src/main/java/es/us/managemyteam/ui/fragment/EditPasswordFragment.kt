@@ -45,6 +45,7 @@ class EditPasswordFragment : BaseFragment<FragmentEditPasswordBinding>() {
         val confirmPassword = viewBinding.editPasswordEditTextConfirmNewPassword.text
 
         editPasswordViewModel.getUpdatePassword(currentPassword, newPassword, confirmPassword)
+        getFocusedView().hideKeyboard()
     }
 
     private fun setupObservers() {
@@ -74,7 +75,13 @@ class EditPasswordFragment : BaseFragment<FragmentEditPasswordBinding>() {
 
                 override fun onLoading(loading: Boolean) {
                     super.onLoading(loading)
-                    viewBinding.editPasswordBtnSendRequest.showLoading(true)
+                    viewBinding.editPasswordBtnSendRequest.apply {
+                        if (!isStaffFirstTime) {
+                            showLoading(loading)
+                        } else {
+                            showLoading(true)
+                        }
+                    }
                 }
             })
 

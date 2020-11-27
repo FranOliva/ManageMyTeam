@@ -36,11 +36,14 @@ class UpdatePasswordViewModel(
         return enableUser.liveData()
     }
 
-    fun getUpdatePasswordData() = updatePassword.liveData()
+    fun getUpdatePasswordData(): LiveData<Resource<Boolean>> {
+        updatePassword.setData(null)
+        return updatePassword.liveData()
+    }
 
     fun getUpdatePassword(currentPassword: String, password: String, passwordRepeated: String) {
         viewModelScope.launch(Dispatchers.Main) {
-            if (validateForm(password, passwordRepeated)) {
+            if (validateForm(currentPassword, password, passwordRepeated)) {
                 updatePassword.setData(Resource.loading(data = null))
                 withContext(Dispatchers.IO) {
                     updatePassword.changeSource(
@@ -52,7 +55,11 @@ class UpdatePasswordViewModel(
         }
     }
 
-    private fun validateForm(password: String, passwordRepeated: String): Boolean {
+    private fun validateForm(
+        currentPassword: String,
+        password: String,
+        passwordRepeated: String
+    ): Boolean {
         return when {
             password.isBlank() || passwordRepeated.isBlank() -> {
                 updatePassword.setData(
@@ -70,6 +77,16 @@ class UpdatePasswordViewModel(
                     Resource.error(
                         Error(
                             R.string.registration_error_invalid_password
+                        )
+                    )
+                )
+                false
+            }
+            currentPassword == password -> {
+                updatePassword.setData(
+                    Resource.error(
+                        Error(
+                            R.string.update_password_same_passwords
                         )
                     )
                 )

@@ -228,6 +228,7 @@ class UserRepositoryImpl(
         currentPassword: String,
         email: String
     ): LiveData<Resource<Boolean>> {
+        updateEmailData.postValue(null)
         val currentUser = auth.currentUser
         if (currentUser != null) {
             val credentials = EmailAuthProvider.getCredential(
@@ -249,7 +250,6 @@ class UserRepositoryImpl(
     }
 
     private fun updateEmailFirebaseAuth(currentUser: FirebaseUser, email: String) {
-        updateEmailData.postValue(null)
         currentUser.updateEmail(email).addOnCompleteListener {
             if (it.isSuccessful) {
                 updateEmailDatabase(currentUser.uid, email)
@@ -298,6 +298,7 @@ class UserRepositoryImpl(
         currentPassword: String,
         password: String
     ): LiveData<Resource<Boolean>> {
+        updatePasswordData.postValue(null)
         val currentUser = auth.currentUser
         if (currentUser != null) {
             val credentials = EmailAuthProvider.getCredential(
@@ -306,7 +307,7 @@ class UserRepositoryImpl(
             )
             currentUser.reauthenticate(credentials).addOnCompleteListener {
                 if (it.isSuccessful) {
-                    updatePassword(currentUser, currentPassword)
+                    updatePassword(currentUser, password)
                 } else {
                     updatePasswordData.value =
                         Resource.error(Error(errorMessageId = R.string.login_error_wrong_password))
@@ -359,7 +360,6 @@ class UserRepositoryImpl(
     }
 
     private fun updatePassword(currentUser: FirebaseUser, password: String) {
-        updatePasswordData.postValue(null)
         currentUser.updatePassword(password)
             .addOnCompleteListener { passwordTask ->
                 if (passwordTask.isSuccessful) {

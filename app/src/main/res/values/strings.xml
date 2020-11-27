@@ -69,6 +69,7 @@
     <string name="registration_error_invalid_password">Las contraseñas introducidas no coinciden</string>
     <string name="registration_error_invalid_phone">Introduzca un teléfono válido</string>
     <string name="registration_error_empty_fields">Debe rellenar todos los campos</string>
+    <string name="update_password_same_passwords">La nueva contraseña debe ser diferente a la anterior</string>
     <string name="registration_information">Este formulario enviará una solicitud de registro en la aplicación. Si usted no pertenece al club esta solicitud se rechazará.</string>
     <string name="update_user_fields_not_filled">Debe rellenar los campos marcados con (*)</string>
     <string name="edit_user_question">¿Qué te gustaría modificar?</string>
