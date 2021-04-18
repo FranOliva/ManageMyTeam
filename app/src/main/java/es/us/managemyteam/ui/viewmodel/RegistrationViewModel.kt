@@ -58,11 +58,16 @@ class RegistrationViewModel(
         phoneNumber: String
     ): Boolean {
         return when {
-            name.isBlank() || password.isBlank() || passwordRepeated.isBlank() || name.isBlank() || surname.isBlank() || phoneNumber.isBlank() -> {
+            name.isBlank() ||
+                    password.isBlank() ||
+                    passwordRepeated.isBlank() ||
+                    name.isBlank() ||
+                    surname.isBlank() ||
+                    phoneNumber.isBlank() -> {
                 createUser.setData(
                     Resource.error(
                         Error(
-                            R.string.registration_error_empty_fields,
+                            R.string.registration_error_empty_field,
                             RegistrationError.EMPTY_FIELDS.ordinal
                         )
                     )

@@ -36,19 +36,7 @@ fun Fragment.showInformationDialog(
     message: String,
     dialogOnClickListener: DialogInterface.OnClickListener? = null
 ) {
-    context?.let { con ->
-        val dialog = AlertDialog.Builder(con)
-            .setCancelable(true)
-            .setMessage(message)
-            .setTitle(null)
-            .setPositiveButton(R.string.accept, dialogOnClickListener)
-            .create()
-        dialog.setOnShowListener {
-            dialog.getButton(DialogInterface.BUTTON_POSITIVE)
-                .setTextColor(ContextCompat.getColor(con, R.color.black))
-        }
-        dialog.show()
-    }
+    context?.showInformationDialog(message, dialogOnClickListener)
 }
 
 fun Fragment.getDefaultDialogErrorListener(): DialogInterface.OnClickListener {

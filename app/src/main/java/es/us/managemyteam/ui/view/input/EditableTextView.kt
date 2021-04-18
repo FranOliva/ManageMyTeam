@@ -1,6 +1,7 @@
 package es.us.managemyteam.ui.view.input
 
 import android.content.Context
+import android.content.DialogInterface
 import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.InputType
@@ -15,7 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import es.us.managemyteam.R
 import es.us.managemyteam.databinding.ViewEditableTextBinding
-import es.us.managemyteam.extension.getStyleTypeArray
+import es.us.managemyteam.extension.*
 import es.us.managemyteam.ui.view.input.CommonInputParams.DEFAULT_HEIGHT
 
 class EditableTextView @JvmOverloads constructor(
@@ -42,6 +43,10 @@ class EditableTextView @JvmOverloads constructor(
     init {
         applyAttributes(attrs)
         initWatcher()
+        setError(null)
+        viewBinding.editableTextLabelHeaderError.setOnClickListener {
+            clickOnError()
+        }
     }
 
     fun setText(text: String?) {
@@ -63,6 +68,24 @@ class EditableTextView @JvmOverloads constructor(
         if (inputType == CommonInputType.NONE) {
             viewBinding.editableTextInputInfo.isFocusable = false
             viewBinding.editableTextInputInfo.isClickable = true
+        }
+    }
+
+    fun setError(errorMessage: String?) {
+        if (errorMessage.isNullOrBlank()) {
+            viewBinding.editableTextImgBorder.setImageResource(R.drawable.input_background)
+            viewBinding.editableTextLabelHeader.setTextAppearance(R.style.SemiBold_Sixteen_Black)
+            viewBinding.editableTextLabelHeaderError.apply {
+                text = errorMessage
+                hide()
+            }
+        } else {
+            viewBinding.editableTextImgBorder.setImageResource(R.drawable.input_background_error)
+            viewBinding.editableTextLabelHeader.setTextAppearance(R.style.SemiBold_Sixteen_Red)
+            viewBinding.editableTextLabelHeaderError.apply {
+                text = errorMessage
+                show()
+            }
         }
     }
 
@@ -172,6 +195,13 @@ class EditableTextView @JvmOverloads constructor(
                 // no-op
             }
         })
+    }
+
+    private fun clickOnError() {
+        rootView.showInformationDialog(
+            viewBinding.editableTextLabelHeaderError.text.toString(),
+            DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() }
+        )
     }
 
 }

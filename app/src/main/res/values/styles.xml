@@ -121,6 +121,10 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="SemiBold.Sixteen.Red" parent="SemiBold.Sixteen">
+        <item name="android:textColor">@color/redWithAlpha</item>
+    </style>
+
     <style name="Bold">
         <item name="android:fontFamily">@font/fonts_notosans_bold</item>
     </style>
@@ -151,6 +155,10 @@
 
     <style name="Bold.Twenty.White" parent="Bold.Twenty">
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Regular.Fourteen.Red" parent="Regular.Fourteen">
+        <item name="android:textColor">@color/redWithAlpha</item>
     </style>
 
 </resources>

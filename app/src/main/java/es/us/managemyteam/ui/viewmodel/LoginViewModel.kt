@@ -4,26 +4,29 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import es.us.managemyteam.R
+import es.us.managemyteam.constant.LoginError
 import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.extension.isEmail
+import es.us.managemyteam.extension.newData
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.Resource
 import es.us.managemyteam.usecase.GetUserUc
 import es.us.managemyteam.usecase.LoginUc
 import es.us.managemyteam.util.CustomMediatorLiveData
+import es.us.managemyteam.util.FirebaseAuthUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+@Suppress("UNCHECKED_CAST")
 class LoginViewModel(private val loginUc: LoginUc, private val getUserUc: GetUserUc) : ViewModel() {
 
     private val login: CustomMediatorLiveData<Resource<String>> = CustomMediatorLiveData()
     private val user: CustomMediatorLiveData<Resource<UserBo>> = CustomMediatorLiveData()
+    private val auth = FirebaseAuthUtil.getFirebaseAuthInstance()
 
     fun getLoginData(): LiveData<Resource<String>> {
-        return login.apply {
-            setData(null)
-        }.liveData()
+        return login.newData() as LiveData<Resource<String>>
     }
 
     fun login(
@@ -38,6 +41,10 @@ class LoginViewModel(private val loginUc: LoginUc, private val getUserUc: GetUse
                 }
             }
         }
+
+    fun signOut() {
+        auth.signOut()
+    }
 
     fun getUserData(): LiveData<Resource<UserBo>> {
         user.setData(null)
@@ -59,7 +66,8 @@ class LoginViewModel(private val loginUc: LoginUc, private val getUserUc: GetUse
                 login.setData(
                     Resource.error(
                         Error(
-                            R.string.registration_error_empty_fields
+                            R.string.registration_error_empty_fields,
+                            LoginError.EMPTY_FIELDS.ordinal
                         )
                     )
                 )
@@ -69,7 +77,8 @@ class LoginViewModel(private val loginUc: LoginUc, private val getUserUc: GetUse
                 login.setData(
                     Resource.error(
                         Error(
-                            R.string.registration_error_invalid_email
+                            R.string.registration_error_invalid_email,
+                            LoginError.NOT_AN_EMAIL.ordinal
                         )
                     )
                 )

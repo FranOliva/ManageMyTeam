@@ -10,23 +10,21 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
+import es.us.managemyteam.constant.LoginError
 import es.us.managemyteam.data.model.UserBo
 import es.us.managemyteam.databinding.FragmentLoginBinding
 import es.us.managemyteam.extension.getFocusedView
 import es.us.managemyteam.extension.hide
 import es.us.managemyteam.extension.hideKeyboard
-import es.us.managemyteam.extension.showErrorDialog
 import es.us.managemyteam.repository.util.Error
 import es.us.managemyteam.repository.util.ResourceObserver
 import es.us.managemyteam.ui.activity.MainActivity
 import es.us.managemyteam.ui.viewmodel.LoginViewModel
-import es.us.managemyteam.util.FirebaseAuthUtil
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private val loginViewModel: LoginViewModel by viewModel()
-    private val auth = FirebaseAuthUtil.getFirebaseAuthInstance()
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             activity?.finish()
@@ -70,8 +68,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
                 override fun onError(error: Error) {
                     super.onError(error)
-                    showErrorDialog(getString(error.errorMessageId))
-                    auth.signOut()
+                    processWithError(error)
                 }
 
                 override fun onLoading(loading: Boolean) {
@@ -101,10 +98,26 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
                 override fun onError(error: Error) {
                     super.onError(error)
-                    showErrorDialog(getString(error.errorMessageId))
-                    auth.signOut()
+                    processWithError(error)
                 }
             })
+    }
+
+    private fun processWithError(error: Error) {
+        val errorMessage = error.serverErrorMessage?: getString(error.errorMessageId)
+        when (LoginError.values().getOrNull(error.errorActionId)) {
+            LoginError.EMPTY_FIELDS -> {
+                viewBinding.loginEditTextEmail.setError(errorMessage)
+                viewBinding.loginEditTextPassword.setError(errorMessage)
+            }
+            LoginError.NOT_AN_EMAIL -> {
+                viewBinding.loginEditTextEmail.setError(errorMessage)
+            }
+            else -> {
+                viewBinding.loginEditTextEmail.setError(errorMessage)
+            }
+        }
+        loginViewModel.signOut()
     }
 
     private fun setupEnterClickListener() {

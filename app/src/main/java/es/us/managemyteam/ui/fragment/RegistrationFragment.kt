@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import es.us.managemyteam.R
+import es.us.managemyteam.constant.RegistrationError
 import es.us.managemyteam.data.model.RegistrationBo
 import es.us.managemyteam.data.model.Role
 import es.us.managemyteam.databinding.FragmentRegistrationBinding
@@ -41,10 +42,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
 
                 override fun onError(error: Error) {
                     super.onError(error)
-                    showErrorDialog(
-                        getString(error.errorMessageId),
-                        DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() }
-                    )
+                    processWithError(error)
                 }
 
                 override fun onLoading(loading: Boolean) {
@@ -53,6 +51,50 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
                 }
             })
 
+    }
+
+    private fun processWithError(error: Error) {
+        val errorMessage = getString(error.errorMessageId)
+        when(RegistrationError.values()[error.errorActionId]){
+            RegistrationError.EMPTY_FIELDS -> {
+                if (viewBinding.registrationEditTextName.text.isBlank()) {
+                    viewBinding.registrationEditTextName.setError(errorMessage)
+                }
+                if (viewBinding.registrationEditTextSurname.text.isBlank()) {
+                    viewBinding.registrationEditTextSurname.setError(errorMessage)
+                }
+                if (viewBinding.registrationEditTextEmail.text.isBlank()) {
+                    viewBinding.registrationEditTextEmail.setError(errorMessage)
+                }
+                if (viewBinding.registrationEditTextPhonenumber.text.isBlank()) {
+                    viewBinding.registrationEditTextPhonenumber.setError(errorMessage)
+                }
+                if (viewBinding.registrationEditTextPassword.text.isBlank()) {
+                    viewBinding.registrationEditTextPassword.setError(errorMessage)
+                }
+                if (viewBinding.registrationEditTextConfirmPassword.text.isBlank()) {
+                    viewBinding.registrationEditTextConfirmPassword.setError(errorMessage)
+                }
+            }
+            RegistrationError.NOT_AN_EMAIL -> {
+                viewBinding.registrationEditTextEmail.setError(errorMessage)
+            }
+            RegistrationError.NOT_A_PHONE -> {
+                viewBinding.registrationEditTextPhonenumber.setError(errorMessage)
+            }
+            RegistrationError.PASSWORDS_NOT_FILL -> {
+                viewBinding.registrationEditTextPassword.setError(errorMessage)
+            }
+        }
+    }
+
+    private fun clearErrors() {
+        viewBinding.registrationEditTextName.setError(null)
+        viewBinding.registrationEditTextSurname.setError(null)
+        viewBinding.registrationEditTextEmail.setError(null)
+        viewBinding.registrationEditTextPhonenumber.setError(null)
+        viewBinding.registrationEditTextPassword.setError(null)
+        viewBinding.registrationEditTextConfirmPassword.setError(null)
     }
 
     private fun setupClickListeners() {
@@ -77,6 +119,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
         val surname = viewBinding.registrationEditTextSurname.text.trim()
         val phoneNumber = viewBinding.registrationEditTextPhonenumber.text.trim()
 
+        clearErrors()
         getFocusedView().hideKeyboard()
 
 
@@ -91,7 +134,8 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
                 Role.PLAYER
             )
         } else {
-            showInformationDialog(getString(R.string.checkbox_error))
+            viewBinding.registrationCheckboxLink.startShakeAnimation()
+//            showInformationDialog(getString(R.string.checkbox_error)) // TODO
         }
     }
 

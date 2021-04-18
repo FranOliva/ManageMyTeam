@@ -3,10 +3,15 @@ package es.us.managemyteam.extension
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.provider.CalendarContract
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.model.LatLng
+import es.us.managemyteam.R
 import java.util.*
 
 private const val GOOGLE_MAPS_URL = "http://maps.google.com/maps?q="
@@ -19,6 +24,23 @@ fun Context.startUrlActionView(url: String) {
 
 fun Context.startGoogleMapsByLatLng(latLng: LatLng) {
     startUrlActionView(GOOGLE_MAPS_URL + latLng.toGoogleMapsFormat())
+}
+
+fun Context.showInformationDialog(
+    message: String,
+    dialogOnClickListener: DialogInterface.OnClickListener? = null
+) {
+    val dialog = AlertDialog.Builder(this)
+        .setCancelable(true)
+        .setMessage(message)
+        .setTitle(null)
+        .setPositiveButton(R.string.accept, dialogOnClickListener)
+        .create()
+    dialog.setOnShowListener {
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE)
+            .setTextColor(ContextCompat.getColor(this, R.color.black))
+    }
+    dialog.show()
 }
 
 @SuppressLint("MissingPermission")
@@ -45,3 +67,4 @@ private fun getContentValues(
 
     return values
 }
+
